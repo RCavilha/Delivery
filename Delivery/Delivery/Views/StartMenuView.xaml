@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Delivery.Views.StartMenuView"
+             xmlns:viewModels="clr-namespace:Delivery.ViewModels">
+    <ContentPage.BindingContext>
+        <viewModels:StoreViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <CollectionView ItemsSource="{Binding ListOfStores}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView Padding="10">
+                            <Frame CornerRadius="0" BorderColor="{StaticResource BorderColor}" Padding="1" HasShadow="False">
+                                <Grid ColumnDefinitions="1*, 1,  2*">
+                                    <Image HeightRequest="80" Source="{Binding Logo}" Margin="10"/>
+                                    <BoxView Grid.Column="1" BackgroundColor="Black"/>
+                                    <StackLayout Grid.Column="2" Margin="10">
+                                        <Label Text="{Binding Name}" TextColor="{StaticResource TextPrimaryCollor}"/>
+                                        <Label Text="{Binding Description}" TextColor="{StaticResource TextSecondCollor}" MaxLines="3"/>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
