@@ -19,9 +19,6 @@ namespace Delivery.Views
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-
-            MessagingCenter.Send
-            BuscandoLista();
         }
 
     }
