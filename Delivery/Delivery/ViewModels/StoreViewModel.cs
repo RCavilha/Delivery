@@ -1,6 +1,8 @@
 ﻿using Delivery.Libraries.Helpers.MVVM;
 using Delivery.Models;
 using Delivery.Services;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -38,7 +40,8 @@ namespace Delivery.ViewModels
         }
         public void StoreItemsGoTo(StoreModel store)
         {
-            Shell.Current.GoToAsync("store/items");
+            string storeSerialized = JsonConvert.SerializeObject(store);
+            Shell.Current.GoToAsync($"store/items?storeSerialized={Uri.EscapeDataString(storeSerialized)}");
         }
     }
 }

@@ -2,30 +2,46 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.StoreItemsView"
-             xmlns:viewModels="clr-namespace:Delivery.ViewModels">
+             xmlns:viewModels="clr-namespace:Delivery.ViewModels"
+             Title="">
     <ContentPage.BindingContext>
         <viewModels:StoreItemsViewModel/>
     </ContentPage.BindingContext>
+    <Shell.TitleView>
+        <ContentView>
+            <Image Source="{Binding Store.Logo}" HorizontalOptions="End" VerticalOptions="Center" HeightRequest="30" ></Image>        
+        </ContentView>
+    </Shell.TitleView>
+    
     <ContentPage.Content>
-        <StackLayout>
-            <CollectionView ItemsSource="{Binding ListStoreItems}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <ContentView>
-                            <Frame CornerRadius="1" Padding="1" HasShadow="False">
-                                <Grid ColumnDefinitions="3*, 1*">
-                                    <StackLayout Margin="10">
-                                        <Label Text="{Binding Name}" TextColor="{StaticResource TextPrimaryCollor}"/>
-                                        <Label Text="{Binding Description}" TextColor="{StaticResource TextSecondCollor}" MaxLines="3"/>
-                                        <Label Text="{Binding PriceFormat}" TextColor="{StaticResource TextPrimaryCollor}" MaxLines="3"/>                                       
-                                    </StackLayout>                                                                      
-                                    <Image Grid.Column="1" HeightRequest="80" Source="{Binding Image}" Margin="10"/>
-                                </Grid>
-                            </Frame>
-                        </ContentView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
+        <ScrollView >
+            <StackLayout>
+                <Image Source="{Binding Store.Logo}"/>
+                <Label Text="{Binding Store.Name}" TextColor="{StaticResource TextPrimaryCollor}"/>
+                <Label Text="{Binding Store.Description}"/>
+                <Label Text="{Binding Store.Address}"/>
+                <Label Text="{Binding Store.Phone}"/>
+                <Label Text=""/>
+
+                <CollectionView ItemsSource="{Binding ListStoreItems}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <ContentView>
+                                <Frame CornerRadius="1" Padding="1" HasShadow="False">
+                                    <Grid ColumnDefinitions="3*, 1*">
+                                        <StackLayout Margin="10">
+                                            <Label Text="{Binding Name}" TextColor="{StaticResource TextPrimaryCollor}"/>
+                                            <Label Text="{Binding Description}" TextColor="{StaticResource TextSecondCollor}" MaxLines="3"/>
+                                            <Label Text="{Binding PriceFormat}" TextColor="{StaticResource TextPrimaryCollor}" MaxLines="3"/>                                       
+                                        </StackLayout>                                                                      
+                                        <Image Grid.Column="1" HeightRequest="80" Source="{Binding Image}" Margin="10"/>
+                                    </Grid>
+                                </Frame>
+                            </ContentView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

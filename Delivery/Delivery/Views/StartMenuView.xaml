@@ -7,8 +7,10 @@
     <ContentPage.BindingContext>
         <viewModels:StoreViewModel/>
     </ContentPage.BindingContext>
+    
     <ContentPage.Content>
         <StackLayout>
+            
             <CollectionView ItemsSource="{Binding ListOfStores}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
