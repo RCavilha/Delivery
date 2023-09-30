@@ -16,10 +16,7 @@ namespace Delivery.Views
         {
             InitializeComponent();
         }
-        protected async override void OnAppearing()
-        {
-            base.OnAppearing();
-        }
+ 
 
     }
 }

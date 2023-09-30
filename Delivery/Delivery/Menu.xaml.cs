@@ -15,6 +15,8 @@ namespace Delivery
         public Menu()
         {
             InitializeComponent();
+
+            Routing.RegisterRoute("store/items", typeof(Views.StoreItemsView));
         }
     }
 }

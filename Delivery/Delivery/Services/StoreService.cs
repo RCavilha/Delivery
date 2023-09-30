@@ -1,13 +1,9 @@
 ﻿using Delivery.Models;
-using Delivery.Repositories;
 using Firebase.Database;
 using Firebase.Database.Query;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
-using static Xamarin.Essentials.Permissions;
-using static Xamarin.Forms.Device;
 
 namespace Delivery.Services
 {
@@ -21,16 +17,7 @@ namespace Delivery.Services
         {
             try
             {
-                await _dbStore.Child(_tableName).
-                    PostAsync(new StoreRepository()
-                    {
-                        Id = stores.Id,
-                        Logo = stores.Logo,
-                        Name = stores.Name,
-                        Description = stores.Description,
-                        Address = stores.Address,
-                        Phone = stores.Phone,
-                    });
+                await _dbStore.Child(_tableName).PostAsync(stores);
                 return true;
             }
             catch
@@ -39,66 +26,21 @@ namespace Delivery.Services
             }
         }
 
-
-
-        public async Task<List<StoreModel>> GetListOfStores()
+        public async Task<List<StoreModel>> GetStoreList()
         {
+            var list = (await _dbStore
+                    .Child(_tableName)
+                    .OnceAsync<StoreModel>()).Select(store => new StoreModel
+                    {
+                        Id = store.Object.Id,
+                        Logo = store.Object.Logo,
+                        Name = store.Object.Name,
+                        Description = store.Object.Description,
+                        Address = store.Object.Address,
+                        Phone = store.Object.Phone,
+                    }).ToList();
 
-            var stores = new List<StoreModel>();
-
-            var response = await _dbStore
-                .Child(_tableName)
-                .OnceAsync<StoreRepository>();
-
-            foreach (var item in response)
-            {
-                var storeRepository = item.Object;
-
-                stores.Add(new StoreModel()
-                {
-                    Id = storeRepository.Id,
-                    Logo = storeRepository.Logo,
-                    Name = storeRepository.Name,
-                    Description = storeRepository.Description,
-                    Address = storeRepository.Address,
-                    Phone = storeRepository.Phone,
-                });
-            }
-
-            return stores;
-
-
-
-            /* var oi = new StoreModel()
-             {
-                 Id = 1,
-                 Logo = "https://botw-pd.s3.amazonaws.com/styles/logo-thumbnail/s3/102014/logo_outback.png?itok=dKkkYi4q",
-                 Name = "OUTBACK",
-                 Description = "Outback Steakhouse",
-                 Address = "3 Andar - Loja 01/02/03/04 - Entrada Sul",
-                 Phone = "(61) 3550-1874",
-             };
-             var oi2 = new StoreModel()
-             {
-                 Id = 2,
-                 Logo = "https://th.bing.com/th/id/OIP.rkuaDq-syjT-EZdhuQ6GfgHaGU?pid=Api&rs=1",
-                 Name = "GIRAFFAS",
-                 Description = "O Giraffas é uma rede de restaurantes de culinária brasileira que serve seus pratos de forma saborosa e criativa.",
-                 Address = "3 Andar - Loja 05/06/07 - Entrada Sul",
-                 Phone = "(61) 3550-1874",
-             };
-
-
-
-             SalvaEmpresa(oi);
-             SalvaEmpresa(oi2);
-
-
-             List<StoreModel> listOfStore = new List<StoreModel>();
-             listOfStore.Add(oi);
-             listOfStore.Add(oi2);
-
-             return listOfStore;*/
+            return list;
         }
     }
 }

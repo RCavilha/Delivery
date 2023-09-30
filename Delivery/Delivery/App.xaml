@@ -26,9 +26,10 @@
             </Style>
 
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource FlyoutBaseStyle}"/>
+            <Style TargetType="ShellContent" BasedOn="{StaticResource FlyoutBaseStyle}"/>
 
             <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
-                <Setter Property="BackgroundColor" Value="{StaticResource LightGrey}"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource White}"/>
             </Style>
 
             <Style TargetType="Label">

@@ -14,13 +14,12 @@
 
     <FlyoutItem Title="Principais" FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent Title="Lojas" Icon="MenuIconStore" ContentTemplate="{DataTemplate views:StartMenuView}"/>
-        <ShellContent Title="Restaurantes" Icon="MenuIconRestaurant" ContentTemplate="{DataTemplate views:StartMenuView}"/>
-        <ShellContent Title="Cinema" Icon="MenuIconCinema" ContentTemplate="{DataTemplate views:StartMenuView}"/>
-        <ShellContent Title="Ticket" Icon="MenuIconTicket" ContentTemplate="{DataTemplate views:StartMenuView}"/>
+        <ShellContent Title="Buscar" Icon="MenuIconRestaurant" ContentTemplate="{DataTemplate views:StartMenuView}"/>
+        <ShellContent Title="Pedidos" Icon="MenuIconCinema" ContentTemplate="{DataTemplate views:StartMenuView}"/>
+        <ShellContent Title="Perfil" Icon="MenuIconTicket" ContentTemplate="{DataTemplate views:StoreItemsView}"/>
     </FlyoutItem>
 
     <ShellContent Title="Novidades" Icon="MenuIconNews" ContentTemplate="{DataTemplate views:StartMenuView}"/>
-    <ShellContent Title="Como chegar" Icon="MenuIconMaps" ContentTemplate="{DataTemplate views:StartMenuView}"/>
-    <ShellContent Title="Wifi" Icon="MenuIconWifi" ContentTemplate="{DataTemplate views:StartMenuView}"/>
+    <ShellContent Title="Ajuda" Icon="MenuIconNews" ContentTemplate="{DataTemplate views:StoreItemsView}"/>
 
 </Shell>

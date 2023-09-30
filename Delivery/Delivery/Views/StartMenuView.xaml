@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.StartMenuView"
-             xmlns:viewModels="clr-namespace:Delivery.ViewModels">
+             xmlns:viewModels="clr-namespace:Delivery.ViewModels"
+             x:Name="StartMenu">
     <ContentPage.BindingContext>
         <viewModels:StoreViewModel/>
     </ContentPage.BindingContext>
@@ -13,6 +14,9 @@
                     <DataTemplate>
                         <ContentView Padding="10">
                             <Frame CornerRadius="0" BorderColor="{StaticResource BorderColor}" Padding="1" HasShadow="False">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference StartMenu}, Path=BindingContext.StoreItemsCommand}" CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
                                 <Grid ColumnDefinitions="1*, 1,  2*">
                                     <Image HeightRequest="80" Source="{Binding Logo}" Margin="10"/>
                                     <BoxView Grid.Column="1" BackgroundColor="Black"/>

@@ -1,28 +1,44 @@
-﻿using Delivery.Models;
+﻿using Delivery.Libraries.Helpers.MVVM;
+using Delivery.Models;
 using Delivery.Services;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Delivery.ViewModels
 {
-    public class StoreViewModel
+    public class StoreViewModel : BaseViewModel
     {
-        public Task<List<StoreModel>> ListOfStores { get; set; }
+        private List<StoreModel> _listOfStores;
+        public List<StoreModel> ListOfStores
+        {
+            get
+            {
+
+                return _listOfStores;
+            }
+            set
+            {
+                SetProperty(ref _listOfStores, value);
+            }
+        }
+
+        public ICommand StoreItemsCommand { get; set; }
 
         public StoreViewModel()
         {
-
-            BuscandoLista();
+            StoreItemsCommand = new Command<StoreModel>(StoreItemsGoTo);
+            GetListStore();
         }
 
-
-        public async void BuscandoLista()
+        public async void GetListStore()
         {
             var service = new StoreService();
-            ListOfStores = service.GetListOfStores();
+            ListOfStores = await service.GetStoreList();
+        }
+        public void StoreItemsGoTo(StoreModel store)
+        {
+            Shell.Current.GoToAsync("store/items");
         }
     }
 }
