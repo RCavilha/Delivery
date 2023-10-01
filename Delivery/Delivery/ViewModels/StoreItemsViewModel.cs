@@ -4,13 +4,15 @@ using Delivery.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Delivery.ViewModels
 {
     [QueryProperty("storeSerialized", "storeSerialized")]
     public class StoreItemsViewModel : BaseViewModel
-    {
+    {      
+
         public StoreModel Store { get; set; }
         public string storeSerialized 
         {
@@ -35,8 +37,11 @@ namespace Delivery.ViewModels
             }
         }
 
+        public ICommand SelectedItemCommand { get; set; }
+
         public StoreItemsViewModel()
         {
+            SelectedItemCommand = new Command<StoreItemModel>(SelectedItemGoTo);
             GetListItems();
         }
 
@@ -44,6 +49,12 @@ namespace Delivery.ViewModels
         {
             var service = new StoreItemsService();
             ListStoreItems = await service.GetListStoreItems();
+        }
+
+        public void SelectedItemGoTo(StoreItemModel selectedItem)
+        {
+            string selectedItemSerialized = JsonConvert.SerializeObject(selectedItem);
+            Shell.Current.GoToAsync($"store/items/selecteditem?selectedItemSerialized={Uri.EscapeDataString(selectedItemSerialized)}");
         }
     }
 }

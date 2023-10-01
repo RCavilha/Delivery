@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Delivery.Views.ItemView"
+             xmlns:viewModel="clr-namespace:Delivery.ViewModels">
+    <ContentPage.BindingContext>
+        <viewModel:ItemViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame HeightRequest="200">
+                <Image Source="{Binding SelectedItem.Image}"/>
+            </Frame>
+            <Label Text="{Binding SelectedItem.Name}" TextColor="{StaticResource TextPrimaryCollor}" Padding="2"/>
+            <Label Text="{Binding SelectedItem.Description}" TextColor="{StaticResource TextSecondCollor}" MaxLines="20" Padding="10"/>
+            <Label Text="{Binding SelectedItem.PriceFormat}" TextColor="{StaticResource TextPrimaryCollor}" MaxLines="3" Padding="2"/>
+            <Grid Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="-" Command="{Binding DecItemsQuantityCommand}" Grid.Column="0" TextColor="{StaticResource PrimaryColor}" BackgroundColor="White" BorderColor="{StaticResource PrimaryColor}"/>
+                <Button Text="{Binding ItemsQuantity}" Grid.Column="1" TextColor="{StaticResource PrimaryColor}" BackgroundColor="White" BorderColor="{StaticResource PrimaryColor}"/>
+                <Button Text="+" Grid.Column="2" Command="{Binding IncItemsQuantityCommand}" TextColor="{StaticResource PrimaryColor}" BackgroundColor="White" BorderColor="{StaticResource PrimaryColor}"/>
+                <Frame BackgroundColor="{StaticResource PrimaryColor}" CornerRadius="5" Grid.Column="3">
+                    <StackLayout VerticalOptions="Center">
+                        <Grid>
+                            <Label Text="Adicionar" HorizontalOptions="Start" />
+                            <Label Text="{Binding TotalPrice, StringFormat='R$ {0:F2}'}" VerticalOptions="EndAndExpand" HorizontalOptions="End"/>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

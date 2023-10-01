@@ -9,8 +9,7 @@
     </ContentPage.BindingContext>
     
     <ContentPage.Content>
-        <StackLayout>
-            
+        <StackLayout>            
             <CollectionView ItemsSource="{Binding ListOfStores}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>

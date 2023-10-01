@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.StoreItemsView"
-             xmlns:viewModels="clr-namespace:Delivery.ViewModels">
+             xmlns:viewModels="clr-namespace:Delivery.ViewModels"
+             x:Name="StoreItemsMenu">
     <ContentPage.BindingContext>
         <viewModels:StoreItemsViewModel/>
     </ContentPage.BindingContext>
@@ -18,11 +19,11 @@
             <StackLayout>
                 <Frame Margin="0,-20,0,-5">
                     <Grid>                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="20"/>                        
-                    </Grid.RowDefinitions>                    
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="20"/>                        
+                        </Grid.RowDefinitions>                    
                         <Label Text="{Binding Store.Description}" Grid.Row="0"  TextColor="{StaticResource TextPrimaryCollor}"/>
                         <Label Text="{Binding Store.Address}" Grid.Row="1" TextColor="{StaticResource TextSecondCollor}"/>
                        <Label Text="{Binding Store.Phone}" Grid.Row="2" TextColor="{StaticResource TextSecondCollor}"/>                    
@@ -33,6 +34,9 @@
                         <DataTemplate>
                             <ContentView>
                                 <Frame CornerRadius="1" Padding="1" HasShadow="False">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference StoreItemsMenu}, Path=BindingContext.SelectedItemCommand}" CommandParameter="{Binding .}"/>
+                                    </Frame.GestureRecognizers>
                                     <Grid ColumnDefinitions="3*, 1*">
                                         <StackLayout Margin="10">
                                             <Label Text="{Binding Name}" TextColor="{StaticResource TextPrimaryCollor}"/>
