@@ -14,10 +14,10 @@
             <Label Text="{Binding SelectedItem.Name}" TextColor="{StaticResource TextPrimaryCollor}" Padding="2"/>
             <Label Text="{Binding SelectedItem.Description}" TextColor="{StaticResource TextSecondCollor}" MaxLines="20" Padding="10"/>
             <Label Text="{Binding SelectedItem.PriceFormat}" TextColor="{StaticResource TextPrimaryCollor}" MaxLines="3" Padding="2"/>
-            <Grid Padding="5">
+            <Grid Padding="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -27,8 +27,8 @@
                 <Frame BackgroundColor="{StaticResource PrimaryColor}" CornerRadius="5" Grid.Column="3">
                     <StackLayout VerticalOptions="Center">
                         <Grid>
-                            <Label Text="Adicionar" HorizontalOptions="Start" />
-                            <Label Text="{Binding TotalPrice, StringFormat='R$ {0:F2}'}" VerticalOptions="EndAndExpand" HorizontalOptions="End"/>
+                            <Label Text="Adicionar" HorizontalOptions="Start"/>
+                            <Label Text="{Binding TotalPrice, StringFormat='R$ {0:F2}'}" HorizontalOptions="End"/>
                         </Grid>
                     </StackLayout>
                 </Frame>

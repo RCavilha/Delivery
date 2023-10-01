@@ -10,19 +10,14 @@ namespace Delivery.Views
         {
             InitializeComponent();
         }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
             Shell.SetTabBarIsVisible(this, false);
         }
-
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-
-            // Mostrar o ShellContent ao sair da página (opcional, dependendo do seu caso de uso)
             Shell.SetTabBarIsVisible(this, true);
         }
     }

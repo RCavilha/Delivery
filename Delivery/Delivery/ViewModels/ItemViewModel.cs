@@ -11,26 +11,28 @@ namespace Delivery.ViewModels
     [QueryProperty("selectedItemSerialized", "selectedItemSerialized")]
     public class ItemViewModel : BaseViewModel
     {
-        private int itemsQuantity = 1;
+        private int _itemsQuantity = 1;
         public int ItemsQuantity
         {
             get
             {
-                return itemsQuantity;
+                return _itemsQuantity;
             }
             set
             {
-                if(value <= 0)
+                if (value <= 0)
                 {
-                    itemsQuantity = 1;
+                    _itemsQuantity = 1;
                 }
                 else
                 {
-                    itemsQuantity = value;
-                }              
-                OnPropertyChanged(nameof(SelectedItem));
+                    _itemsQuantity = value;
+                }
+                OnPropertyChanged(nameof(ItemsQuantity));
+                OnPropertyChanged(nameof(TotalPrice));
             }
         }
+
 
         public StoreItemModel SelectedItem { get; set; }
         public string selectedItemSerialized
@@ -39,10 +41,22 @@ namespace Delivery.ViewModels
             {
                 SelectedItem = JsonConvert.DeserializeObject<StoreItemModel>(Uri.UnescapeDataString(value));
                 OnPropertyChanged(nameof(SelectedItem));
+                OnPropertyChanged(nameof(TotalPrice));
             }
         }
 
-        public ICommand IncItemsQuantityCommand { get; set; }
+        public double TotalPrice
+        {
+            get
+            {
+                if(SelectedItem == null)
+                    return 0;
+
+                return  SelectedItem.Price * _itemsQuantity;
+            }            
+        }
+
+    public ICommand IncItemsQuantityCommand { get; set; }
         public ICommand DecItemsQuantityCommand { get; set; }
 
         public void IncItemsQuantity()
@@ -52,7 +66,13 @@ namespace Delivery.ViewModels
 
         public void DecItemsQuantity()
         {
-            itemsQuantity--;
+            ItemsQuantity--;
+        }
+
+        public ItemViewModel()
+        {
+            IncItemsQuantityCommand = new Command(IncItemsQuantity);
+            DecItemsQuantityCommand = new Command(DecItemsQuantity);
         }
     }
 }

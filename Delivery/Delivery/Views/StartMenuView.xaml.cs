@@ -16,7 +16,5 @@ namespace Delivery.Views
         {
             InitializeComponent();
         }
- 
-
     }
 }
