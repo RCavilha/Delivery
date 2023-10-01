@@ -2,27 +2,32 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.StoreItemsView"
-             xmlns:viewModels="clr-namespace:Delivery.ViewModels"
-             Title="">
+             xmlns:viewModels="clr-namespace:Delivery.ViewModels">
     <ContentPage.BindingContext>
         <viewModels:StoreItemsViewModel/>
     </ContentPage.BindingContext>
     <Shell.TitleView>
-        <ContentView>
-            <Image Source="{Binding Store.Logo}" HorizontalOptions="End" VerticalOptions="Center" HeightRequest="30" ></Image>        
-        </ContentView>
-    </Shell.TitleView>
-    
+        <Grid>
+            <Label Text="{Binding Store.Name}" TextColor="{StaticResource PrimaryColor}" VerticalTextAlignment="Center"/>
+            <Image Source="{Binding Store.Logo}" HorizontalOptions="End"/>
+        </Grid>
+    </Shell.TitleView>   
+      
     <ContentPage.Content>
-        <ScrollView >
+        <ScrollView>
             <StackLayout>
-                <Image Source="{Binding Store.Logo}"/>
-                <Label Text="{Binding Store.Name}" TextColor="{StaticResource TextPrimaryCollor}"/>
-                <Label Text="{Binding Store.Description}"/>
-                <Label Text="{Binding Store.Address}"/>
-                <Label Text="{Binding Store.Phone}"/>
-                <Label Text=""/>
-
+                <Frame Margin="0,-20,0,-5">
+                    <Grid>                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="20"/>                        
+                    </Grid.RowDefinitions>                    
+                        <Label Text="{Binding Store.Description}" Grid.Row="0"  TextColor="{StaticResource TextPrimaryCollor}"/>
+                        <Label Text="{Binding Store.Address}" Grid.Row="1" TextColor="{StaticResource TextSecondCollor}"/>
+                       <Label Text="{Binding Store.Phone}" Grid.Row="2" TextColor="{StaticResource TextSecondCollor}"/>                    
+                    </Grid>
+                </Frame>
                 <CollectionView ItemsSource="{Binding ListStoreItems}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
