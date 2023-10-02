@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Delivery.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Delivery.Views
 		public ItemView ()
 		{
 			InitializeComponent ();
-		}
+        }
 
         protected override void OnAppearing()
         {

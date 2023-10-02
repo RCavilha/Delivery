@@ -2,10 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.ItemView"
-             xmlns:viewModel="clr-namespace:Delivery.ViewModels">
+             xmlns:viewModel="clr-namespace:Delivery.ViewModels"
+             xmlns:converter="clr-namespace:Delivery.Libraries.Converters">
     <ContentPage.BindingContext>
         <viewModel:ItemViewModel/>
     </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ItemsCountBoolConverter x:Key="ItemsCountBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <Frame HeightRequest="200">
@@ -21,7 +27,7 @@
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Text="-" Command="{Binding DecItemsQuantityCommand}" Grid.Column="0" TextColor="{StaticResource PrimaryColor}" BackgroundColor="White" BorderColor="{StaticResource PrimaryColor}"/>
+                <Button Text="-" IsEnabled="{Binding ItemsQuantity, Converter={StaticResource ItemsCountBoolConverter}}" Command="{Binding DecItemsQuantityCommand}" Grid.Column="0" TextColor="{StaticResource PrimaryColor}" BackgroundColor="White" BorderColor="{StaticResource PrimaryColor}"/>
                 <Button Text="{Binding ItemsQuantity}" Grid.Column="1" TextColor="{StaticResource PrimaryColor}" BackgroundColor="White" BorderColor="{StaticResource PrimaryColor}"/>
                 <Button Text="+" Grid.Column="2" Command="{Binding IncItemsQuantityCommand}" TextColor="{StaticResource PrimaryColor}" BackgroundColor="White" BorderColor="{StaticResource PrimaryColor}"/>
                 <Frame BackgroundColor="{StaticResource PrimaryColor}" CornerRadius="5" Grid.Column="3">

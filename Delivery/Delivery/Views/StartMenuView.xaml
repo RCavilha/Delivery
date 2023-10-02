@@ -14,7 +14,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <ContentView Padding="5">
-                            <Frame CornerRadius="10" BorderColor="{StaticResource BorderColor}" Padding="1" HasShadow="False">
+                            <Frame CornerRadius="0" BorderColor="{StaticResource BorderColor}" Padding="1" HasShadow="False">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={x:Reference StartMenu}, Path=BindingContext.StoreItemsCommand}" CommandParameter="{Binding .}"/>
                                 </Frame.GestureRecognizers>

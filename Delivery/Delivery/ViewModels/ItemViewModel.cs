@@ -33,7 +33,6 @@ namespace Delivery.ViewModels
             }
         }
 
-
         public StoreItemModel SelectedItem { get; set; }
         public string selectedItemSerialized
         {
@@ -42,6 +41,7 @@ namespace Delivery.ViewModels
                 SelectedItem = JsonConvert.DeserializeObject<StoreItemModel>(Uri.UnescapeDataString(value));
                 OnPropertyChanged(nameof(SelectedItem));
                 OnPropertyChanged(nameof(TotalPrice));
+                OnPropertyChanged(nameof(ItemsQuantity));
             }
         }
 
@@ -73,6 +73,7 @@ namespace Delivery.ViewModels
         {
             IncItemsQuantityCommand = new Command(IncItemsQuantity);
             DecItemsQuantityCommand = new Command(DecItemsQuantity);
+            ItemsQuantity = 1;
         }
     }
 }
