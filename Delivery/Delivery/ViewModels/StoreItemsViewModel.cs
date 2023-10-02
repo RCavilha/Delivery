@@ -23,32 +23,12 @@ namespace Delivery.ViewModels
             }
         }
 
-        private List<StoreItemModel> _listStoreItems;
-        public List<StoreItemModel> ListStoreItems
-        {
-            get
-            {
-
-                return _listStoreItems;
-            }
-            set
-            {
-                SetProperty(ref _listStoreItems, value);
-            }
-        }
-
         public ICommand SelectedItemCommand { get; set; }
 
         public StoreItemsViewModel()
         {
             SelectedItemCommand = new Command<StoreItemModel>(SelectedItemGoTo);
-            GetListItems();
-        }
-
-        public async void GetListItems()
-        {
-            var service = new StoreItemsService();
-            ListStoreItems = await service.GetListStoreItems();
+        
         }
 
         public void SelectedItemGoTo(StoreItemModel selectedItem)

@@ -37,6 +37,13 @@ namespace Delivery.ViewModels
         {
             var service = new StoreService();
             ListOfStores = await service.GetStoreList();
+
+            var items = new StoreItemsService();
+
+            foreach (var store in ListOfStores)
+            {
+                store.StoreItems = items.GetListStoreItems();
+            }
         }
         public void StoreItemsGoTo(StoreModel store)
         {

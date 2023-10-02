@@ -10,7 +10,7 @@
 
             <Color x:Key="TextPrimaryCollor">#000000</Color>
             <Color x:Key="TextSecondCollor">#A0A0A0</Color>
-            <Color x:Key="BorderColor">#707070</Color>
+            <Color x:Key="BorderColor">#FFA861</Color>
 
             <Color x:Key="PrimaryColor">#FFA861</Color>
 

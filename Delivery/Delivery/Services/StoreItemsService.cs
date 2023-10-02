@@ -6,7 +6,7 @@ namespace Delivery.Services
 {
     public class StoreItemsService
     {
-        public async Task<List<StoreItemModel>> GetListStoreItems()
+        public List<StoreItemModel> GetListStoreItems()
         {
             var listStoreItem = new List<StoreItemModel>()
            {
