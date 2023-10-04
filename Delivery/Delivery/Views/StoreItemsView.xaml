@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.StoreItemsView"
              xmlns:viewModels="clr-namespace:Delivery.ViewModels"
+             xmlns:behaviors="clr-namespace:Delivery.Behaviors"
              x:Name="StoreItemsMenu">
     <ContentPage.BindingContext>
         <viewModels:StoreItemsViewModel/>
@@ -17,9 +18,11 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
             <ScrollView Grid.Row="0">
+                <ScrollView.Behaviors>
+                    <behaviors:HideBagButtonOnScrollBehavior/>
+                </ScrollView.Behaviors>
                 <StackLayout>
                     <Frame Margin="0,-20,0,-5" HasShadow="True" BorderColor="LightGray" Padding="20">
                         <Grid>
@@ -53,20 +56,18 @@
                                 </ContentView>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
+                        <CollectionView.Footer>
+                            <Frame x:Name="bagFrame" Grid.Row="1" HasShadow="True" BorderColor="LightGray" Padding="20">
+                                <Grid ColumnDefinitions="2" BackgroundColor="{StaticResource White}">
+                                    <Label Text="R$ 23,00" Grid.Column="1" TextColor="{StaticResource TextPrimaryCollor}" VerticalOptions="Center"/>
+                                    <Button Text="Carrinho" Grid.Column="2" CornerRadius="30" BackgroundColor="{StaticResource PrimaryColor}" TextColor="{StaticResource White}" VerticalOptions="Center"/>
+                                </Grid>
+                            </Frame>
+                        </CollectionView.Footer>
                     </CollectionView>
                 </StackLayout>
             </ScrollView>
-            <Button Grid.Row="0" Text="Carrin"  
-                FontAttributes="Bold" BackgroundColor="{StaticResource PrimaryColor}" CornerRadius="50"
-                TextColor="White" HorizontalOptions="End" WidthRequest="60" HeightRequest="60"
-                Margin="0,0,20,22" VerticalOptions="End" x:Name="btnIncluirImagem"        
-                 IsVisible="True"/>
-            <Frame Grid.Row="1" HasShadow="True" BorderColor="LightGray" Padding="20">
-                <Grid ColumnDefinitions="2" BackgroundColor="{StaticResource White}">
-                    <Label Text="R$ 23,00" Grid.Column="1" TextColor="{StaticResource TextPrimaryCollor}" VerticalOptions="Center"/>
-                    <Button Text="Carrinho" Grid.Column="2" CornerRadius="30" BackgroundColor="{StaticResource PrimaryColor}" TextColor="{StaticResource White}" VerticalOptions="Center"/>
-                </Grid>
-            </Frame>
+            <Button x:Name="bagButton" Grid.Row="0" Text="Carrin" FontAttributes="Bold" BackgroundColor="{StaticResource PrimaryColor}" CornerRadius="50" TextColor="White" HorizontalOptions="End" WidthRequest="60" HeightRequest="60" Margin="0,0,20,22" VerticalOptions="End"/>
         </Grid>
     </ContentPage.Content>
 
