@@ -30,7 +30,7 @@ namespace Delivery.ViewModels
 
         public async void GetCartList()
         {
-            CartList = await shoppingCartService.GetCartItem(); 
+            CartList = await shoppingCartService.GetCartItem();
         }
     }
 }

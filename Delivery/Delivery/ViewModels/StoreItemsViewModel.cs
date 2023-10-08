@@ -1,9 +1,7 @@
 ﻿using Delivery.Libraries.Helpers.MVVM;
 using Delivery.Models;
-using Delivery.Services;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -11,10 +9,10 @@ namespace Delivery.ViewModels
 {
     [QueryProperty("storeSerialized", "storeSerialized")]
     public class StoreItemsViewModel : BaseViewModel
-    {        
+    {
         public StoreModel Store { get; set; }
-        
-        public string storeSerialized 
+
+        public string storeSerialized
         {
             set
             {

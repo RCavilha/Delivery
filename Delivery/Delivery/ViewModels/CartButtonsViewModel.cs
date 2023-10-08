@@ -34,8 +34,8 @@ namespace Delivery.ViewModels
 
             UpdateTotalAsync(); // Chame o método para atualizar o total quando o ViewModel for criado
         }
-        
-        ~CartButtonsViewModel() 
+
+        ~CartButtonsViewModel()
         {
             MessagingCenter.Unsubscribe<CartButtonsViewModel>(this, "CartUpdateFromAddItem");
             MessagingCenter.Unsubscribe<StoreItemsView>(this, "CartUpdateFromStoreItems");

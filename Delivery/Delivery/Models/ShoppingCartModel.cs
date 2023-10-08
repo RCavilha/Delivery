@@ -6,7 +6,7 @@ namespace Delivery.Models
     {
         [PrimaryKey]
         public int IdItem { get; set; }
-        public int IdStore { get; set; }      
+        public int IdStore { get; set; }
         public string Image { get; set; }
         public string Name { get; set; }
         public double UnitPrice { get; set; }

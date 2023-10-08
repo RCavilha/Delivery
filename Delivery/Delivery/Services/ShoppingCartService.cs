@@ -1,9 +1,7 @@
 ﻿using Delivery.Models;
 using Delivery.Services;
 using SQLite;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -40,7 +38,7 @@ namespace Delivery.Services
                 Name = name,
                 UnitPrice = price,
                 Quantity = quantity,
-                TotalPrice = price*quantity,
+                TotalPrice = price * quantity,
             };
 
             var exist = await GetCartItem(idItem);
@@ -52,7 +50,7 @@ namespace Delivery.Services
             else
             {
                 await db.UpdateAsync(item);
-            }                           
+            }
         }
 
         public async Task RemoveCartItem(ShoppingCartModel item)
@@ -103,7 +101,7 @@ namespace Delivery.Services
             else
             {
                 return false;
-            }            
+            }
         }
     }
 }

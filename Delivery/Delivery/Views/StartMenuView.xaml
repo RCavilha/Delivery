@@ -8,22 +8,31 @@
     <ContentPage.BindingContext>
         <viewModels:StoreViewModel/>
     </ContentPage.BindingContext>
-
     <ContentPage.Content>
         <StackLayout>
             <CollectionView ItemsSource="{Binding ListOfStores}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <ContentView Padding="5">
-                            <Frame CornerRadius="0" BorderColor="{StaticResource BorderColor}" Padding="1" HasShadow="False">
+                            <Frame CornerRadius="0" 
+                                   BorderColor="{StaticResource BorderColor}" 
+                                   Padding="1" 
+                                   HasShadow="False">
                                 <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference StartMenu}, Path=BindingContext.StoreItemsCommand}" CommandParameter="{Binding .}"/>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference StartMenu}, Path=BindingContext.StoreItemsCommand}" 
+                                                          CommandParameter="{Binding .}"/>
                                 </Frame.GestureRecognizers>
                                 <Grid ColumnDefinitions="1*, 1,  2*">
-                                    <Image HeightRequest="80" Source="{Binding Logo}" Margin="10"/>
-                                    <StackLayout Grid.Column="2" Margin="10">
-                                        <Label Text="{Binding Name}" TextColor="{StaticResource TextPrimaryCollor}"/>
-                                        <Label Text="{Binding Description}" TextColor="{StaticResource TextSecondCollor}" MaxLines="3"/>
+                                    <Image HeightRequest="80" 
+                                           Source="{Binding Logo}" 
+                                           Margin="10"/>
+                                    <StackLayout Grid.Column="2" 
+                                                 Margin="10">
+                                        <Label Text="{Binding Name}" 
+                                               TextColor="{StaticResource TextPrimaryCollor}"/>
+                                        <Label Text="{Binding Description}" 
+                                               TextColor="{StaticResource TextSecondCollor}" 
+                                               MaxLines="3"/>
                                     </StackLayout>
                                 </Grid>
                             </Frame>
