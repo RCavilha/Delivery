@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.StoreItemsView"
              xmlns:viewModels="clr-namespace:Delivery.ViewModels"
-             xmlns:behaviors="clr-namespace:Delivery.Behaviors"
+             xmlns:views="clr-namespace:Delivery.Views"
+             xmlns:behaviors="clr-namespace:Delivery.Behaviors"  
              
              x:Name="StoreItemsMenu">
     <ContentPage.BindingContext>
@@ -76,25 +77,7 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                         <CollectionView.Footer>
-                            <Frame x:Name="bagFrame" 
-                                   Grid.Row="1" 
-                                   HasShadow="True" 
-                                   BorderColor="LightGray" 
-                                   Padding="20">
-                                <Grid ColumnDefinitions="2" 
-                                      BackgroundColor="{StaticResource White}">
-                                    <Label Text="R$ 23,00"
-                                           Grid.Column="1" 
-                                           TextColor="{StaticResource TextPrimaryCollor}" 
-                                           VerticalOptions="Center"/>
-                                    <Button Text="Carrinho" 
-                                            Grid.Column="2" 
-                                            CornerRadius="30" 
-                                            BackgroundColor="{StaticResource PrimaryColor}" 
-                                            TextColor="{StaticResource White}" 
-                                            VerticalOptions="Center"/>
-                                </Grid>
-                            </Frame>
+                            <views:CartButtonsView/>
                         </CollectionView.Footer>
                     </CollectionView>
                 </StackLayout>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Delivery.Views.CartButtonsView"
+             xmlns:viewModel="clr-namespace:Delivery.ViewModels"             
+             HeightRequest="65">
+    <ContentView.BindingContext>
+        <viewModel:CartButtonsViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <Frame HasShadow="True" BorderColor="LightGray" Padding="20">
+            <Grid BackgroundColor="White">
+                <Label Text="{Binding Total}" 
+                       TextColor="Black" 
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start"/>                
+                <Button Text="Carrinho" 
+                        CornerRadius="30" 
+                        BackgroundColor="Orange" 
+                        TextColor="White" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="End"/>
+            </Grid>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

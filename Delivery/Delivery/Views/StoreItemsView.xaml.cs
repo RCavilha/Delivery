@@ -13,12 +13,19 @@ namespace Delivery.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            Shell.SetTabBarIsVisible(this, false);
+            Shell.SetTabBarIsVisible(this, false);            
         }
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
             Shell.SetTabBarIsVisible(this, true);
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            //return true to prevent back, return false to just do something before going back. 
+            MessagingCenter.Send(this, "CartUpdateFromStoreItems");
+            return true;
         }
     }
 }
