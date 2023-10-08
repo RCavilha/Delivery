@@ -1,13 +1,17 @@
 ﻿using Delivery.Libraries.Helpers.MVVM;
 using Delivery.Models;
+using Delivery.Services;
+using MvvmHelpers.Commands;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Command = MvvmHelpers.Commands.Command;
 
 namespace Delivery.ViewModels
 {
+    [QueryProperty("StoreCode", "StoreCode")]
     [QueryProperty("selectedItemSerialized", "selectedItemSerialized")]
     public class ItemViewModel : BaseViewModel
     {
@@ -44,20 +48,39 @@ namespace Delivery.ViewModels
                 OnPropertyChanged(nameof(ItemsQuantity));
             }
         }
+        private int _storeCode { get; set; }
+        public int StoreCode
+        {
+            get { return _storeCode; }
+            set
+            {
+                _storeCode = value;
+            }
+        }
 
         public double TotalPrice
         {
             get
             {
-                if(SelectedItem == null)
+                if (SelectedItem == null)
                     return 0;
 
-                return  SelectedItem.Price * _itemsQuantity;
-            }            
+                return SelectedItem.Price * _itemsQuantity;
+            }
         }
 
-    public ICommand IncItemsQuantityCommand { get; set; }
+        public AsyncCommand AddItemCommand { get; set; }
+        public ICommand IncItemsQuantityCommand { get; set; }
         public ICommand DecItemsQuantityCommand { get; set; }
+
+        IShoppingCartService shoppingCartService;
+
+        public async Task AddItem()
+        {
+            await shoppingCartService.AddItemToCart(_storeCode, SelectedItem.Id, SelectedItem.Image, SelectedItem.Name, SelectedItem.Price, ItemsQuantity);
+
+            await Shell.Current.Navigation.PopAsync();
+        }
 
         public void IncItemsQuantity()
         {
@@ -71,9 +94,10 @@ namespace Delivery.ViewModels
 
         public ItemViewModel()
         {
+            AddItemCommand = new AsyncCommand(AddItem);
             IncItemsQuantityCommand = new Command(IncItemsQuantity);
             DecItemsQuantityCommand = new Command(DecItemsQuantity);
-            ItemsQuantity = 1;
+            shoppingCartService = DependencyService.Get<IShoppingCartService>();
         }
     }
 }

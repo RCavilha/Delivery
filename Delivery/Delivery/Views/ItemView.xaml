@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.ItemView"
              xmlns:viewModel="clr-namespace:Delivery.ViewModels"
-             xmlns:converter="clr-namespace:Delivery.Libraries.Converters">
+             xmlns:converter="clr-namespace:Delivery.Libraries.Converters"
+             x:Name="ItemMenu">
     <ContentPage.BindingContext>
         <viewModel:ItemViewModel/>
     </ContentPage.BindingContext>
@@ -19,7 +20,7 @@
             </Frame>
             <Label Text="{Binding SelectedItem.Name}" TextColor="{StaticResource TextPrimaryCollor}" Padding="2"/>
             <Label Text="{Binding SelectedItem.Description}" TextColor="{StaticResource TextSecondCollor}" MaxLines="20" Padding="10"/>
-            <Label Text="{Binding SelectedItem.PriceFormat}" TextColor="{StaticResource TextPrimaryCollor}" MaxLines="3" Padding="2"/>
+            <Label Text="{Binding SelectedItem.Price, StringFormat='R$ {0:F2}'}" TextColor="{StaticResource TextPrimaryCollor}" MaxLines="3" Padding="2"/>
             <Grid Padding="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
@@ -31,6 +32,9 @@
                 <Button Text="{Binding ItemsQuantity}" Grid.Column="1" TextColor="{StaticResource PrimaryColor}" BackgroundColor="White" BorderColor="{StaticResource PrimaryColor}"/>
                 <Button Text="+" Grid.Column="2" Command="{Binding IncItemsQuantityCommand}" TextColor="{StaticResource PrimaryColor}" BackgroundColor="White" BorderColor="{StaticResource PrimaryColor}"/>
                 <Frame BackgroundColor="{StaticResource PrimaryColor}" CornerRadius="5" Grid.Column="3">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={x:Reference ItemMenu}, Path=BindingContext.AddItemCommand}" CommandParameter="{Binding .}"/>
+                    </Frame.GestureRecognizers>
                     <StackLayout VerticalOptions="Center">
                         <Grid>
                             <Label Text="Adicionar" HorizontalOptions="Start"/>

@@ -4,14 +4,18 @@
              x:Class="Delivery.Views.StoreItemsView"
              xmlns:viewModels="clr-namespace:Delivery.ViewModels"
              xmlns:behaviors="clr-namespace:Delivery.Behaviors"
+             
              x:Name="StoreItemsMenu">
     <ContentPage.BindingContext>
         <viewModels:StoreItemsViewModel/>
     </ContentPage.BindingContext>
     <Shell.TitleView>
         <Grid>
-            <Label Text="{Binding Store.Name}" TextColor="{StaticResource PrimaryColor}" VerticalTextAlignment="Center"/>
-            <Image Source="{Binding Store.Logo}" HorizontalOptions="End"/>
+            <Label Text="{Binding Store.Name}" 
+                   TextColor="{StaticResource PrimaryColor}" 
+                   VerticalTextAlignment="Center"/>
+            <Image Source="{Binding Store.Logo}" 
+                   HorizontalOptions="End"/>
         </Grid>
     </Shell.TitleView>
     <ContentPage.Content>
@@ -24,31 +28,46 @@
                     <behaviors:HideBagButtonOnScrollBehavior/>
                 </ScrollView.Behaviors>
                 <StackLayout>
-                    <Frame Margin="0,-20,0,-5" HasShadow="True" BorderColor="LightGray" Padding="20">
+                    <Frame Margin="0,-20,0,-5" 
+                           HasShadow="True" 
+                           BorderColor="LightGray" 
+                           Padding="20">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="20"/>
                             </Grid.RowDefinitions>
-                            <Label Text="{Binding Store.Description}" Grid.Row="0"  TextColor="{StaticResource TextPrimaryCollor}"/>
-                            <Label Text="{Binding Store.Address}" Grid.Row="1" TextColor="{StaticResource TextSecondCollor}"/>
-                            <Label Text="{Binding Store.Phone}" Grid.Row="2" TextColor="{StaticResource TextSecondCollor}"/>
+                            <Label Text="{Binding Store.Description}" 
+                                   Grid.Row="0"  
+                                   TextColor="{StaticResource TextPrimaryCollor}"/>
+                            <Label Text="{Binding Store.Address}" 
+                                   Grid.Row="1" 
+                                   TextColor="{StaticResource TextSecondCollor}"/>
+                            <Label Text="{Binding Store.Phone}" 
+                                   Grid.Row="2" 
+                                   TextColor="{StaticResource TextSecondCollor}"/>
                         </Grid>
                     </Frame>
                     <CollectionView ItemsSource="{Binding Store.StoreItems}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <ContentView>
-                                    <Frame CornerRadius="1" Padding="1" HasShadow="False">
+                                    <Frame CornerRadius="1" 
+                                           Padding="1" 
+                                           HasShadow="False">
                                         <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Source={x:Reference StoreItemsMenu}, Path=BindingContext.SelectedItemCommand}" CommandParameter="{Binding .}"/>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference StoreItemsMenu}, Path=BindingContext.SelectedItemCommand}" 
+                                                                  CommandParameter="{Binding .}"/>
                                         </Frame.GestureRecognizers>
                                         <Grid ColumnDefinitions="3*, 1*">
                                             <StackLayout Margin="10">
-                                                <Label Text="{Binding Name}" TextColor="{StaticResource TextPrimaryCollor}"/>
-                                                <Label Text="{Binding Description}" TextColor="{StaticResource TextSecondCollor}" MaxLines="3"/>
-                                                <Label Text="{Binding PriceFormat}" TextColor="{StaticResource TextPrimaryCollor}" MaxLines="3"/>
+                                                <Label Text="{Binding Name}" 
+                                                       TextColor="{StaticResource TextPrimaryCollor}"/>
+                                                <Label Text="{Binding Description}" 
+                                                       TextColor="{StaticResource TextSecondCollor}" MaxLines="3"/>
+                                                <Label Text="{Binding Price, StringFormat='R$ {0:F2}'}" 
+                                                       TextColor="{StaticResource TextPrimaryCollor}" MaxLines="3"/>
                                             </StackLayout>
                                             <Image Grid.Column="1" HeightRequest="80" Source="{Binding Image}" Margin="10"/>
                                         </Grid>
@@ -57,19 +76,42 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                         <CollectionView.Footer>
-                            <Frame x:Name="bagFrame" Grid.Row="1" HasShadow="True" BorderColor="LightGray" Padding="20">
-                                <Grid ColumnDefinitions="2" BackgroundColor="{StaticResource White}">
-                                    <Label Text="R$ 23,00" Grid.Column="1" TextColor="{StaticResource TextPrimaryCollor}" VerticalOptions="Center"/>
-                                    <Button Text="Carrinho" Grid.Column="2" CornerRadius="30" BackgroundColor="{StaticResource PrimaryColor}" TextColor="{StaticResource White}" VerticalOptions="Center"/>
+                            <Frame x:Name="bagFrame" 
+                                   Grid.Row="1" 
+                                   HasShadow="True" 
+                                   BorderColor="LightGray" 
+                                   Padding="20">
+                                <Grid ColumnDefinitions="2" 
+                                      BackgroundColor="{StaticResource White}">
+                                    <Label Text="R$ 23,00"
+                                           Grid.Column="1" 
+                                           TextColor="{StaticResource TextPrimaryCollor}" 
+                                           VerticalOptions="Center"/>
+                                    <Button Text="Carrinho" 
+                                            Grid.Column="2" 
+                                            CornerRadius="30" 
+                                            BackgroundColor="{StaticResource PrimaryColor}" 
+                                            TextColor="{StaticResource White}" 
+                                            VerticalOptions="Center"/>
                                 </Grid>
                             </Frame>
                         </CollectionView.Footer>
                     </CollectionView>
                 </StackLayout>
             </ScrollView>
-            <Button x:Name="bagButton" Grid.Row="0" Text="Carrin" FontAttributes="Bold" BackgroundColor="{StaticResource PrimaryColor}" CornerRadius="50" TextColor="White" HorizontalOptions="End" WidthRequest="60" HeightRequest="60" Margin="0,0,20,22" VerticalOptions="End"/>
+            <Button x:Name="bagButton" 
+                    Grid.Row="0" 
+                    Text="Carrin" 
+                    FontAttributes="Bold" 
+                    Command="{Binding CartCommand}"
+                    BackgroundColor="{StaticResource PrimaryColor}" 
+                    CornerRadius="50" 
+                    TextColor="White" 
+                    HorizontalOptions="End" 
+                    WidthRequest="60" 
+                    HeightRequest="60" 
+                    Margin="0,0,20,22" 
+                    VerticalOptions="End"/>
         </Grid>
     </ContentPage.Content>
-
-
 </ContentPage>

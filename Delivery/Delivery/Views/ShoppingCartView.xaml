@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Delivery.Views.ShoppingCartView"
+             xmlns:viewModels="clr-namespace:Delivery.ViewModels"
+             x:Name="Cart">
+    <ContentPage.BindingContext>
+        <viewModels:ShoppingCartViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <CollectionView ItemsSource="{Binding CartList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView Padding="5">
+                            <Frame CornerRadius="0" BorderColor="{StaticResource BorderColor}" Padding="1" HasShadow="False">
+                                <Grid ColumnDefinitions="1*, 1,  2*">
+                                    <Image HeightRequest="80" Source="{Binding Image}" Margin="10"/>
+                                    <StackLayout Grid.Column="3" Margin="10">
+                                        <Label Text="{Binding IdItem}" TextColor="{StaticResource TextPrimaryCollor}"/>
+                                        <Label Text="{Binding IdStore}" TextColor="{StaticResource TextPrimaryCollor}"/>
+                                        <Label Text="{Binding Name}" TextColor="{StaticResource TextPrimaryCollor}" MaxLines="3"/>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

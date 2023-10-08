@@ -14,7 +14,7 @@
 
     <FlyoutItem Title="Principais" FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent Title="Lojas" Icon="MenuIconStore" ContentTemplate="{DataTemplate views:StartMenuView}"/>
-        <ShellContent Title="Carrinho" Icon="MenuIconRestaurant" ContentTemplate="{DataTemplate views:StartMenuView}"/>
+        <ShellContent Title="Carrinho" Icon="MenuIconRestaurant" ContentTemplate="{DataTemplate views:ShoppingCartView}"/>
         <ShellContent Title="Pedidos" Icon="MenuIconCinema" ContentTemplate="{DataTemplate views:StartMenuView}"/>
         <ShellContent Title="Perfil" Icon="MenuIconTicket" ContentTemplate="{DataTemplate views:StoreItemsView}"/>
     </FlyoutItem>

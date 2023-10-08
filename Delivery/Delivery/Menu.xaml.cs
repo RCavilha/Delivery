@@ -18,6 +18,7 @@ namespace Delivery
 
             Routing.RegisterRoute("store/items", typeof(Views.StoreItemsView));
             Routing.RegisterRoute("store/items/selecteditem", typeof(Views.ItemView));
+            Routing.RegisterRoute("store/cart", typeof(Views.ShoppingCartView));
         }
     }
 }
