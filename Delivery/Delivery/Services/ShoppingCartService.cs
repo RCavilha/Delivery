@@ -82,6 +82,12 @@ namespace Delivery.Services
             return await db.Table<ShoppingCartModel>().CountAsync();
         }
 
+        public async Task<double> GetTotalPrice()
+        {
+            await Init();
+            double total = await db.ExecuteScalarAsync<double>("SELECT SUM(TotalPrice) FROM ShoppingCartModel");
+            return total;
+        }
 
         public async Task<bool> StoreChanged(int idStoreSelected)
         {

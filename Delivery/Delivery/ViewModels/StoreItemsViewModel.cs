@@ -1,7 +1,10 @@
 ﻿using Delivery.Libraries.Helpers.MVVM;
 using Delivery.Models;
+using Delivery.Services;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -10,14 +13,49 @@ namespace Delivery.ViewModels
     [QueryProperty("storeSerialized", "storeSerialized")]
     public class StoreItemsViewModel : BaseViewModel
     {
-        public StoreModel Store { get; set; }
+        public int idStore { get; set; }
 
-        public string storeSerialized
+        private bool _pageIsLoaded = false;
+        public bool PageIsLoaded
+        {
+            get
+            {
+                return _pageIsLoaded;
+            }
+            set
+            {
+                _pageIsLoaded = value;
+                OnPropertyChanged(nameof(PageIsLoaded));
+            }
+        }
+
+        private StoreModel _storeModel;
+        public StoreModel Store
+        {
+            get
+            {
+                return _storeModel;
+            }
+            set
+            {
+                _storeModel = value;
+
+                var items = new StoreItemsService();
+                Store.StoreItems = items.GetListStoreItems();
+                OnPropertyChanged(nameof(Store));
+                PageIsLoaded = true;
+            }
+        }
+
+        public int storeSerialized
         {
             set
             {
-                Store = JsonConvert.DeserializeObject<StoreModel>(Uri.UnescapeDataString(value));
-                OnPropertyChanged(nameof(Store));
+                if (idStore != value)
+                {
+                    idStore = value;
+                    GetStoreDataBase();
+                }
             }
         }
 
@@ -26,8 +64,16 @@ namespace Delivery.ViewModels
 
         public StoreItemsViewModel()
         {
+            PageIsLoaded = false;
             SelectedItemCommand = new Command<StoreItemModel>(SelectedItemGoTo);
             CartCommand = new Command(OpenCart);
+        }
+
+        public async void GetStoreDataBase()
+        {
+            await Task.Delay(500);
+            var service = new StoreService();
+            Store = await service.GetStore(idStore);
         }
 
         public void SelectedItemGoTo(StoreItemModel selectedItem)

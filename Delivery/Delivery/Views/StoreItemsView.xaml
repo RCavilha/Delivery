@@ -1,15 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.StoreItemsView"
              xmlns:viewModels="clr-namespace:Delivery.ViewModels"
              xmlns:views="clr-namespace:Delivery.Views"
-             xmlns:behaviors="clr-namespace:Delivery.Behaviors"  
-             
+             xmlns:behaviors="clr-namespace:Delivery.Behaviors"         
+             xmlns:converter="clr-namespace:Delivery.Libraries.Converters"
+             Shell.TabBarIsVisible="False"
              x:Name="StoreItemsMenu">
     <ContentPage.BindingContext>
         <viewModels:StoreItemsViewModel/>
     </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BoolNegationConverter x:Key="BoolNegationConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>    
     <Shell.TitleView>
         <Grid>
             <Label Text="{Binding Store.Name}" 
@@ -29,10 +36,15 @@
                     <behaviors:HideBagButtonOnScrollBehavior/>
                 </ScrollView.Behaviors>
                 <StackLayout>
+                    <ActivityIndicator IsRunning="{Binding PageIsLoaded, Converter={StaticResource BoolNegationConverter}}"
+                       IsVisible="{Binding PageIsLoaded,Converter={StaticResource BoolNegationConverter}}"
+                                       Color="Orange">
+                    </ActivityIndicator>                  
                     <Frame Margin="0,-20,0,-5" 
                            HasShadow="True" 
                            BorderColor="LightGray" 
-                           Padding="20">
+                           Padding="20"
+                           IsVisible="{Binding PageIsLoaded}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -56,7 +68,8 @@
                                 <ContentView>
                                     <Frame CornerRadius="1" 
                                            Padding="1" 
-                                           HasShadow="False">
+                                           HasShadow="False"
+                                           IsVisible="{Binding PageIsLoaded}">
                                         <Frame.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding Source={x:Reference StoreItemsMenu}, Path=BindingContext.SelectedItemCommand}" 
                                                                   CommandParameter="{Binding .}"/>

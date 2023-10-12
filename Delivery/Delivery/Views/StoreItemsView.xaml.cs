@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Delivery.ViewModels;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Delivery.Views
@@ -10,22 +11,12 @@ namespace Delivery.Views
         {
             InitializeComponent();
         }
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            Shell.SetTabBarIsVisible(this, false);            
-        }
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            Shell.SetTabBarIsVisible(this, true);
-        }
+ 
 
         protected override bool OnBackButtonPressed()
         {
-            //return true to prevent back, return false to just do something before going back. 
             MessagingCenter.Send(this, "CartUpdateFromStoreItems");
-            return true;
+            return base.OnBackButtonPressed();
         }
     }
 }

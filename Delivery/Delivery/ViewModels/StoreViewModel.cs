@@ -1,10 +1,11 @@
 ﻿using Delivery.Libraries.Helpers.MVVM;
 using Delivery.Models;
 using Delivery.Services;
+using MvvmHelpers.Commands;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Windows.Input;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Delivery.ViewModels
@@ -25,11 +26,11 @@ namespace Delivery.ViewModels
             }
         }
 
-        public ICommand StoreItemsCommand { get; set; }
+        public AsyncCommand<StoreModel> StoreItemsCommand { get; set; }
 
         public StoreViewModel()
         {
-            StoreItemsCommand = new Command<StoreModel>(StoreItemsGoTo);
+            StoreItemsCommand = new AsyncCommand<StoreModel>(StoreItemsGoTo);
             GetListStore();
         }
 
@@ -45,10 +46,9 @@ namespace Delivery.ViewModels
                 store.StoreItems = items.GetListStoreItems();
             }
         }
-        public void StoreItemsGoTo(StoreModel store)
+        public async Task StoreItemsGoTo(StoreModel store)
         {
-            string storeSerialized = JsonConvert.SerializeObject(store);
-            Shell.Current.GoToAsync($"store/items?storeSerialized={Uri.EscapeDataString(storeSerialized)}");
+            await Shell.Current.GoToAsync($"store/items?storeSerialized={store.Id}");
         }
     }
 }

@@ -2,7 +2,8 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.CartButtonsView"
-             xmlns:viewModel="clr-namespace:Delivery.ViewModels"             
+             xmlns:viewModel="clr-namespace:Delivery.ViewModels"   
+             Shell.TabBarIsVisible="False"
              HeightRequest="65">
     <ContentView.BindingContext>
         <viewModel:CartButtonsViewModel/>

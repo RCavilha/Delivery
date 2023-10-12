@@ -2,12 +2,15 @@
 using Delivery.Models;
 using Delivery.Services;
 using System.Collections.Generic;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Delivery.ViewModels
 {
     public class ShoppingCartViewModel : BaseViewModel
     {
+        public StoreModel Store { get; set; }
+
         private List<ShoppingCartModel> _cartList;
         public List<ShoppingCartModel> CartList
         {
@@ -30,7 +33,7 @@ namespace Delivery.ViewModels
 
         public async void GetCartList()
         {
-            CartList = await shoppingCartService.GetCartItem();
+            CartList = await shoppingCartService.GetCartItem();                        
         }
     }
 }

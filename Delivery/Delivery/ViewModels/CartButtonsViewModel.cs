@@ -11,9 +11,15 @@ namespace Delivery.ViewModels
     {
         private IShoppingCartService shoppingCartService;
 
-        private int _total;
+        private int _quantity = 0;
+        public int Quantity
+        {
+            get { return _quantity; }
+            private set { SetProperty(ref _quantity, value); }
+        }
 
-        public int Total
+        private double _total = 0;
+        public double Total
         {
             get { return _total; }
             private set { SetProperty(ref _total, value); }
@@ -43,12 +49,10 @@ namespace Delivery.ViewModels
 
         private async Task UpdateTotalAsync()
         {
-            Total = await GetTotal();
+            Total = await shoppingCartService.GetTotalPrice();
+            Quantity = await shoppingCartService.GetItemCount();
         }
 
-        private async Task<int> GetTotal()
-        {
-            return await shoppingCartService.GetItemCount();
-        }
+   
     }
 }

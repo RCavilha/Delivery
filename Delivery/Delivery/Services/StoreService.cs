@@ -28,19 +28,24 @@ namespace Delivery.Services
 
         public async Task<List<StoreModel>> GetStoreList()
         {
-            var list = (await _dbStore
-                    .Child(_tableName)
-                    .OnceAsync<StoreModel>()).Select(store => new StoreModel
-                    {
-                        Id = store.Object.Id,
-                        Logo = store.Object.Logo,
-                        Name = store.Object.Name,
-                        Description = store.Object.Description,
-                        Address = store.Object.Address,
-                        Phone = store.Object.Phone,
-                    }).ToList();
+            var firebaseObjects = await _dbStore
+                .Child(_tableName)
+                .OnceAsync<StoreModel>();
+            var storeModels = firebaseObjects
+                .Select(firebaseObject => firebaseObject.Object)
+                .ToList();
+            return storeModels;
+        }
 
-            return list;
+        public async Task<StoreModel> GetStore(int idStore)
+        {
+            var storeSelect = (await _dbStore
+                    .Child(_tableName)
+                    .OnceAsync<StoreModel>())
+                    .Where(store => store.Object.Id == idStore)
+                    .FirstOrDefault();
+
+            return storeSelect.Object;
         }
     }
 }

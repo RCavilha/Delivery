@@ -4,6 +4,7 @@
              x:Class="Delivery.Views.ItemView"
              xmlns:viewModel="clr-namespace:Delivery.ViewModels"
              xmlns:converter="clr-namespace:Delivery.Libraries.Converters"
+             Shell.TabBarIsVisible="False"
              x:Name="ItemMenu">
     <ContentPage.BindingContext>
         <viewModel:ItemViewModel/>

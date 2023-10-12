@@ -3,10 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.ShoppingCartView"
              xmlns:viewModels="clr-namespace:Delivery.ViewModels"
+             Shell.TabBarIsVisible="False"
              x:Name="Cart">
     <ContentPage.BindingContext>
         <viewModels:ShoppingCartViewModel/>
     </ContentPage.BindingContext>
+    <Shell.TitleView>
+        <Grid>
+            <Label Text="{Binding Store.Name}" 
+                   TextColor="{StaticResource PrimaryColor}" 
+                   VerticalTextAlignment="Center"/>
+            <Image Source="{Binding Store.Logo}" 
+                   HorizontalOptions="End"/>
+        </Grid>
+    </Shell.TitleView>    
     <ContentPage.Content>
         <StackLayout>
             <CollectionView ItemsSource="{Binding CartList}">
@@ -17,26 +27,86 @@
                                    BorderColor="{StaticResource BorderColor}" 
                                    Padding="1" 
                                    HasShadow="False">
-                                <Grid ColumnDefinitions="1*, 1,  2*">
+                                <Grid ColumnDefinitions="100, 1,  2*">
                                     <Image HeightRequest="80" 
                                            Source="{Binding Image}" 
                                            Margin="10"/>
-                                    <StackLayout Grid.Column="3" 
-                                                 Margin="10">
-                                        <Label Text="{Binding IdItem}" 
-                                               TextColor="{StaticResource TextPrimaryCollor}"/>
-                                        <Label Text="{Binding IdStore}" 
-                                               TextColor="{StaticResource TextPrimaryCollor}"/>
-                                        <Label Text="{Binding Name}" 
-                                               TextColor="{StaticResource TextPrimaryCollor}" 
-                                               MaxLines="3"/>
+                                    <StackLayout Grid.Column="2" 
+                                                 Margin="10"
+                                                 VerticalOptions="Start">
+                                        <Label Text="Pizza de frango con catupiry muito boa com broda de cheddar e parelelepipedo" 
+                                               TextColor="{StaticResource TextPrimaryCollor}"
+                                               MaxLines="2"/>
                                     </StackLayout>
+                                    <StackLayout Grid.Column="2" 
+                                                 Margin="10"
+                                                 VerticalOptions="End">
+                                        <Label Text="{Binding TotalPrice, StringFormat='R$ {0:F2}'}" 
+                                               TextColor="{StaticResource TextPrimaryCollor}"/>
+                                    </StackLayout>
+                                    <Frame Grid.Column="2"
+                                           VerticalOptions="End"
+                                           HorizontalOptions="End"                                           
+                                           Padding="1"
+                                           Margin="10"
+                                           HeightRequest="35">
+                                        <Grid Padding="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="35"/>
+                                                <ColumnDefinition Width="30"/>
+                                                <ColumnDefinition Width="35"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button Text="-" 
+                                                    Grid.Column="0" TextColor="{StaticResource PrimaryColor}" 
+                                                    BackgroundColor="White" 
+                                                    BorderColor="{StaticResource PrimaryColor}"
+                                                    Style="{StaticResource QuantityButton}"/>
+                                            <Frame Padding="0" BorderColor="Transparent" HasShadow="False" Grid.Column="1">
+                                                <Label Text="{Binding Quantity}" 
+                                                       TextColor="{StaticResource PrimaryColor}" 
+                                                       VerticalOptions="CenterAndExpand"
+                                                       HorizontalOptions="CenterAndExpand"
+                                                       Margin="0"
+                                                       Style="{StaticResource QuantityLabel}"/>
+                                            </Frame>
+                                            <Button Text="+" 
+                                                    Grid.Column="2" 
+                                                    TextColor="{StaticResource PrimaryColor}" 
+                                                    BackgroundColor="White" 
+                                                    BorderColor="{StaticResource PrimaryColor}"
+                                                    Style="{StaticResource QuantityButton}"/>
+                                        </Grid> 
+                                    </Frame>
                                 </Grid>
                             </Frame>
                         </ContentView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <Frame HasShadow="True" BorderColor="LightGray" Padding="20">
+                <Grid BackgroundColor="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Text="Valor total" 
+                           TextColor="Black" 
+                           VerticalOptions="Center" 
+                           HorizontalOptions="Start"
+                           Grid.Row="0"/>                    
+                    <Label Text="R$ 20,00" 
+                           TextColor="Black" 
+                           VerticalOptions="Center" 
+                           HorizontalOptions="End"
+                           Grid.Row="0"/>
+                    <Button Text="Finalizar" 
+                        CornerRadius="10" 
+                        BackgroundColor="Orange" 
+                        TextColor="White" 
+                        VerticalOptions="Center" 
+                        Grid.Row="1"/>
+                </Grid>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
