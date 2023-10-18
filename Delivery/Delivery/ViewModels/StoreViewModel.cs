@@ -12,12 +12,13 @@ namespace Delivery.ViewModels
 {
     public class StoreViewModel : BaseViewModel
     {
+        private IShoppingCartService shoppingCartService;
+
         private List<StoreModel> _listOfStores;
         public List<StoreModel> ListOfStores
         {
             get
             {
-
                 return _listOfStores;
             }
             set
@@ -26,11 +27,21 @@ namespace Delivery.ViewModels
             }
         }
 
+        public bool ShowCartView
+        {
+            get
+            {
+                var quantity = shoppingCartService.GetItemCount().Result;
+                return (quantity > 0);
+            }
+        }
+
         public AsyncCommand<StoreModel> StoreItemsCommand { get; set; }
 
         public StoreViewModel()
         {
             StoreItemsCommand = new AsyncCommand<StoreModel>(StoreItemsGoTo);
+            shoppingCartService = DependencyService.Get<IShoppingCartService>();
             GetListStore();
         }
 

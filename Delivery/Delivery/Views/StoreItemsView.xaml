@@ -16,7 +16,7 @@
         <ResourceDictionary>
             <converter:BoolNegationConverter x:Key="BoolNegationConverter"/>
         </ResourceDictionary>
-    </ContentPage.Resources>    
+    </ContentPage.Resources>
     <Shell.TitleView>
         <Grid>
             <Label Text="{Binding Store.Name}" 
@@ -32,14 +32,11 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <ScrollView Grid.Row="0">
-                <ScrollView.Behaviors>
-                    <behaviors:HideBagButtonOnScrollBehavior/>
-                </ScrollView.Behaviors>
                 <StackLayout>
                     <ActivityIndicator IsRunning="{Binding PageIsLoaded, Converter={StaticResource BoolNegationConverter}}"
                        IsVisible="{Binding PageIsLoaded,Converter={StaticResource BoolNegationConverter}}"
                                        Color="Orange">
-                    </ActivityIndicator>                  
+                    </ActivityIndicator>
                     <Frame Margin="0,-20,0,-5" 
                            HasShadow="True" 
                            BorderColor="LightGray" 
@@ -63,13 +60,18 @@
                         </Grid>
                     </Frame>
                     <CollectionView ItemsSource="{Binding Store.StoreItems}">
+                        <CollectionView.Behaviors>
+                            <behaviors:HideBagButtonOnScrollBehavior/>
+                        </CollectionView.Behaviors>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <ContentView>
                                     <Frame CornerRadius="1" 
                                            Padding="1" 
                                            HasShadow="False"
-                                           IsVisible="{Binding PageIsLoaded}">
+                                           IsVisible="{Binding PageIsLoaded}"
+                                           HeightRequest="120"
+                                           x:Name="ContentViewItemsList">
                                         <Frame.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding Source={x:Reference StoreItemsMenu}, Path=BindingContext.SelectedItemCommand}" 
                                                                   CommandParameter="{Binding .}"/>
@@ -90,7 +92,7 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                         <CollectionView.Footer>
-                            <views:CartButtonsView/>
+                            <views:CartButtonsView x:Name="CartButtonsView"/>
                         </CollectionView.Footer>
                     </CollectionView>
                 </StackLayout>
@@ -107,7 +109,8 @@
                     WidthRequest="60" 
                     HeightRequest="60" 
                     Margin="0,0,20,22" 
-                    VerticalOptions="End"/>
+                    VerticalOptions="End"
+                    IsVisible="False"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

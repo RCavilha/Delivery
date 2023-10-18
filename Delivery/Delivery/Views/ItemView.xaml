@@ -37,35 +37,42 @@
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Text="-" IsEnabled="{Binding ItemsQuantity, Converter={StaticResource ItemsCountBoolConverter}}" 
-                        Command="{Binding DecItemsQuantityCommand}" 
-                        Grid.Column="0" TextColor="{StaticResource PrimaryColor}" 
-                        BackgroundColor="White" 
-                        BorderColor="{StaticResource PrimaryColor}"/>
-                <Button Text="{Binding ItemsQuantity}" 
-                        Grid.Column="1" 
-                        TextColor="{StaticResource PrimaryColor}" 
-                        BackgroundColor="White" 
-                        BorderColor="{StaticResource PrimaryColor}"/>
-                <Button Text="+" 
-                        Grid.Column="2" 
-                        Command="{Binding IncItemsQuantityCommand}" 
-                        TextColor="{StaticResource PrimaryColor}" 
-                        BackgroundColor="White" 
-                        BorderColor="{StaticResource PrimaryColor}"/>
-                <Frame BackgroundColor="{StaticResource PrimaryColor}" 
-                       CornerRadius="5" 
-                       Grid.Column="3">
+                <Button 
+                    Text="-" IsEnabled="{Binding ItemsQuantity, Converter={StaticResource ItemsCountBoolConverter}}" 
+                    Command="{Binding DecItemsQuantityCommand}" 
+                    Grid.Column="0" TextColor="{StaticResource PrimaryColor}" 
+                    BackgroundColor="White" 
+                    BorderColor="{StaticResource PrimaryColor}"/>
+                <Button 
+                    Text="{Binding ItemsQuantity}" 
+                    Grid.Column="1" 
+                    TextColor="{StaticResource PrimaryColor}" 
+                    BackgroundColor="White" 
+                    BorderColor="{StaticResource PrimaryColor}"/>
+                <Button 
+                    Text="+" 
+                    Grid.Column="2" 
+                    Command="{Binding IncItemsQuantityCommand}" 
+                    TextColor="{StaticResource PrimaryColor}" 
+                    BackgroundColor="White" 
+                    BorderColor="{StaticResource PrimaryColor}"/>
+                <Frame 
+                    BackgroundColor="{StaticResource PrimaryColor}" 
+                    CornerRadius="5" 
+                    Grid.Column="3">
                     <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding Source={x:Reference ItemMenu}, Path=BindingContext.AddItemCommand}" 
-                                              CommandParameter="{Binding .}"/>
+                        <TapGestureRecognizer 
+                            Command="{Binding Source={x:Reference ItemMenu}, Path=BindingContext.AddItemCommand}" 
+                            CommandParameter="{Binding .}"/>
                     </Frame.GestureRecognizers>
                     <StackLayout VerticalOptions="Center">
                         <Grid>
-                            <Label Text="Adicionar" 
-                                   HorizontalOptions="Start"/>
-                            <Label Text="{Binding TotalPrice, StringFormat='R$ {0:F2}'}" 
-                                   HorizontalOptions="End"/>
+                            <Label 
+                                Text="Adicionar" 
+                                HorizontalOptions="Start"/>
+                            <Label 
+                                Text="{Binding TotalPrice, StringFormat='R$ {0:F2}'}" 
+                                HorizontalOptions="End"/>
                         </Grid>
                     </StackLayout>
                 </Frame>

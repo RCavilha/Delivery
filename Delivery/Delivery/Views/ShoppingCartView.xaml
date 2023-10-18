@@ -56,12 +56,19 @@
                                                 <ColumnDefinition Width="30"/>
                                                 <ColumnDefinition Width="35"/>
                                             </Grid.ColumnDefinitions>
-                                            <Button Text="-" 
-                                                    Grid.Column="0" TextColor="{StaticResource PrimaryColor}" 
-                                                    BackgroundColor="White" 
-                                                    BorderColor="{StaticResource PrimaryColor}"
-                                                    Style="{StaticResource QuantityButton}"/>
-                                            <Frame Padding="0" BorderColor="Transparent" HasShadow="False" Grid.Column="1">
+                                            <Button 
+                                                Text="-" 
+                                                Grid.Column="0" TextColor="{StaticResource PrimaryColor}" 
+                                                BackgroundColor="White" 
+                                                BorderColor="{StaticResource PrimaryColor}"
+                                                Style="{StaticResource QuantityButton}"
+                                                Command="{Binding Source={x:Reference Cart}, Path=BindingContext.DecSelectedItemCountCommand}" 
+                                                CommandParameter="{Binding .}"/>
+                                            <Frame 
+                                                Padding="0" 
+                                                BorderColor="Transparent" 
+                                                HasShadow="False" 
+                                                Grid.Column="1">                                                
                                                 <Label Text="{Binding Quantity}" 
                                                        TextColor="{StaticResource PrimaryColor}" 
                                                        VerticalOptions="CenterAndExpand"
@@ -69,12 +76,15 @@
                                                        Margin="0"
                                                        Style="{StaticResource QuantityLabel}"/>
                                             </Frame>
-                                            <Button Text="+" 
-                                                    Grid.Column="2" 
-                                                    TextColor="{StaticResource PrimaryColor}" 
-                                                    BackgroundColor="White" 
-                                                    BorderColor="{StaticResource PrimaryColor}"
-                                                    Style="{StaticResource QuantityButton}"/>
+                                            <Button 
+                                                Text="+"                                                     
+                                                Grid.Column="2" 
+                                                TextColor="{StaticResource PrimaryColor}" 
+                                                BackgroundColor="White" 
+                                                BorderColor="{StaticResource PrimaryColor}"
+                                                Style="{StaticResource QuantityButton}"
+                                                Command="{Binding Source={x:Reference Cart}, Path=BindingContext.IncSelectedItemCountCommand}" 
+                                                CommandParameter="{Binding .}"/>
                                         </Grid> 
                                     </Frame>
                                 </Grid>
@@ -94,17 +104,18 @@
                            VerticalOptions="Center" 
                            HorizontalOptions="Start"
                            Grid.Row="0"/>                    
-                    <Label Text="R$ 20,00" 
+                    <Label Text="{Binding Total}" 
                            TextColor="Black" 
                            VerticalOptions="Center" 
                            HorizontalOptions="End"
                            Grid.Row="0"/>
                     <Button Text="Finalizar" 
                         CornerRadius="10" 
-                        BackgroundColor="Orange" 
+                        BackgroundColor="{StaticResource PrimaryColor}" 
                         TextColor="White" 
                         VerticalOptions="Center" 
-                        Grid.Row="1"/>
+                        Grid.Row="1"
+                        Command="{Binding FinishCommand}"/>
                 </Grid>
             </Frame>
         </StackLayout>

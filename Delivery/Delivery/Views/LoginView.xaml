@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Delivery.Views.LoginView">
+    <Grid
+        RowSpacing="0"
+        ColumnSpacing="0">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="6*" />
+        </Grid.RowDefinitions>
+
+        <BoxView 
+            Grid.Row="0"/>
+
+        <Image
+            Grid.Row="0"
+            Source="logo.png"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            HeightRequest="2000"
+            WidthRequest="2000" />
+
+        <Label 
+            Grid.Row="1"
+            Text="LOGIN"
+            FontSize="Large"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" 
+            TextColor="{StaticResource PrimaryColor}"/>
+
+        <StackLayout                
+            Grid.Row="2"
+            VerticalOptions="Fill"
+            HorizontalOptions="Center"
+            Spacing="15">
+
+            <StackLayout HorizontalOptions="Center" Spacing="5">
+                <Label                     
+                    Text="Email:" />
+                <Entry                     
+                    Text="{Binding Email}" 
+                    Keyboard="Email"
+                    WidthRequest="300" />
+            </StackLayout>
+
+            <StackLayout HorizontalOptions="Center" Spacing="5">
+                <Label 
+                    
+                    Text="Password:" />
+                <Entry 
+                    Text="{ Binding Password }"                    
+                    WidthRequest="300"
+                    IsPassword="True"/>
+            </StackLayout>
+        </StackLayout>
+
+        <Button
+            Grid.Row="2"
+            Text="LOGIN"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Margin="15,10"
+            BackgroundColor="{StaticResource PrimaryColor}"
+            TextColor="White"
+            Command="{ Binding LoginCommand }"
+            WidthRequest="300"/>
+    </Grid>
+</ContentPage>
+    
+    

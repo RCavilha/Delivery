@@ -3,24 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.CartButtonsView"
              xmlns:viewModel="clr-namespace:Delivery.ViewModels"   
-             Shell.TabBarIsVisible="False"
-             HeightRequest="65">
+             HeightRequest="65"
+             IsVisible="{Binding ShowCartButtonsView}"
+             x:Name="CartButton">
     <ContentView.BindingContext>
-        <viewModel:CartButtonsViewModel/>
-    </ContentView.BindingContext>
-    <ContentView.Content>
-        <Frame HasShadow="True" BorderColor="LightGray" Padding="20">
-            <Grid BackgroundColor="White">
-                <Label Text="{Binding Total}" 
-                       TextColor="Black" 
-                       VerticalOptions="Center" 
-                       HorizontalOptions="Start"/>                
-                <Button Text="Carrinho" 
-                        CornerRadius="30" 
-                        BackgroundColor="Orange" 
-                        TextColor="White" 
-                        VerticalOptions="Center" 
-                        HorizontalOptions="End"/>
+        <viewModel:CartButtonsViewModel/>        
+    </ContentView.BindingContext>              
+    <ContentView.Content>        
+        <Frame HasShadow="True" BorderColor="LightGray" VerticalOptions="Start">
+            <Grid BackgroundColor="White" VerticalOptions="Start" Padding="-10" Margin="15,0,5,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label 
+                    Grid.Row="0"
+                    Text="{Binding Total, StringFormat='R$ {0:F2}'}" 
+                    TextColor="Black" 
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Start"/>                
+                <Button 
+                    Grid.Row="0"                    
+                    Text="Carrinho"                     
+                    CornerRadius="15" 
+                    WidthRequest="150"
+                    BackgroundColor="{StaticResource PrimaryColor}" 
+                    TextColor="{StaticResource White}" 
+                    VerticalOptions="Center" 
+                    HorizontalOptions="End"
+                    Command="{Binding GotoCartCommand}"/>
             </Grid>
         </Frame>
     </ContentView.Content>

@@ -1,39 +1,45 @@
-﻿using Xamarin.Forms;
+﻿using Delivery.Views;
+using System.Linq;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace Delivery.Behaviors
 {
-    public class HideBagButtonOnScrollBehavior : Behavior<ScrollView>
+    public class HideBagButtonOnScrollBehavior : Behavior<CollectionView>
     {
-        protected override void OnAttachedTo(ScrollView scrollView)
+        private Button _bagButton;
+        private ContentView _cartButtonsView;
+
+        protected override void OnAttachedTo(CollectionView collectionView)
         {
-            base.OnAttachedTo(scrollView);
-            scrollView.Scrolled += OnScrollViewScrolled;
+            base.OnAttachedTo(collectionView);
+            collectionView.Scrolled += OnCollectionViewScrolled;
         }
 
-        protected override void OnDetachingFrom(ScrollView scrollView)
+        protected override void OnDetachingFrom(CollectionView collectionView)
         {
-            base.OnDetachingFrom(scrollView);
-            scrollView.Scrolled -= OnScrollViewScrolled;
+            base.OnDetachingFrom(collectionView);
+            collectionView.Scrolled -= OnCollectionViewScrolled;
         }
 
-        private void OnScrollViewScrolled(object sender, ScrolledEventArgs e)
-        {
-            var scrollView = (ScrollView)sender;
-            var secondPrimartGridRow = scrollView.FindByName<RowDefinition>("secondPrimartGridRow");
-            var bagButton = scrollView.FindByName<Button>("bagButton");
+        private void OnCollectionViewScrolled(object sender, ItemsViewScrolledEventArgs e)
+        {           
+            double itemHeight = 120;
+            var collectionView = (CollectionView)sender;
+            var visibleItemCount = (int)(collectionView.Height / itemHeight);
+            var totalItemsCount = collectionView.ItemsSource?.Cast<object>().Count() ?? 0;
+            var lastVisibleItemIndex = e.FirstVisibleItemIndex + visibleItemCount;
 
-            if (e.ScrollY + scrollView.Height >= scrollView.ContentSize.Height - 20)
-            {
-                // ScrollView chegou ao final, oculta o botão
-                //secondPrimartGridRow.Height = 80;
-                bagButton.IsVisible = false;
-            }
-            else
-            {
-                // ScrollView não está no final, mostra o botão
-                //secondPrimartGridRow.Height = 0;
-                bagButton.IsVisible = true;
-            }
+            if (_bagButton == null)
+                _bagButton = collectionView.FindByName<Button>("bagButton");
+
+            if (_cartButtonsView == null)
+               _cartButtonsView = collectionView.FindByName<ContentView>("CartButtonsView");
+
+            if (_bagButton != null)
+                _bagButton.IsVisible = _cartButtonsView.IsVisible && !(lastVisibleItemIndex >= totalItemsCount - 1);
         }
+
     }
+
 }

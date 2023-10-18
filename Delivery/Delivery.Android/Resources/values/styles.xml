@@ -16,6 +16,7 @@
     <!--<item name="colorAccent">#FF4081</item>-->
     <item name="android:statusBarColor">#FFFFFF</item>
     <item name="android:windowLightStatusBar">True</item>
+    <item name="colorAccent">#ffbf00</item>
   </style>
   <style name="MainTheme.Splash" parent ="Theme.AppCompat.Light.NoActionBar">
     <item name="android:windowBackground">@drawable/splashscreen</item>

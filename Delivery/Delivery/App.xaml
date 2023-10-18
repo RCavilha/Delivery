@@ -10,9 +10,9 @@
 
             <Color x:Key="TextPrimaryCollor">#000000</Color>
             <Color x:Key="TextSecondCollor">#A0A0A0</Color>
-            <Color x:Key="BorderColor">#FFA861</Color>
+            <Color x:Key="BorderColor">#ffbf00</Color>
 
-            <Color x:Key="PrimaryColor">#FFA861</Color>
+            <Color x:Key="PrimaryColor">#ffbf00</Color>
 
             <Color x:Key="SucessColor">#1BAB42</Color>
             <Color x:Key="ErrorColor">#F44343</Color>
@@ -56,9 +56,7 @@
                 <Setter Property="FontFamily" Value="MontserratBold" />
                 <Setter Property="FontSize" Value="12" />
                 <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
-            </Style>            
-            
-
+            </Style>                      
         </ResourceDictionary>
     </Application.Resources>
 </Application>

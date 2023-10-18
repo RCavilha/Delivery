@@ -2,6 +2,9 @@
 using Delivery.Models;
 using Delivery.Services;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -11,8 +14,8 @@ namespace Delivery.ViewModels
     {
         public StoreModel Store { get; set; }
 
-        private List<ShoppingCartModel> _cartList;
-        public List<ShoppingCartModel> CartList
+        private ObservableCollection<ShoppingCartModel> _cartList;
+        public ObservableCollection<ShoppingCartModel> CartList
         {
             get
             {
@@ -23,17 +26,53 @@ namespace Delivery.ViewModels
                 SetProperty(ref _cartList, value);
             }
         }
+        public ICommand FinishCommand { get; set; }
+        public ICommand IncSelectedItemCountCommand { get; set; }
+        public ICommand DecSelectedItemCountCommand { get; set; }
+        
         IShoppingCartService shoppingCartService;
 
         public ShoppingCartViewModel()
         {
             shoppingCartService = DependencyService.Get<IShoppingCartService>();
+            FinishCommand = new Command(GoToFinish);
+            IncSelectedItemCountCommand = new Command<ShoppingCartModel>(IncSelectedItemCount);
+            DecSelectedItemCountCommand = new Command<ShoppingCartModel>(DecSelectedItemCount);
             GetCartList();
         }
 
         public async void GetCartList()
         {
-            CartList = await shoppingCartService.GetCartItem();                        
+            //await Task.Delay(50);
+           var itemList = await shoppingCartService.GetCartItem();
+
+            CartList = new ObservableCollection<ShoppingCartModel>(itemList);
+        }
+        public void GoToFinish()
+        {
+            Shell.Current.GoToAsync($"cart/purchase");
+        }
+
+        public void DecSelectedItemCount(ShoppingCartModel item)
+        {            
+
+            if(item.Quantity <= 1)
+            {
+                shoppingCartService.RemoveCartItem(item);
+                CartList.Remove(item);
+                OnPropertyChanged(nameof(CartList));
+            }
+            else
+            {
+                item.Quantity--;
+                shoppingCartService.UpdateCartItem(item);
+            }
+        }
+
+        public void IncSelectedItemCount(ShoppingCartModel item)
+        {
+            item.Quantity++;            
+            shoppingCartService.UpdateCartItem(item);              
         }
     }
 }

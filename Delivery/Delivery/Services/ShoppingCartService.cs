@@ -1,25 +1,32 @@
 ﻿using Delivery.Models;
 using Delivery.Services;
 using SQLite;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 [assembly: Dependency(typeof(ShoppingCartService))]
 namespace Delivery.Services
 {
     public class ShoppingCartService : IShoppingCartService
     {
+        public int CurrentStoreId { get; private set; }
+
         SQLiteAsyncConnection db;
         async Task Init()
         {
             if (db != null)
                 return;
 
+            CurrentStoreId = 0;
+
             // Get an absolute path to the database file
-            var databasePath = Path.Combine(FileSystem.AppDataDirectory, "6CartData.db");
+            var databasePath = Path.Combine(FileSystem.AppDataDirectory, "22CartData.db");//9
 
             db = new SQLiteAsyncConnection(databasePath);
 
@@ -28,6 +35,8 @@ namespace Delivery.Services
 
         public async Task AddItemToCart(int idStore, int idItem, string image, string name, double price, int quantity)
         {
+            CurrentStoreId = idStore;
+
             await Init();
 
             var item = new ShoppingCartModel
@@ -53,6 +62,12 @@ namespace Delivery.Services
             }
         }
 
+        public async Task UpdateCartItem(ShoppingCartModel item)
+        {
+            await Init();
+            await db.UpdateAsync(item);
+        }
+
         public async Task RemoveCartItem(ShoppingCartModel item)
         {
             await Init();
@@ -63,7 +78,7 @@ namespace Delivery.Services
         {
             await Init();
 
-            var listItem = await db.Table<ShoppingCartModel>().ToListAsync();
+            var listItem = await db.Table<ShoppingCartModel>().ToListAsync();            
             return listItem;
         }
 
@@ -91,23 +106,16 @@ namespace Delivery.Services
 
         public async Task<bool> StoreChanged(int idStoreSelected)
         {
-            int itemCount = await GetItemCount();
-
-            if (itemCount == 0)
+            if (CurrentStoreId > 0)
             {
-                return false;
+                return CurrentStoreId == idStoreSelected;
             }
 
+            await Init();
             var exist = await db.Table<ShoppingCartModel>().FirstOrDefaultAsync(c => c.IdStore == idStoreSelected);
 
-            if (exist == null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return exist == null;
         }
+
     }
 }

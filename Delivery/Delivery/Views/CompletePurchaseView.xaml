@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Delivery.Views.CompletePurchaseView"
+             Shell.TabBarIsVisible="False"             
+             Title="Meu pedido">    
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame 
+                BorderColor="{StaticResource PrimaryColor}"
+                Margin="20,5,20,0">
+                <Grid RowDefinitions="auto,auto,auto" RowSpacing="-15">
+                    <Frame Grid.Row="0" HasShadow="False">
+                        <Grid>
+                            <Label 
+                                Text="Quantidade de itens" 
+                                HorizontalOptions="StartAndExpand"
+                                TextColor="{StaticResource Black}"
+                                FontSize="15"/>
+                            
+                            <Label 
+                                Text="1" 
+                                HorizontalOptions="End"
+                                TextColor="{StaticResource Black}"
+                                FontSize="15"/>                        
+                            <Label 
+                                Text="Valor total" 
+                                HorizontalOptions="Start"
+                                VerticalOptions="End"
+                                TextColor="{StaticResource Black}"
+                                FontSize="15"
+                                Grid.Row="1"/>
+                            <Label 
+                                Text="R$ 30,00" 
+                                HorizontalOptions="End"
+                                TextColor="{StaticResource Black}"
+                                FontSize="15"
+                                Grid.Row="1"/>
+                            <Label 
+                                Text="Desconto" 
+                                HorizontalOptions="Start"
+                                VerticalOptions="End"
+                                TextColor="{StaticResource Black}"
+                                FontSize="15"
+                                Grid.Row="2"/>
+                            <Label 
+                                Text="R$ 0,00" 
+                                HorizontalOptions="End"
+                                TextColor="{StaticResource Black}"
+                                FontSize="15"
+                                Grid.Row="2"/>
+                            <Label 
+                                Text="Total a pagar" 
+                                HorizontalOptions="Start"
+                                VerticalOptions="End"
+                                TextColor="{StaticResource Black}"
+                                FontSize="15"
+                                Grid.Row="3"/>
+                            <Label 
+                                Text="R$ 30,00" 
+                                HorizontalOptions="End"
+                                TextColor="{StaticResource Black}"
+                                FontSize="15"
+                                Grid.Row="3"/>
+                        </Grid>
+                    </Frame>
+                    <Frame 
+                        Grid.Row="1"                                                                                                                               
+                        HasShadow="False">                                                
+                        <StackLayout RadioButtonGroup.GroupName="PurchaseTypeGroup" Grid.Row="0">
+                            <Label 
+                               Text="Retirada ou entrega?"
+                              TextColor="{StaticResource Black}"                            
+                               FontSize="20"/>
+                            <RadioButton 
+                                x:Name="RadioButtonEntrega"                
+                                Value="Entrega"
+                                Content="Entrega"
+                                TextColor="{StaticResource PrimaryColor}"
+                                FontSize="15"
+                                IsChecked="True"/>
+                            <RadioButton 
+                                x:Name="RadioButtonRetirada"                
+                                Value="Retirada"
+                                Content="Retirada"
+                                TextColor="{StaticResource PrimaryColor}"
+                                FontSize="15"/>
+                        </StackLayout>
+                    </Frame>
+                    <Frame 
+                        Grid.Row="2"                           
+                        HasShadow="False">
+                        <StackLayout RadioButtonGroup.GroupName="PaymentMethodsGroup" >                    
+                          <Label 
+                              Text="Tipo de pagamento"                       
+                              TextColor="{StaticResource Black}"
+                              FontSize="20"/>
+                          <RadioButton
+                              x:Name="RadioButtonSystem"                
+                              Value="Dinheiro"
+                              Content="Dinheiro"
+                              TextColor="{StaticResource PrimaryColor}"
+                              FontSize="15"
+                              IsChecked="True"/>
+                          <RadioButton 
+                              x:Name="RadioButtonLight"                
+                              Value="Crédito"
+                              Content="Crédito"
+                              TextColor="{StaticResource PrimaryColor}"
+                              FontSize="15"/>
+                          <RadioButton
+                              x:Name="RadioButtonDark"                
+                              Value="Débito"
+                              Content="Débito"
+                              TextColor="{StaticResource PrimaryColor}"
+                              FontSize="15"/>                    
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+            </Frame>
+            <Button 
+                Text="Finalizar compra" 
+                CornerRadius="10" 
+                BackgroundColor="{StaticResource PrimaryColor}" 
+                TextColor="{StaticResource White}" 
+                VerticalOptions="End" 
+                Margin="20"/>            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
