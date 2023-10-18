@@ -60,18 +60,22 @@ namespace Delivery.Services
             {
                 await db.UpdateAsync(item);
             }
+
+            MessagingCenter.Send(this, "CartUpdate");
         }
 
         public async Task UpdateCartItem(ShoppingCartModel item)
         {
             await Init();
             await db.UpdateAsync(item);
+            MessagingCenter.Send(this, "CartUpdate");
         }
 
         public async Task RemoveCartItem(ShoppingCartModel item)
         {
             await Init();
             await db.DeleteAsync(item);
+            MessagingCenter.Send(this, "CartUpdate");
         }
 
         public async Task<List<ShoppingCartModel>> GetCartItem()

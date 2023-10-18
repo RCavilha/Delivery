@@ -67,9 +67,7 @@ namespace Delivery.ViewModels
                 item.Quantity--;
                 item.TotalPrice = item.UnitPrice * item.Quantity;
                 await shoppingCartService.UpdateCartItem(item);
-            }
-
-            MessagingCenter.Send(this, "CartUpdateFromCartView");
+            }            
         }
 
         public async void IncSelectedItemCount(ShoppingCartModel item)
@@ -77,7 +75,6 @@ namespace Delivery.ViewModels
             item.Quantity++;   
             item.TotalPrice = item.UnitPrice * item.Quantity;
             await shoppingCartService.UpdateCartItem(item);
-            MessagingCenter.Send(this, "CartUpdateFromCartView");
         }
     }
 }

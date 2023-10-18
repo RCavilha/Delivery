@@ -45,17 +45,8 @@ namespace Delivery.ViewModels
         {
             shoppingCartService = DependencyService.Get<IShoppingCartService>();
             GotoCartCommand = new Command(OpenCart);
-            MessagingCenter.Subscribe<ItemViewModel>(this, "CartUpdateFromAddItem", async (upd) =>
-            {
-                await UpdateTotalAsync();
-            });
 
-            MessagingCenter.Subscribe<StoreItemsView>(this, "CartUpdateFromStoreItems", async (upd) =>
-            {
-                await UpdateTotalAsync();
-            });
-
-            MessagingCenter.Subscribe<ShoppingCartViewModel>(this, "CartUpdateFromCartView", async (upd) =>
+            MessagingCenter.Subscribe<ShoppingCartService>(this, "CartUpdate", async (upd) =>
             {
                 await UpdateTotalAsync();
             });
@@ -65,9 +56,7 @@ namespace Delivery.ViewModels
 
         ~CartButtonsViewModel()
         {
-            MessagingCenter.Unsubscribe<CartButtonsViewModel>(this, "CartUpdateFromAddItem");
-            MessagingCenter.Unsubscribe<StoreItemsView>(this, "CartUpdateFromStoreItems");
-            MessagingCenter.Unsubscribe<ShoppingCartViewModel>(this, "CartUpdateFromCartView");
+            MessagingCenter.Unsubscribe<ShoppingCartService>(this, "CartUpdate");
         }
         
         private async Task UpdateTotalAsync()

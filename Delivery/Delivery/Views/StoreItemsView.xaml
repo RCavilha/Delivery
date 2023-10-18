@@ -99,7 +99,7 @@
             </ScrollView>
             <Button x:Name="bagButton" 
                     Grid.Row="0" 
-                    Text="Carrin" 
+                    Text="+" 
                     FontAttributes="Bold" 
                     Command="{Binding CartCommand}"
                     BackgroundColor="{StaticResource PrimaryColor}" 
