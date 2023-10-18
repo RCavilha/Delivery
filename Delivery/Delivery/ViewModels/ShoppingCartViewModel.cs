@@ -53,26 +53,31 @@ namespace Delivery.ViewModels
             Shell.Current.GoToAsync($"cart/purchase");
         }
 
-        public void DecSelectedItemCount(ShoppingCartModel item)
+        public async void DecSelectedItemCount(ShoppingCartModel item)
         {            
 
             if(item.Quantity <= 1)
             {
-                shoppingCartService.RemoveCartItem(item);
+                await shoppingCartService.RemoveCartItem(item);
                 CartList.Remove(item);
                 OnPropertyChanged(nameof(CartList));
             }
             else
             {
                 item.Quantity--;
-                shoppingCartService.UpdateCartItem(item);
+                item.TotalPrice = item.UnitPrice * item.Quantity;
+                await shoppingCartService.UpdateCartItem(item);
             }
+
+            MessagingCenter.Send(this, "CartUpdateFromCartView");
         }
 
-        public void IncSelectedItemCount(ShoppingCartModel item)
+        public async void IncSelectedItemCount(ShoppingCartModel item)
         {
-            item.Quantity++;            
-            shoppingCartService.UpdateCartItem(item);              
+            item.Quantity++;   
+            item.TotalPrice = item.UnitPrice * item.Quantity;
+            await shoppingCartService.UpdateCartItem(item);
+            MessagingCenter.Send(this, "CartUpdateFromCartView");
         }
     }
 }

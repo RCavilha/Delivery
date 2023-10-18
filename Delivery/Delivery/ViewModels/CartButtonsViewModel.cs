@@ -1,6 +1,7 @@
 ﻿using Delivery.Services;
 using Delivery.Views;
 using MvvmHelpers;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -54,6 +55,11 @@ namespace Delivery.ViewModels
                 await UpdateTotalAsync();
             });
 
+            MessagingCenter.Subscribe<ShoppingCartViewModel>(this, "CartUpdateFromCartView", async (upd) =>
+            {
+                await UpdateTotalAsync();
+            });
+
             UpdateTotalAsync(); // Chame o método para atualizar o total quando o ViewModel for criado
         }
 
@@ -61,8 +67,9 @@ namespace Delivery.ViewModels
         {
             MessagingCenter.Unsubscribe<CartButtonsViewModel>(this, "CartUpdateFromAddItem");
             MessagingCenter.Unsubscribe<StoreItemsView>(this, "CartUpdateFromStoreItems");
+            MessagingCenter.Unsubscribe<ShoppingCartViewModel>(this, "CartUpdateFromCartView");
         }
-
+        
         private async Task UpdateTotalAsync()
         {
             Total = await shoppingCartService.GetTotalPrice();

@@ -8,12 +8,7 @@ namespace Delivery.Views
     {
         public CartButtonsView()
         {
-            InitializeComponent();
-
-            
+            InitializeComponent();            
         }
-
-
-
     }
 }

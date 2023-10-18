@@ -12,7 +12,6 @@ namespace Delivery.Views
             InitializeComponent();
         }
  
-
         protected override bool OnBackButtonPressed()
         {
             MessagingCenter.Send(this, "CartUpdateFromStoreItems");
