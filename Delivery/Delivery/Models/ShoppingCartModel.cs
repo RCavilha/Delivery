@@ -6,7 +6,7 @@ namespace Delivery.Models
     public class ShoppingCartModel : BaseModel
     {
         [PrimaryKey]
-        public int IdItem { get; set; }
+        public int IdItem { get; set; }        
         public int IdStore { get; set; }
         public string Image { get; set; }
         public string Name { get; set; }

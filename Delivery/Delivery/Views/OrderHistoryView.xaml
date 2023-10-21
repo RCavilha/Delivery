@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Delivery.Views.OrderHistoryView"
+             xmlns:viewModels="clr-namespace:Delivery.ViewModels"
+             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+    <ContentPage.BindingContext>
+        <viewModels:OrderHistoryViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <CollectionView ItemsSource="{Binding OrderList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView Padding="0, 7">
+                            <yummy:PancakeView Padding="10" Margin="1" BackgroundColor="White">
+                                <yummy:PancakeView.Border>
+                                    <yummy:Border Color="#000000" Thickness="1" DashPattern="4,10" />
+                                </yummy:PancakeView.Border>
+                                <StackLayout>
+                                    <Label 
+                                        Text="{Binding OrderId, StringFormat='Número do pedido: {0}'}" 
+                                        Margin="0,0,0,10"
+                                        FontSize="14"/>
+                                    <Label 
+                                        Text="{Binding StoreName, StringFormat='Loja: {0}'}"                                         
+                                        Margin="0, 10, 0, 0"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding DeliveryType}"/>
+                                        <Label Text="{Binding OrderDateTime, StringFormat='{0:dd}/{0:MM}/{0:yyyy}'}"/>
+                                        <Label Text="{Binding OrderDateTime, StringFormat='ás {0:HH:mm} h'}"/>                                        
+                                    </StackLayout>
+                                    <Label Text="{Binding PaymentType, StringFormat='Pagamento: {0}'}"/>
+                                    <Label Text="{Binding TotalAmountToPay, StringFormat='Valor pago: R$ {0}'}"/>
+                                </StackLayout>
+                            </yummy:PancakeView>
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

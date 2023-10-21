@@ -52,10 +52,10 @@
             </StackLayout>
         </Frame>
         <Button
-            Text="Atualizar dados"
+            Text="Logout"
             BackgroundColor="{StaticResource White}"
             TextColor="{StaticResource PrimaryColor}"
-                 BorderColor="{StaticResource PrimaryColor}"
+            BorderColor="{StaticResource PrimaryColor}"
             HorizontalOptions="EndAndExpand"
             VerticalOptions="Center"
             Margin="0,0,10,0"/>

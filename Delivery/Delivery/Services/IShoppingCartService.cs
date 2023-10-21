@@ -10,11 +10,13 @@ namespace Delivery.Services
         Task AddItemToCart(int idStore, int idItem, string image, string name, double price, int quantity);
         Task UpdateCartItem(ShoppingCartModel item);
         Task RemoveCartItem(ShoppingCartModel item);
-        Task<List<ShoppingCartModel>> GetCartItem();
+        Task ClearCart();
+        Task<List<ShoppingCartModel>> GetCartList();
         Task<ShoppingCartModel> GetCartItem(int idItem);
-        Task<int> GetItemCount();
+        Task<int> GetCount();
         Task<double> GetTotalPrice();
         Task<bool> StoreChanged(int idStoreSelected);
-
+        Task<int> GetTotalQuantityItems();
+        int GetStoreId();
     }
 }

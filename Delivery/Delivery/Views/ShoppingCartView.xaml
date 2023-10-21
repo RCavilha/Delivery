@@ -16,27 +16,31 @@
             <Image Source="{Binding Store.Logo}" 
                    HorizontalOptions="End"/>
         </Grid>
-    </Shell.TitleView>    
+    </Shell.TitleView>
     <ContentPage.Content>
         <StackLayout>
             <CollectionView ItemsSource="{Binding CartList}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <ContentView Padding="5">
-                            <Frame CornerRadius="0" 
-                                   BorderColor="{StaticResource BorderColor}" 
-                                   Padding="1" 
-                                   HasShadow="False">
+                            <Frame 
+                                CornerRadius="0" 
+                                BorderColor="{StaticResource BorderColor}" 
+                                Padding="1" 
+                                HasShadow="False">
                                 <Grid ColumnDefinitions="100, 1,  2*">
-                                    <Image HeightRequest="80" 
-                                           Source="{Binding Image}" 
-                                           Margin="10"/>
-                                    <StackLayout Grid.Column="2" 
-                                                 Margin="10"
-                                                 VerticalOptions="Start">
-                                        <Label Text="Pizza de frango con catupiry muito boa com broda de cheddar e parelelepipedo" 
-                                               TextColor="{StaticResource TextPrimaryCollor}"
-                                               MaxLines="2"/>
+                                    <Image 
+                                        HeightRequest="80" 
+                                        Source="{Binding Image}" 
+                                        Margin="10"/>
+                                    <StackLayout 
+                                        Grid.Column="2" 
+                                        Margin="10"
+                                        VerticalOptions="Start">
+                                        <Label 
+                                            Text="Pizza de frango con catupiry muito boa com broda de cheddar e parelelepipedo" 
+                                            TextColor="{StaticResource TextPrimaryCollor}"
+                                            MaxLines="2"/>
                                     </StackLayout>
                                     <StackLayout Grid.Column="2" 
                                                  Margin="10"
@@ -103,8 +107,8 @@
                            TextColor="Black" 
                            VerticalOptions="Center" 
                            HorizontalOptions="Start"
-                           Grid.Row="0"/>                    
-                    <Label Text="{Binding Total}" 
+                           Grid.Row="0"/>
+                    <Label Text="{Binding ShoppingCartTotalPrice, StringFormat='R$ {0:F2}'}" 
                            TextColor="Black" 
                            VerticalOptions="Center" 
                            HorizontalOptions="End"

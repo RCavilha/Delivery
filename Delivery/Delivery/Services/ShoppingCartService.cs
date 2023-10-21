@@ -77,8 +77,13 @@ namespace Delivery.Services
             await db.DeleteAsync(item);
             MessagingCenter.Send(this, "CartUpdate");
         }
-
-        public async Task<List<ShoppingCartModel>> GetCartItem()
+        public async Task ClearCart()
+        {
+            await Init();
+            await db.DeleteAllAsync<ShoppingCartModel>();
+            MessagingCenter.Send(this, "CartUpdate");
+        }
+        public async Task<List<ShoppingCartModel>> GetCartList()
         {
             await Init();
 
@@ -95,7 +100,7 @@ namespace Delivery.Services
             return item;
         }
 
-        public async Task<int> GetItemCount()
+        public async Task<int> GetCount()
         {
             await Init();
             return await db.Table<ShoppingCartModel>().CountAsync();
@@ -119,6 +124,18 @@ namespace Delivery.Services
             var exist = await db.Table<ShoppingCartModel>().FirstOrDefaultAsync(c => c.IdStore == idStoreSelected);
 
             return exist == null;
+        }
+
+        public async Task<int> GetTotalQuantityItems()
+        {
+            await Init();
+            int totalQuantity = await db.ExecuteScalarAsync<int>("SELECT SUM(Quantity) FROM ShoppingCartModel");
+            return totalQuantity;
+        }
+
+        public int GetStoreId()
+        {
+            return CurrentStoreId;
         }
 
     }

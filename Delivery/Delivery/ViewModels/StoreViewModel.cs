@@ -31,7 +31,7 @@ namespace Delivery.ViewModels
         {
             get
             {
-                var quantity = shoppingCartService.GetItemCount().Result;
+                var quantity = shoppingCartService.GetCount().Result;
                 return (quantity > 0);
             }
         }
@@ -49,13 +49,6 @@ namespace Delivery.ViewModels
         {
             var service = new StoreService();
             ListOfStores = await service.GetStoreList();
-
-            var items = new StoreItemsService();
-
-            foreach (var store in ListOfStores)
-            {
-                store.StoreItems = items.GetListStoreItems();
-            }
         }
         public async Task StoreItemsGoTo(StoreModel store)
         {

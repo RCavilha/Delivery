@@ -62,7 +62,7 @@ namespace Delivery.ViewModels
         private async Task UpdateTotalAsync()
         {
             Total = await shoppingCartService.GetTotalPrice();
-            Quantity = await shoppingCartService.GetItemCount();
+            Quantity = await shoppingCartService.GetCount();
         }
 
         public void OpenCart()

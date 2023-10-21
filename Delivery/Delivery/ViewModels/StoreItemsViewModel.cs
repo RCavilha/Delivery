@@ -40,8 +40,8 @@ namespace Delivery.ViewModels
             {
                 _storeModel = value;
 
-                var items = new StoreItemsService();
-                Store.StoreItems = items.GetListStoreItems();
+                //var items = new StoreItemsService();
+                //Store.StoreItems = items.GetListStoreItems();
                 OnPropertyChanged(nameof(Store));
                 PageIsLoaded = true;
             }
@@ -71,9 +71,11 @@ namespace Delivery.ViewModels
 
         public async void GetStoreDataBase()
         {
-            await Task.Delay(500);
+            await Task.Delay(150);
             var service = new StoreService();
             Store = await service.GetStore(idStore);
+
+            //await service.SalvaEmpresa(Store);
         }
 
         public void SelectedItemGoTo(StoreItemModel selectedItem)

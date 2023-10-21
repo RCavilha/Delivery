@@ -14,6 +14,20 @@ namespace Delivery.ViewModels
     {
         public StoreModel Store { get; set; }
 
+        private double _shoppingCartTotalPrice;
+
+        public double ShoppingCartTotalPrice
+        {
+            get 
+            { 
+                return _shoppingCartTotalPrice; 
+            }
+            set 
+            { 
+                SetProperty(ref _shoppingCartTotalPrice, value);                
+            }
+        }
+
         private ObservableCollection<ShoppingCartModel> _cartList;
         public ObservableCollection<ShoppingCartModel> CartList
         {
@@ -43,14 +57,13 @@ namespace Delivery.ViewModels
 
         public async void GetCartList()
         {
-            //await Task.Delay(50);
-           var itemList = await shoppingCartService.GetCartItem();
-
-            CartList = new ObservableCollection<ShoppingCartModel>(itemList);
+           var itemList = await shoppingCartService.GetCartList();
+           CartList = new ObservableCollection<ShoppingCartModel>(itemList);
+           TotalPrice();
         }
         public void GoToFinish()
         {
-            Shell.Current.GoToAsync($"cart/purchase");
+            Shell.Current.GoToAsync($"cart/ordercompletion");
         }
 
         public async void DecSelectedItemCount(ShoppingCartModel item)
@@ -60,12 +73,14 @@ namespace Delivery.ViewModels
             {
                 await shoppingCartService.RemoveCartItem(item);
                 CartList.Remove(item);
-                OnPropertyChanged(nameof(CartList));
+                TotalPrice();
+                //OnPropertyChanged(nameof(CartList));
             }
             else
             {
                 item.Quantity--;
                 item.TotalPrice = item.UnitPrice * item.Quantity;
+                TotalPrice();
                 await shoppingCartService.UpdateCartItem(item);
             }            
         }
@@ -74,7 +89,19 @@ namespace Delivery.ViewModels
         {
             item.Quantity++;   
             item.TotalPrice = item.UnitPrice * item.Quantity;
-            await shoppingCartService.UpdateCartItem(item);
+            TotalPrice();
+            await shoppingCartService.UpdateCartItem(item);            
+        }
+
+        public void TotalPrice()
+        {
+            double soma = 0;
+            foreach (var item in CartList)
+            {
+                soma += item.TotalPrice;
+            }
+
+            ShoppingCartTotalPrice = soma;
         }
     }
 }
