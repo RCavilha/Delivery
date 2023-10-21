@@ -8,6 +8,14 @@
     <ContentPage.BindingContext>
         <viewModels:StoreViewModel/>
     </ContentPage.BindingContext>
+    <Shell.TitleView>
+        <Grid>
+            <Image 
+                Source="logo.png" 
+                HorizontalOptions="Center"
+                Margin="0,0,20,0" />
+        </Grid>
+    </Shell.TitleView>
     <ContentPage.Content>
         <StackLayout>
             <CollectionView ItemsSource="{Binding ListOfStores}">

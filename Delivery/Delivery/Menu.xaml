@@ -4,8 +4,8 @@
              x:Class="Delivery.Menu"
              xmlns:views="clr-namespace:Delivery.Views">
     <TabBar>
-        <ShellContent Title="Lojas" Icon="MenuIconStore" ContentTemplate="{DataTemplate views:StartMenuView}"/>
-        <ShellContent Title="Pedidos" Icon="MenuIconCinema" ContentTemplate="{DataTemplate views:OrderHistoryView}"/>
-        <ShellContent Title="Perfil" Icon="MenuIconTicket" ContentTemplate="{DataTemplate views:LoginView}"/>
+        <ShellContent Title="Lojas" Icon="store" ContentTemplate="{DataTemplate views:StartMenuView}"/>
+        <ShellContent Title="Pedidos" Icon="orderlist" ContentTemplate="{DataTemplate views:OrderHistoryView}"/>
+        <ShellContent Title="Perfil" Icon="profile" ContentTemplate="{DataTemplate views:LoginView}"/>
     </TabBar>
 </Shell>

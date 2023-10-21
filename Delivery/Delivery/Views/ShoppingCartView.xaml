@@ -4,19 +4,20 @@
              x:Class="Delivery.Views.ShoppingCartView"
              xmlns:viewModels="clr-namespace:Delivery.ViewModels"
              Shell.TabBarIsVisible="False"
-             x:Name="Cart">
+             x:Name="Cart"
+             Title="teste">
+    <Shell.TitleView>
+        <Grid>
+            <Image 
+                Source="cartstore" 
+                HorizontalOptions="End"
+                Margin="10,10,10,10" />
+        </Grid>
+    </Shell.TitleView>
     <ContentPage.BindingContext>
         <viewModels:ShoppingCartViewModel/>
     </ContentPage.BindingContext>
-    <Shell.TitleView>
-        <Grid>
-            <Label Text="{Binding Store.Name}" 
-                   TextColor="{StaticResource PrimaryColor}" 
-                   VerticalTextAlignment="Center"/>
-            <Image Source="{Binding Store.Logo}" 
-                   HorizontalOptions="End"/>
-        </Grid>
-    </Shell.TitleView>
+
     <ContentPage.Content>
         <StackLayout>
             <CollectionView ItemsSource="{Binding CartList}">

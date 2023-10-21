@@ -4,6 +4,14 @@
              x:Class="Delivery.Views.OrderHistoryView"
              xmlns:viewModels="clr-namespace:Delivery.ViewModels"
              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+    <Shell.TitleView>
+        <Grid>
+            <Image 
+                Source="logo.png" 
+                HorizontalOptions="Center"
+                Margin="0,0,20,0" />
+        </Grid>
+    </Shell.TitleView>
     <ContentPage.BindingContext>
         <viewModels:OrderHistoryViewModel/>
     </ContentPage.BindingContext>
@@ -19,19 +27,31 @@
                                 </yummy:PancakeView.Border>
                                 <StackLayout>
                                     <Label 
-                                        Text="{Binding OrderId, StringFormat='Número do pedido: {0}'}" 
-                                        Margin="0,0,0,10"
-                                        FontSize="14"/>
+                                        Text="{Binding OrderId, StringFormat='Número do pedido: {0}'}"                                         
+                                        FontSize="14"
+                                        TextColor="{StaticResource TextPrimaryCollor}"/>
                                     <Label 
-                                        Text="{Binding StoreName, StringFormat='Loja: {0}'}"                                         
-                                        Margin="0, 10, 0, 0"/>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding DeliveryType}"/>
-                                        <Label Text="{Binding OrderDateTime, StringFormat='{0:dd}/{0:MM}/{0:yyyy}'}"/>
-                                        <Label Text="{Binding OrderDateTime, StringFormat='ás {0:HH:mm} h'}"/>                                        
+                                        Text="{Binding StoreName, StringFormat='Loja: {0}'}"
+                                        Margin="0,0,0,10"
+                                        TextColor="{StaticResource TextSecondCollor}"
+                                        MaxLines="2"/>
+                                    <StackLayout Orientation="Horizontal" Margin="0, 10, 0, 0">
+                                        <Label 
+                                            Text="{Binding DeliveryType}" 
+                                            TextColor="{StaticResource TextSecondCollor}"/>
+                                        <Label 
+                                            Text="{Binding OrderDateTime, StringFormat='{0:dd}/{0:MM}/{0:yyyy}'}"
+                                            TextColor="{StaticResource TextSecondCollor}"/>
+                                        <Label 
+                                            Text="{Binding OrderDateTime, StringFormat='ás {0:HH:mm} h'}"
+                                            TextColor="{StaticResource TextSecondCollor}"/>
                                     </StackLayout>
-                                    <Label Text="{Binding PaymentType, StringFormat='Pagamento: {0}'}"/>
-                                    <Label Text="{Binding TotalAmountToPay, StringFormat='Valor pago: R$ {0}'}"/>
+                                    <Label 
+                                        Text="{Binding PaymentType, StringFormat='Pagamento: {0}'}"
+                                        TextColor="{StaticResource TextSecondCollor}"/>
+                                    <Label 
+                                        Text="{Binding TotalAmountToPay, StringFormat='Valor pago: R$ {0}'}"
+                                        TextColor="{StaticResource TextPrimaryCollor}"/>
                                 </StackLayout>
                             </yummy:PancakeView>
                         </ContentView>

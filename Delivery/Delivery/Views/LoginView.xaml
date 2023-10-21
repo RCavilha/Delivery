@@ -5,16 +5,13 @@
     <Grid
         RowSpacing="0"
         ColumnSpacing="0">
-
         <Grid.RowDefinitions>
             <RowDefinition Height="5*" />
             <RowDefinition Height="1*" />
             <RowDefinition Height="6*" />
         </Grid.RowDefinitions>
-
         <BoxView 
             Grid.Row="0"/>
-
         <Image
             Grid.Row="0"
             Source="logo.png"
@@ -22,7 +19,6 @@
             HorizontalOptions="Center"
             HeightRequest="2000"
             WidthRequest="2000" />
-
         <Label 
             Grid.Row="1"
             Text="LOGIN"
@@ -30,30 +26,34 @@
             HorizontalOptions="Center"
             VerticalOptions="Center" 
             TextColor="{StaticResource PrimaryColor}"/>
-
-        <StackLayout                
+        <StackLayout
             Grid.Row="2"
             VerticalOptions="Fill"
             HorizontalOptions="Center"
             Spacing="15">
-
             <StackLayout HorizontalOptions="Center" Spacing="5">
-                <Label                     
+                <Label
+                    TextColor="{StaticResource TextPrimaryCollor}"
                     Text="Email:" />
-                <Entry                     
-                    Text="{Binding Email}" 
+                <Entry
+                    TextColor="{StaticResource TextPrimaryCollor}"
+                    Text="" 
                     Keyboard="Email"
-                    WidthRequest="300" />
+                    WidthRequest="300"
+                    Placeholder="informe seu email"
+                    PlaceholderColor="{StaticResource TextSecondCollor}"/>
             </StackLayout>
-
             <StackLayout HorizontalOptions="Center" Spacing="5">
                 <Label 
-                    
-                    Text="Password:" />
+                    TextColor="{StaticResource TextPrimaryCollor}"
+                    Text="Senha:" />
                 <Entry 
-                    Text="{ Binding Password }"                    
+                    TextColor="{StaticResource TextPrimaryCollor}"
+                    Text=""
                     WidthRequest="300"
-                    IsPassword="True"/>
+                    IsPassword="True"
+                    Placeholder="informe sua senha"
+                    PlaceholderColor="{StaticResource TextSecondCollor}"/>
             </StackLayout>
         </StackLayout>
 
@@ -62,7 +62,7 @@
             Text="LOGIN"
             HorizontalOptions="Center"
             VerticalOptions="Center"
-            Margin="15,10"
+            Margin="10,40,10,0"
             BackgroundColor="{StaticResource PrimaryColor}"
             TextColor="White"
             Command="{ Binding LoginCommand }"
