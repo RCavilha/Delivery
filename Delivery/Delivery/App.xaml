@@ -56,7 +56,14 @@
                 <Setter Property="FontFamily" Value="MontserratBold" />
                 <Setter Property="FontSize" Value="12" />
                 <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
-            </Style>                      
+            </Style>
+
+            <Style TargetType="Label" x:Key="ButtonCartQuantityLabel">
+                <Setter Property="FontFamily" Value="MontserratBold" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="TextColor" Value="Red" />
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

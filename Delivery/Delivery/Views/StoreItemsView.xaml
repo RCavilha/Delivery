@@ -9,9 +9,6 @@
              xmlns:converter="clr-namespace:Delivery.Libraries.Converters"
              Shell.TabBarIsVisible="False"
              x:Name="StoreItemsMenu">
-    <ContentPage.BindingContext>
-        <viewModels:StoreItemsViewModel/>
-    </ContentPage.BindingContext>
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:BoolNegationConverter x:Key="BoolNegationConverter"/>
@@ -30,39 +27,40 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="60" x:Name="RowCartButton"/>
             </Grid.RowDefinitions>
-            <ScrollView Grid.Row="0">
+            
                 <StackLayout>
                     <ActivityIndicator IsRunning="{Binding PageIsLoaded, Converter={StaticResource BoolNegationConverter}}"
                        IsVisible="{Binding PageIsLoaded,Converter={StaticResource BoolNegationConverter}}"
                                        Color="Orange">
                     </ActivityIndicator>
-                    <Frame Margin="0,-20,0,-5" 
+                    <CollectionView ItemsSource="{Binding Store.StoreItems}" x:Name="CollectionStoreItems" Scrolled="CollectionStoreItems_Scrolled">
+
+                        <CollectionView.Header>
+                            <Frame Margin="0,0,0,5" 
                            HasShadow="True" 
                            BorderColor="LightGray" 
                            Padding="20"
                            IsVisible="{Binding PageIsLoaded}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="20"/>
-                            </Grid.RowDefinitions>
-                            <Label Text="{Binding Store.Description}" 
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="20"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Text="{Binding Store.Description}" 
                                    Grid.Row="0"  
                                    TextColor="{StaticResource TextPrimaryCollor}"/>
-                            <Label Text="{Binding Store.Address}" 
+                                    <Label Text="{Binding Store.Address}" 
                                    Grid.Row="1" 
                                    TextColor="{StaticResource TextSecondCollor}"/>
-                            <Label Text="{Binding Store.Phone}" 
+                                    <Label Text="{Binding Store.Phone}" 
                                    Grid.Row="2" 
                                    TextColor="{StaticResource TextSecondCollor}"/>
-                        </Grid>
-                    </Frame>
-                    <CollectionView ItemsSource="{Binding Store.StoreItems}">
-                        <CollectionView.Behaviors>
-                            <behaviors:HideBagButtonOnScrollBehavior/>
-                        </CollectionView.Behaviors>
+                                </Grid>
+                            </Frame>
+                        </CollectionView.Header>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <ContentView>
@@ -91,26 +89,40 @@
                                 </ContentView>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
-                        <CollectionView.Footer>
-                            <views:CartButtonsView x:Name="CartButtonsView"/>
-                        </CollectionView.Footer>
                     </CollectionView>
-                </StackLayout>
-            </ScrollView>
-            <Button x:Name="bagButton" 
-                    Grid.Row="0" 
-                    Text="+" 
-                    FontAttributes="Bold" 
-                    Command="{Binding CartCommand}"
-                    BackgroundColor="{StaticResource PrimaryColor}" 
-                    CornerRadius="50" 
-                    TextColor="White" 
-                    HorizontalOptions="End" 
-                    WidthRequest="60" 
-                    HeightRequest="60" 
-                    Margin="0,0,20,22" 
-                    VerticalOptions="End"
-                    IsVisible="False"/>
+                </StackLayout>            
+            <Grid 
+                Grid.Row="0"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                x:Name="bagGrid"
+                IsVisible="false">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer 
+                        Command="{Binding Source={x:Reference StoreItemsMenu}, Path=BindingContext.CartCommand}" 
+                        CommandParameter="{Binding .}"/>
+                </Grid.GestureRecognizers>
+                <Frame
+                    CornerRadius="50"
+                    WidthRequest="25"
+                    HeightRequest="25"
+                    Margin="0,0,10,10" 
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    IsVisible="true">
+                    <Image
+                        HeightRequest="50"
+                        Source="cartstore"
+                        BackgroundColor="{StaticResource PrimaryColor}"/>
+                </Frame>
+                <Label 
+                    Padding="20,2,0,0"
+                    Text="{Binding QuantityCartItems}"
+                    Style="{StaticResource ButtonCartQuantityLabel}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start"
+                    IsVisible="true" />
+            </Grid>
+            <views:CartButtonsView x:Name="CartButtonsView" VerticalOptions="End" Grid.Row="1"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

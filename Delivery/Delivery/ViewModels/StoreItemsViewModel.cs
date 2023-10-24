@@ -39,11 +39,22 @@ namespace Delivery.ViewModels
             set
             {
                 _storeModel = value;
-
-                //var items = new StoreItemsService();
-                //Store.StoreItems = items.GetListStoreItems();
                 OnPropertyChanged(nameof(Store));
                 PageIsLoaded = true;
+            }
+        }
+
+        private int _quantityCartItem;
+        public int QuantityCartItem
+        {
+            get
+            {
+                return _quantityCartItem;
+            }
+            set
+            {
+                _quantityCartItem = value;
+                OnPropertyChanged(nameof(_quantityCartItem));
             }
         }
 
@@ -62,11 +73,13 @@ namespace Delivery.ViewModels
         public ICommand SelectedItemCommand { get; set; }
         public ICommand CartCommand { get; set; }
 
+        IShoppingCartService shoppingCartService;
         public StoreItemsViewModel()
         {
             PageIsLoaded = false;
             SelectedItemCommand = new Command<StoreItemModel>(SelectedItemGoTo);
             CartCommand = new Command(OpenCart);
+            shoppingCartService = DependencyService.Get<IShoppingCartService>();
         }
 
         public async void GetStoreDataBase()
@@ -74,8 +87,6 @@ namespace Delivery.ViewModels
             await Task.Delay(150);
             var service = new StoreService();
             Store = await service.GetStore(idStore);
-
-            //await service.SalvaEmpresa(Store);
         }
 
         public void SelectedItemGoTo(StoreItemModel selectedItem)
@@ -87,6 +98,11 @@ namespace Delivery.ViewModels
         public void OpenCart()
         {
             Shell.Current.GoToAsync($"store/cart");
+        }
+
+        public async void UpdateQuantityCartItem()
+        {
+            QuantityCartItem = await shoppingCartService.GetTotalQuantityItems();
         }
     }
 }

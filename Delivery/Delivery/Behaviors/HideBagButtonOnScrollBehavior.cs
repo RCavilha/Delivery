@@ -7,8 +7,10 @@ namespace Delivery.Behaviors
 {
     public class HideBagButtonOnScrollBehavior : Behavior<CollectionView>
     {
-        private Button _bagButton;
+        private Grid _bagGrid;
         private ContentView _cartButtonsView;
+        private RowDefinition _rowCartButtonsView;
+        private int _totalItemsCount = 0;
 
         protected override void OnAttachedTo(CollectionView collectionView)
         {
@@ -23,21 +25,35 @@ namespace Delivery.Behaviors
         }
 
         private void OnCollectionViewScrolled(object sender, ItemsViewScrolledEventArgs e)
-        {           
-            double itemHeight = 120;
+        {
             var collectionView = (CollectionView)sender;
-            var visibleItemCount = (int)(collectionView.Height / itemHeight);
-            var totalItemsCount = collectionView.ItemsSource?.Cast<object>().Count() ?? 0;
-            var lastVisibleItemIndex = e.FirstVisibleItemIndex + visibleItemCount;
 
-            if (_bagButton == null)
-                _bagButton = collectionView.FindByName<Button>("bagButton");
+            if (_totalItemsCount == 0)
+                _totalItemsCount = collectionView.ItemsSource?.Cast<object>().Count() ?? 0;
+
+            if (_bagGrid == null)
+                _bagGrid = collectionView.FindByName<Grid>("bagGrid");
 
             if (_cartButtonsView == null)
-               _cartButtonsView = collectionView.FindByName<ContentView>("CartButtonsView");
+                _cartButtonsView = collectionView.FindByName<ContentView>("CartButtonsView");
 
-            if (_bagButton != null)
-                _bagButton.IsVisible = _cartButtonsView.IsVisible && !(lastVisibleItemIndex >= totalItemsCount - 1);
+            if (_rowCartButtonsView == null)
+                _rowCartButtonsView = collectionView.FindByName<RowDefinition>("RowCartButton");
+
+            if ((_bagGrid != null) && (_cartButtonsView != null))
+            {
+                _bagGrid.IsVisible = _cartButtonsView.IsVisible && !(e.LastVisibleItemIndex >= _totalItemsCount);
+
+                if ((_cartButtonsView.IsVisible) && (!_bagGrid.IsVisible))
+                {
+                    _rowCartButtonsView.Height = 60;
+                }
+                else
+                {
+                    _rowCartButtonsView.Height = 0;
+                }
+            }
+                
         }
 
     }

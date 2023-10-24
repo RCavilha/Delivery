@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.PancakeView;
 using Command = MvvmHelpers.Commands.Command;
 
 namespace Delivery.ViewModels
@@ -77,7 +78,8 @@ namespace Delivery.ViewModels
 
         public async Task AddItem()
         {
-            await shoppingCartService.AddItemToCart(_storeCode, SelectedItem.Id, SelectedItem.Image, SelectedItem.Name, SelectedItem.Price, ItemsQuantity);            
+            await shoppingCartService.AddItemToCart(_storeCode, SelectedItem.Id, SelectedItem.Image, SelectedItem.Name, SelectedItem.Price, ItemsQuantity);
+            MessagingCenter.Send(this, "CartButtonUpdate");
             await Shell.Current.Navigation.PopAsync();
         }
 

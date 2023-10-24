@@ -2,8 +2,6 @@
 using Delivery.Models;
 using Delivery.Services;
 using MvvmHelpers.Commands;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -14,16 +12,16 @@ namespace Delivery.ViewModels
     {
         private IShoppingCartService shoppingCartService;
 
-        private List<StoreModel> _listOfStores;
-        public List<StoreModel> ListOfStores
+        private List<StoreModel> _storeList;
+        public List<StoreModel> StoreList
         {
             get
             {
-                return _listOfStores;
+                return _storeList;
             }
             set
             {
-                SetProperty(ref _listOfStores, value);
+                SetProperty(ref _storeList, value);
             }
         }
 
@@ -48,7 +46,7 @@ namespace Delivery.ViewModels
         public async void GetListStore()
         {
             var service = new StoreService();
-            ListOfStores = await service.GetStoreList();
+            StoreList = await service.GetStoreList();
         }
         public async Task StoreItemsGoTo(StoreModel store)
         {
