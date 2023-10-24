@@ -13,32 +13,21 @@ namespace Delivery.ViewModels
         private OrderModel _order;
         public OrderModel Order
         {
-            get
-            {
-                return _order;
-            }
-            set
-            {
-                SetProperty(ref _order, value);
-            }
+            get { return _order; }
+            set { SetProperty(ref _order, value); }
         }
 
         private bool _seending = false;
-
         public bool Seending
         {
-            get
-            {
-                return _seending;
-            }
-            set
-            {
-                SetProperty(ref _seending, value);
-            }
+            get { return _seending; }
+            set { SetProperty(ref _seending, value); }
         }
 
         IShoppingCartService shoppingCartService;
+
         IOrderService orderService;
+
         IStoreService storeService;
         public ICommand SendOrderCommand { get; set; }
         public OrderCompletionViewModel()
@@ -49,7 +38,6 @@ namespace Delivery.ViewModels
             SendOrderCommand = new Command(SendOrder);
             _getOrder();
         }
-
         private async void _getOrder()
         {
             Order = new OrderModel();
@@ -70,7 +58,7 @@ namespace Delivery.ViewModels
             int orderCount = await orderService.GetOrderCount();
             orderCount++;
             Order.OrderId = Order.StoreId.ToString("D4") + orderCount.ToString("D4");
-            Order.OrderDateTime = DateTime.Now;            
+            Order.OrderDateTime = DateTime.Now;
             Order.ShoppingCart = await shoppingCartService.GetCartList();
             MessagingCenter.Send(Order, "AddOrderToHistory");
             await orderService.AddUserOrder(Order);

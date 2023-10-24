@@ -24,21 +24,15 @@ namespace Delivery.ViewModels
             }
             set 
             { 
-                SetProperty(ref _shoppingCartTotalPrice, value);                
+                SetProperty(ref _shoppingCartTotalPrice, value);
             }
         }
 
         private ObservableCollection<ShoppingCartModel> _cartList;
         public ObservableCollection<ShoppingCartModel> CartList
         {
-            get
-            {
-                return _cartList;
-            }
-            set
-            {
-                SetProperty(ref _cartList, value);
-            }
+            get { return _cartList; }
+            set { SetProperty(ref _cartList, value); }
         }
         public ICommand FinishCommand { get; set; }
         public ICommand IncSelectedItemCountCommand { get; set; }
@@ -54,7 +48,6 @@ namespace Delivery.ViewModels
             DecSelectedItemCountCommand = new Command<ShoppingCartModel>(DecSelectedItemCount);
             GetCartList();
         }
-
         public async void GetCartList()
         {
            var itemList = await shoppingCartService.GetCartList();
@@ -65,7 +58,6 @@ namespace Delivery.ViewModels
         {
             Shell.Current.GoToAsync($"cart/ordercompletion");
         }
-
         public async void DecSelectedItemCount(ShoppingCartModel item)
         {            
 
@@ -82,9 +74,8 @@ namespace Delivery.ViewModels
                 item.TotalPrice = item.UnitPrice * item.Quantity;
                 TotalPrice();
                 await shoppingCartService.UpdateCartItem(item);
-            }            
+            }
         }
-
         public async void IncSelectedItemCount(ShoppingCartModel item)
         {
             item.Quantity++;   
@@ -92,7 +83,6 @@ namespace Delivery.ViewModels
             TotalPrice();
             await shoppingCartService.UpdateCartItem(item);            
         }
-
         public void TotalPrice()
         {
             double soma = 0;
@@ -100,7 +90,6 @@ namespace Delivery.ViewModels
             {
                 soma += item.TotalPrice;
             }
-
             ShoppingCartTotalPrice = soma;
         }
     }

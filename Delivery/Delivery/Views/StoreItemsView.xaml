@@ -1,11 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.StoreItemsView"
-             xmlns:viewModels="clr-namespace:Delivery.ViewModels"
              xmlns:views="clr-namespace:Delivery.Views"
-             xmlns:behaviors="clr-namespace:Delivery.Behaviors"         
              xmlns:converter="clr-namespace:Delivery.Libraries.Converters"
              Shell.TabBarIsVisible="False"
              x:Name="StoreItemsMenu">
@@ -16,11 +13,11 @@
     </ContentPage.Resources>
     <Shell.TitleView>
         <Grid>
-            <Label Text="{Binding Store.Name}" 
-                   TextColor="{StaticResource PrimaryColor}" 
-                   VerticalTextAlignment="Center"/>
-            <Image Source="{Binding Store.Logo}" 
-                   HorizontalOptions="End"/>
+            <Label 
+                Text="{Binding Store.Name}" 
+                TextColor="{StaticResource PrimaryColor}" 
+                VerticalTextAlignment="Center"/>
+            <Image Source="{Binding Store.Logo}" HorizontalOptions="End"/>
         </Grid>
     </Shell.TitleView>
     <ContentPage.Content>
@@ -28,69 +25,84 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="60" x:Name="RowCartButton"/>
-            </Grid.RowDefinitions>
-            
+            </Grid.RowDefinitions>            
                 <StackLayout>
-                    <ActivityIndicator IsRunning="{Binding PageIsLoaded, Converter={StaticResource BoolNegationConverter}}"
-                       IsVisible="{Binding PageIsLoaded,Converter={StaticResource BoolNegationConverter}}"
-                                       Color="Orange">
+                    <ActivityIndicator 
+                        IsRunning="{Binding PageIsLoaded, Converter={StaticResource BoolNegationConverter}}"
+                        IsVisible="{Binding PageIsLoaded,Converter={StaticResource BoolNegationConverter}}"
+                        Color="Orange">
                     </ActivityIndicator>
-                    <CollectionView ItemsSource="{Binding Store.StoreItems}" x:Name="CollectionStoreItems" Scrolled="CollectionStoreItems_Scrolled">
-
+                    <CollectionView 
+                        ItemsSource="{Binding Store.StoreItems}"
+                        x:Name="CollectionStoreItems"
+                        Scrolled="CollectionStoreItems_Scrolled">
                         <CollectionView.Header>
-                            <Frame Margin="0,0,0,5" 
-                           HasShadow="True" 
-                           BorderColor="LightGray" 
-                           Padding="20"
-                           IsVisible="{Binding PageIsLoaded}">
+                            <Frame 
+                                Margin="0,0,0,5" 
+                                HasShadow="True" 
+                                BorderColor="LightGray" 
+                                Padding="20"
+                                IsVisible="{Binding PageIsLoaded}">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="20"/>
                                     </Grid.RowDefinitions>
-                                    <Label Text="{Binding Store.Description}" 
-                                   Grid.Row="0"  
-                                   TextColor="{StaticResource TextPrimaryCollor}"/>
-                                    <Label Text="{Binding Store.Address}" 
-                                   Grid.Row="1" 
-                                   TextColor="{StaticResource TextSecondCollor}"/>
-                                    <Label Text="{Binding Store.Phone}" 
-                                   Grid.Row="2" 
-                                   TextColor="{StaticResource TextSecondCollor}"/>
+                                    <Label 
+                                        Text="{Binding Store.Description}" 
+                                        Grid.Row="0"  
+                                        TextColor="{StaticResource TextPrimaryCollor}"/>
+                                    <Label 
+                                        Text="{Binding Store.Address}" 
+                                        Grid.Row="1" 
+                                        TextColor="{StaticResource TextSecondCollor}"/>
+                                    <Label 
+                                        Text="{Binding Store.Phone}" 
+                                        Grid.Row="2" 
+                                        TextColor="{StaticResource TextSecondCollor}"/>
                                 </Grid>
                             </Frame>
                         </CollectionView.Header>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <ContentView>
-                                    <Frame CornerRadius="1" 
-                                           Padding="1" 
-                                           HasShadow="False"
-                                           IsVisible="{Binding PageIsLoaded}"
-                                           HeightRequest="120"
-                                           x:Name="ContentViewItemsList">
+                                    <Frame 
+                                        CornerRadius="1" 
+                                        Padding="1" 
+                                        HasShadow="False"
+                                        IsVisible="{Binding PageIsLoaded}"
+                                        HeightRequest="120"
+                                        x:Name="ContentViewItemsList">
                                         <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Source={x:Reference StoreItemsMenu}, Path=BindingContext.SelectedItemCommand}" 
-                                                                  CommandParameter="{Binding .}"/>
+                                            <TapGestureRecognizer 
+                                                Command="{Binding Source={x:Reference StoreItemsMenu}, Path=BindingContext.SelectedItemCommand}" 
+                                                CommandParameter="{Binding .}"/>
                                         </Frame.GestureRecognizers>
                                         <Grid ColumnDefinitions="3*, 1*">
                                             <StackLayout Margin="10">
-                                                <Label Text="{Binding Name}" 
-                                                       TextColor="{StaticResource TextPrimaryCollor}"/>
-                                                <Label Text="{Binding Description}" 
-                                                       TextColor="{StaticResource TextSecondCollor}" MaxLines="3"/>
-                                                <Label Text="{Binding Price, StringFormat='R$ {0:F2}'}" 
-                                                       TextColor="{StaticResource TextPrimaryCollor}" MaxLines="3"/>
+                                                <Label 
+                                                    Text="{Binding Name}" 
+                                                    TextColor="{StaticResource TextPrimaryCollor}"/>
+                                                <Label 
+                                                    Text="{Binding Description}" 
+                                                    TextColor="{StaticResource TextSecondCollor}" MaxLines="3"/>
+                                                <Label 
+                                                    Text="{Binding Price, StringFormat='R$ {0:F2}'}" 
+                                                    TextColor="{StaticResource TextPrimaryCollor}" MaxLines="3"/>
                                             </StackLayout>
-                                            <Image Grid.Column="1" HeightRequest="80" Source="{Binding Image}" Margin="10"/>
+                                            <Image 
+                                                Grid.Column="1" 
+                                                HeightRequest="80" 
+                                                Source="{Binding Image}" 
+                                                Margin="10"/>
                                         </Grid>
                                     </Frame>
                                 </ContentView>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                </StackLayout>            
+                </StackLayout>
             <Grid 
                 Grid.Row="0"
                 HorizontalOptions="End"
@@ -122,7 +134,10 @@
                     VerticalOptions="Start"
                     IsVisible="true" />
             </Grid>
-            <views:CartButtonsView x:Name="CartButtonsView" VerticalOptions="End" Grid.Row="1"/>
+            <views:CartButtonsView 
+                x:Name="CartButtonsView" 
+                VerticalOptions="End" 
+                Grid.Row="1"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

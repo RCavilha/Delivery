@@ -51,7 +51,6 @@ namespace Delivery.Services
             };
 
             var exist = await GetCartItem(idItem);
-
             if ((exist == null) || (exist.IdItem != idItem))
             {
                 await db.InsertAsync(item);
@@ -132,6 +131,5 @@ namespace Delivery.Services
         {
             return CurrentStoreId;
         }
-
     }
 }

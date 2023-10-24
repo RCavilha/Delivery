@@ -7,11 +7,18 @@
              IsVisible="{Binding ShowCartButtonsView}"
              x:Name="CartButton">
     <ContentView.BindingContext>
-        <viewModel:CartButtonsViewModel/>        
-    </ContentView.BindingContext>              
-    <ContentView.Content>        
-        <Frame HasShadow="True" BorderColor="LightGray" VerticalOptions="Start">
-            <Grid BackgroundColor="White" VerticalOptions="Start" Padding="-10" Margin="15,0,5,0">
+        <viewModel:CartButtonsViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <Frame 
+            HasShadow="True" 
+            BorderColor="LightGray" 
+            VerticalOptions="Start">
+            <Grid 
+                BackgroundColor="White" 
+                VerticalOptions="Start" 
+                Padding="-10" 
+                Margin="15,0,5,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>

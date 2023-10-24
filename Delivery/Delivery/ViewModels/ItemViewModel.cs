@@ -19,10 +19,7 @@ namespace Delivery.ViewModels
         private int _itemsQuantity = 1;
         public int ItemsQuantity
         {
-            get
-            {
-                return _itemsQuantity;
-            }
+            get { return _itemsQuantity; }
             set
             {
                 if (value <= 0)
@@ -37,7 +34,6 @@ namespace Delivery.ViewModels
                 OnPropertyChanged(nameof(TotalPrice));
             }
         }
-
         public StoreItemModel SelectedItem { get; set; }
         public string selectedItemSerialized
         {
@@ -53,12 +49,8 @@ namespace Delivery.ViewModels
         public int StoreCode
         {
             get { return _storeCode; }
-            set
-            {
-                _storeCode = value;
-            }
+            set { _storeCode = value; }
         }
-
         public double TotalPrice
         {
             get
@@ -69,35 +61,30 @@ namespace Delivery.ViewModels
                 return SelectedItem.Price * _itemsQuantity;
             }
         }
-
         public AsyncCommand AddItemCommand { get; set; }
         public ICommand IncItemsQuantityCommand { get; set; }
         public ICommand DecItemsQuantityCommand { get; set; }
 
         IShoppingCartService shoppingCartService;
-
-        public async Task AddItem()
-        {
-            await shoppingCartService.AddItemToCart(_storeCode, SelectedItem.Id, SelectedItem.Image, SelectedItem.Name, SelectedItem.Price, ItemsQuantity);
-            await Shell.Current.Navigation.PopAsync();
-        }
-
-        public void IncItemsQuantity()
-        {
-            ItemsQuantity++;
-        }
-
-        public void DecItemsQuantity()
-        {
-            ItemsQuantity--;
-        }
-
         public ItemViewModel()
         {
             AddItemCommand = new AsyncCommand(AddItem);
             IncItemsQuantityCommand = new Command(IncItemsQuantity);
             DecItemsQuantityCommand = new Command(DecItemsQuantity);
             shoppingCartService = DependencyService.Get<IShoppingCartService>();
+        }
+        public async Task AddItem()
+        {
+            await shoppingCartService.AddItemToCart(_storeCode, SelectedItem.Id, SelectedItem.Image, SelectedItem.Name, SelectedItem.Price, ItemsQuantity);
+            await Shell.Current.Navigation.PopAsync();
+        }
+        public void IncItemsQuantity()
+        {
+            ItemsQuantity++;
+        }
+        public void DecItemsQuantity()
+        {
+            ItemsQuantity--;
         }
     }
 }

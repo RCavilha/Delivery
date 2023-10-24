@@ -32,14 +32,10 @@ namespace Delivery.ViewModels
         private StoreModel _storeModel;
         public StoreModel Store
         {
-            get
-            {
-                return _storeModel;
-            }
+            get { return _storeModel; }
             set
             {
-                _storeModel = value;
-                OnPropertyChanged(nameof(Store));
+                SetProperty(ref _storeModel, value);
                 PageIsLoaded = true;
             }
         }
@@ -47,15 +43,8 @@ namespace Delivery.ViewModels
         private int _quantityCartItem;
         public int QuantityCartItem
         {
-            get
-            {
-                return _quantityCartItem;
-            }
-            set
-            {
-                _quantityCartItem = value;
-                OnPropertyChanged(nameof(_quantityCartItem));
-            }
+            get { return _quantityCartItem;}
+            set { SetProperty(ref _quantityCartItem, value); }
         }
 
         public int storeSerialized
@@ -69,11 +58,11 @@ namespace Delivery.ViewModels
                 }
             }
         }
-
         public ICommand SelectedItemCommand { get; set; }
         public ICommand CartCommand { get; set; }
 
         IShoppingCartService shoppingCartService;
+
         IStoreService storeService;
         public StoreItemsViewModel()
         {

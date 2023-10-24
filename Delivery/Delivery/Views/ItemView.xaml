@@ -19,17 +19,20 @@
             <Frame HeightRequest="200">
                 <Image Source="{Binding SelectedItem.Image}"/>
             </Frame>
-            <Label Text="{Binding SelectedItem.Name}" 
-                   TextColor="{StaticResource TextPrimaryCollor}" 
-                   Padding="2"/>
-            <Label Text="{Binding SelectedItem.Description}" 
-                   TextColor="{StaticResource TextSecondCollor}" 
-                   MaxLines="20" 
-                   Padding="10"/>
-            <Label Text="{Binding SelectedItem.Price, StringFormat='R$ {0:F2}'}" 
-                   TextColor="{StaticResource TextPrimaryCollor}" 
-                   MaxLines="3" 
-                   Padding="2"/>
+            <Label 
+                Text="{Binding SelectedItem.Name}" 
+                TextColor="{StaticResource TextPrimaryCollor}" 
+                Padding="2"/>
+            <Label 
+                Text="{Binding SelectedItem.Description}" 
+                TextColor="{StaticResource TextSecondCollor}" 
+                MaxLines="20" 
+                Padding="10"/>
+            <Label 
+                Text="{Binding SelectedItem.Price, StringFormat='R$ {0:F2}'}" 
+                TextColor="{StaticResource TextPrimaryCollor}" 
+                MaxLines="3" 
+                Padding="2"/>
             <Grid Padding="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>

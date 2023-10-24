@@ -12,8 +12,6 @@ public class OrderService : IOrderService
 {
     private static string _tableName = "Orders";
     public static string FireBasePassword = "H96LnlDzvh0rZ9sJ3bnUGN0Pj9V8qkUyD9eZd9qq";
-    //public List<OrderModel> UserOrders { get; set; }
-
     FirebaseClient _dbStore;
 
     void Init()
@@ -30,7 +28,6 @@ public class OrderService : IOrderService
         try
         {
             await _dbStore.Child(_tableName).PostAsync(order);
-            //UserOrders.Add(order);
             return true;
         }
         catch
@@ -49,10 +46,9 @@ public class OrderService : IOrderService
             .Select(firebaseObject => firebaseObject.Object)
             .ToList();
 
-        //UserOrders = orderList;
-
         return orderList;
     }
+
     public async Task<int> GetOrderCount()
     {
         Init();

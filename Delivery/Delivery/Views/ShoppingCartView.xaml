@@ -17,7 +17,6 @@
     <ContentPage.BindingContext>
         <viewModels:ShoppingCartViewModel/>
     </ContentPage.BindingContext>
-
     <ContentPage.Content>
         <StackLayout>
             <CollectionView ItemsSource="{Binding CartList}">
@@ -43,18 +42,21 @@
                                             TextColor="{StaticResource TextPrimaryCollor}"
                                             MaxLines="2"/>
                                     </StackLayout>
-                                    <StackLayout Grid.Column="2" 
-                                                 Margin="10"
-                                                 VerticalOptions="End">
-                                        <Label Text="{Binding TotalPrice, StringFormat='R$ {0:F2}'}" 
-                                               TextColor="{StaticResource TextPrimaryCollor}"/>
+                                    <StackLayout 
+                                        Grid.Column="2" 
+                                        Margin="10"
+                                        VerticalOptions="End">
+                                        <Label 
+                                            Text="{Binding TotalPrice, StringFormat='R$ {0:F2}'}" 
+                                            TextColor="{StaticResource TextPrimaryCollor}"/>
                                     </StackLayout>
-                                    <Frame Grid.Column="2"
-                                           VerticalOptions="End"
-                                           HorizontalOptions="End"                                           
-                                           Padding="1"
-                                           Margin="10"
-                                           HeightRequest="35">
+                                    <Frame 
+                                        Grid.Column="2"
+                                        VerticalOptions="End"
+                                        HorizontalOptions="End"                                           
+                                        Padding="1"
+                                        Margin="10"
+                                        HeightRequest="35">
                                         <Grid Padding="0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="35"/>
@@ -74,12 +76,13 @@
                                                 BorderColor="Transparent" 
                                                 HasShadow="False" 
                                                 Grid.Column="1">                                                
-                                                <Label Text="{Binding Quantity}" 
-                                                       TextColor="{StaticResource PrimaryColor}" 
-                                                       VerticalOptions="CenterAndExpand"
-                                                       HorizontalOptions="CenterAndExpand"
-                                                       Margin="0"
-                                                       Style="{StaticResource QuantityLabel}"/>
+                                                <Label 
+                                                    Text="{Binding Quantity}" 
+                                                    TextColor="{StaticResource PrimaryColor}" 
+                                                    VerticalOptions="CenterAndExpand"
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    Margin="0"
+                                                    Style="{StaticResource QuantityLabel}"/>
                                             </Frame>
                                             <Button 
                                                 Text="+"                                                     
@@ -98,23 +101,29 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Frame HasShadow="True" BorderColor="LightGray" Padding="20">
+            <Frame 
+                HasShadow="True" 
+                BorderColor="LightGray" 
+                Padding="20">
                 <Grid BackgroundColor="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Text="Valor total" 
-                           TextColor="Black" 
-                           VerticalOptions="Center" 
-                           HorizontalOptions="Start"
-                           Grid.Row="0"/>
-                    <Label Text="{Binding ShoppingCartTotalPrice, StringFormat='R$ {0:F2}'}" 
-                           TextColor="Black" 
-                           VerticalOptions="Center" 
-                           HorizontalOptions="End"
-                           Grid.Row="0"/>
-                    <Button Text="Finalizar" 
+                    <Label 
+                        Text="Valor total" 
+                        TextColor="Black" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Start"
+                        Grid.Row="0"/>
+                    <Label 
+                        Text="{Binding ShoppingCartTotalPrice, StringFormat='R$ {0:F2}'}" 
+                        TextColor="Black" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="End"
+                        Grid.Row="0"/>
+                    <Button 
+                        Text="Finalizar" 
                         CornerRadius="10" 
                         BackgroundColor="{StaticResource PrimaryColor}" 
                         TextColor="White" 

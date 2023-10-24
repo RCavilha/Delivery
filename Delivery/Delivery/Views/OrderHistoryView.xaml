@@ -21,9 +21,15 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <ContentView Padding="0, 7">
-                            <yummy:PancakeView Padding="10" Margin="1" BackgroundColor="White">
+                            <yummy:PancakeView 
+                                Padding="10" 
+                                Margin="1" 
+                                BackgroundColor="White">
                                 <yummy:PancakeView.Border>
-                                    <yummy:Border Color="#000000" Thickness="1" DashPattern="4,10" />
+                                    <yummy:Border 
+                                        Color="#000000" 
+                                        Thickness="1" 
+                                        DashPattern="4,10" />
                                 </yummy:PancakeView.Border>
                                 <StackLayout>
                                     <Label 

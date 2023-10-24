@@ -22,11 +22,9 @@ namespace Delivery.ViewModels
         public bool ShowCartButtonsView
         {
             get { return _showCartButtonsView; }
-            private set
-            {
-                SetProperty(ref _showCartButtonsView, value);
-            }
+            private set { SetProperty(ref _showCartButtonsView, value); }
         }
+
         private int _quantity = 0;
         public int Quantity
         {

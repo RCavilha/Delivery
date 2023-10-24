@@ -10,22 +10,18 @@ namespace Delivery.ViewModels
 {
     public class StoreViewModel : BaseViewModel
     {
+        public AsyncCommand<StoreModel> StoreItemsCommand { get; set; }
+
         private IShoppingCartService shoppingCartService;
+
         private IStoreService storeService;
 
         private List<StoreModel> _storeList;
         public List<StoreModel> StoreList
         {
-            get
-            {
-                return _storeList;
-            }
-            set
-            {
-                SetProperty(ref _storeList, value);
-            }
+            get { return _storeList; }
+            set { SetProperty(ref _storeList, value); }
         }
-
         public bool ShowCartView
         {
             get
@@ -34,9 +30,6 @@ namespace Delivery.ViewModels
                 return (quantity > 0);
             }
         }
-
-        public AsyncCommand<StoreModel> StoreItemsCommand { get; set; }
-
         public StoreViewModel()
         {
             StoreItemsCommand = new AsyncCommand<StoreModel>(StoreItemsGoTo);
@@ -44,7 +37,6 @@ namespace Delivery.ViewModels
             storeService = DependencyService.Get<IStoreService>();
             GetListStore();
         }
-
         public async void GetListStore()
         {
             StoreList = await storeService.GetStoreList();

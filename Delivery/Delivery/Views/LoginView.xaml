@@ -56,7 +56,6 @@
                     PlaceholderColor="{StaticResource TextSecondCollor}"/>
             </StackLayout>
         </StackLayout>
-
         <Button
             Grid.Row="2"
             Text="LOGIN"
@@ -69,5 +68,3 @@
             WidthRequest="300"/>
     </Grid>
 </ContentPage>
-    
-    
