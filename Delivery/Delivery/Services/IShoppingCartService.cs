@@ -6,7 +6,6 @@ namespace Delivery.Services
 {
     public interface IShoppingCartService
     {
-
         Task AddItemToCart(int idStore, int idItem, string image, string name, double price, int quantity);
         Task UpdateCartItem(ShoppingCartModel item);
         Task RemoveCartItem(ShoppingCartModel item);

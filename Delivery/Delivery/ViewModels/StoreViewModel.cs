@@ -11,6 +11,7 @@ namespace Delivery.ViewModels
     public class StoreViewModel : BaseViewModel
     {
         private IShoppingCartService shoppingCartService;
+        private IStoreService storeService;
 
         private List<StoreModel> _storeList;
         public List<StoreModel> StoreList
@@ -40,13 +41,13 @@ namespace Delivery.ViewModels
         {
             StoreItemsCommand = new AsyncCommand<StoreModel>(StoreItemsGoTo);
             shoppingCartService = DependencyService.Get<IShoppingCartService>();
+            storeService = DependencyService.Get<IStoreService>();
             GetListStore();
         }
 
         public async void GetListStore()
         {
-            var service = new StoreService();
-            StoreList = await service.GetStoreList();
+            StoreList = await storeService.GetStoreList();
         }
         public async Task StoreItemsGoTo(StoreModel store)
         {

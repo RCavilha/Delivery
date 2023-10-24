@@ -37,14 +37,15 @@ namespace Delivery.ViewModels
             }
         }
 
-
         IShoppingCartService shoppingCartService;
         IOrderService orderService;
+        IStoreService storeService;
         public ICommand SendOrderCommand { get; set; }
         public OrderCompletionViewModel()
         {
             shoppingCartService = DependencyService.Get<IShoppingCartService>();
             orderService = DependencyService.Get<IOrderService>();
+            storeService = DependencyService.Get<IStoreService>();
             SendOrderCommand = new Command(SendOrder);
             _getOrder();
         }
@@ -54,6 +55,7 @@ namespace Delivery.ViewModels
             Order = new OrderModel();
             Order.UserLogin = "admin";
             Order.StoreId = shoppingCartService.GetStoreId();
+            Order.StoreName = await storeService.GetStoreName(Order.StoreId);
             Order.DeliveryType = "Entrega";
             Order.PaymentType = "Dinheiro";
             Order.TotalQuantity = await shoppingCartService.GetTotalQuantityItems();

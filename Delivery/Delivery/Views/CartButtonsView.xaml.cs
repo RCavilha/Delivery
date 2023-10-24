@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Delivery.ViewModels;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Delivery.Views
@@ -6,9 +7,16 @@ namespace Delivery.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CartButtonsView : ContentView
     {
+        private CartButtonsViewModel _viewModel;
         public CartButtonsView()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            _viewModel = new CartButtonsViewModel();
+            BindingContext = _viewModel;
+        }
+        public void UpdateTotal()
+        {
+            _viewModel.UpdateTotal();
         }
     }
 }

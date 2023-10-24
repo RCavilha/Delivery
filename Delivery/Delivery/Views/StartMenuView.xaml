@@ -54,7 +54,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <views:CartButtonsView/>
+            <views:CartButtonsView x:Name="CartButtonsView"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage> 

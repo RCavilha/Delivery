@@ -74,19 +74,20 @@ namespace Delivery.ViewModels
         public ICommand CartCommand { get; set; }
 
         IShoppingCartService shoppingCartService;
+        IStoreService storeService;
         public StoreItemsViewModel()
         {
             PageIsLoaded = false;
             SelectedItemCommand = new Command<StoreItemModel>(SelectedItemGoTo);
             CartCommand = new Command(OpenCart);
             shoppingCartService = DependencyService.Get<IShoppingCartService>();
+            storeService = DependencyService.Get<IStoreService>();
         }
 
         public async void GetStoreDataBase()
         {
             await Task.Delay(150);
-            var service = new StoreService();
-            Store = await service.GetStore(idStore);
+            Store = await storeService.GetStore(idStore);
         }
 
         public void SelectedItemGoTo(StoreItemModel selectedItem)

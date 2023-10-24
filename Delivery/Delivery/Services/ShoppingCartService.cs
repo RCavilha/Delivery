@@ -60,34 +60,29 @@ namespace Delivery.Services
             {
                 await db.UpdateAsync(item);
             }
-
-            MessagingCenter.Send(this, "CartUpdate");
         }
 
         public async Task UpdateCartItem(ShoppingCartModel item)
         {
             await Init();
             await db.UpdateAsync(item);
-            MessagingCenter.Send(this, "CartUpdate");
         }
 
         public async Task RemoveCartItem(ShoppingCartModel item)
         {
             await Init();
             await db.DeleteAsync(item);
-            MessagingCenter.Send(this, "CartUpdate");
         }
         public async Task ClearCart()
         {
             await Init();
             await db.DeleteAllAsync<ShoppingCartModel>();
-            MessagingCenter.Send(this, "CartUpdate");
         }
         public async Task<List<ShoppingCartModel>> GetCartList()
         {
             await Init();
 
-            var listItem = await db.Table<ShoppingCartModel>().ToListAsync();            
+            var listItem = await db.Table<ShoppingCartModel>().ToListAsync();
             return listItem;
         }
 

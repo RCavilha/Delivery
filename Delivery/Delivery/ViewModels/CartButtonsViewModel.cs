@@ -12,7 +12,12 @@ namespace Delivery.ViewModels
     {
         private IShoppingCartService shoppingCartService;
         public ICommand GotoCartCommand { get; set; }
-
+        public CartButtonsViewModel()
+        {
+            shoppingCartService = DependencyService.Get<IShoppingCartService>();
+            GotoCartCommand = new Command(OpenCart);
+            UpdateTotalAsync();
+        }
         private bool _showCartButtonsView = false;
         public bool ShowCartButtonsView
         {
@@ -22,7 +27,6 @@ namespace Delivery.ViewModels
                 SetProperty(ref _showCartButtonsView, value);
             }
         }
-            
         private int _quantity = 0;
         public int Quantity
         {
@@ -33,38 +37,21 @@ namespace Delivery.ViewModels
                 SetProperty(ref _quantity, value); 
             }
         }
-
         private double _total = 0;
         public double Total
         {
             get { return _total; }
             private set { SetProperty(ref _total, value); }
         }
-
-        public CartButtonsViewModel()
+        public void UpdateTotal()
         {
-            shoppingCartService = DependencyService.Get<IShoppingCartService>();
-            GotoCartCommand = new Command(OpenCart);
-
-            MessagingCenter.Subscribe<ShoppingCartService>(this, "CartUpdate", async (upd) =>
-            {
-                await UpdateTotalAsync();
-            });
-
-            UpdateTotalAsync(); // Chame o método para atualizar o total quando o ViewModel for criado
+            Task task = UpdateTotalAsync();
         }
-
-        ~CartButtonsViewModel()
-        {
-            MessagingCenter.Unsubscribe<ShoppingCartService>(this, "CartUpdate");
-        }
-        
-        private async Task UpdateTotalAsync()
+        public async Task UpdateTotalAsync()
         {
             Total = await shoppingCartService.GetTotalPrice();
             Quantity = await shoppingCartService.GetCount();
         }
-
         public void OpenCart()
         {
             Shell.Current.GoToAsync($"store/cart");

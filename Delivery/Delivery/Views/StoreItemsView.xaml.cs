@@ -18,29 +18,15 @@ namespace Delivery.Views
             InitializeComponent();
             _viewModel = new StoreItemsViewModel();
             BindingContext = _viewModel;
-
-            
-            MessagingCenter.Subscribe<ItemViewModel>(this, "CartButtonUpdate", async (upd) =>
-            {
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-
-                });
-            });
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
             _viewModel.UpdateQuantityCartItem();
+            CartButtonsView.UpdateTotal();
             ControlCartButton();
         }
-
-        ~StoreItemsView()
-        {
-            MessagingCenter.Unsubscribe<ItemViewModel>(this, "CartButtonUpdate");
-        }
-
         private void CollectionStoreItems_Scrolled(object sender, ItemsViewScrolledEventArgs e)
         {
             if (_totalItemsCount == 0)

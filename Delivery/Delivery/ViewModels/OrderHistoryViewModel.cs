@@ -12,6 +12,8 @@ namespace Delivery.ViewModels
 {
     public class OrderHistoryViewModel : BaseViewModel
     {
+        IOrderService orderService;
+        IStoreService storeService;
         private ObservableCollection<OrderModel> _orderList;
         public ObservableCollection<OrderModel> OrderList
         {
@@ -24,12 +26,11 @@ namespace Delivery.ViewModels
                 SetProperty(ref _orderList, value);
             }
         }
-
-        IOrderService orderService;
         public OrderHistoryViewModel()
         {
             orderService = DependencyService.Get<IOrderService>();
-            
+            storeService = DependencyService.Get<StoreService>();
+
             MessagingCenter.Subscribe<OrderModel>(this, "AddOrderToHistory", (add) =>
             {
                 if(OrderList  != null) 
@@ -46,8 +47,7 @@ namespace Delivery.ViewModels
         }
         public async void GetOrderList()
         {
-            var service = new StoreService();
-            var storeList = await service.GetStoreList();
+            var storeList = await storeService.GetStoreList();
             var list = await orderService.GetOrderList("admin");
 
             foreach (var item in list)

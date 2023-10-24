@@ -79,7 +79,6 @@ namespace Delivery.ViewModels
         public async Task AddItem()
         {
             await shoppingCartService.AddItemToCart(_storeCode, SelectedItem.Id, SelectedItem.Image, SelectedItem.Name, SelectedItem.Price, ItemsQuantity);
-            MessagingCenter.Send(this, "CartButtonUpdate");
             await Shell.Current.Navigation.PopAsync();
         }
 
