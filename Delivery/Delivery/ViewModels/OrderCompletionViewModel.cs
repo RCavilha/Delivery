@@ -67,6 +67,9 @@ namespace Delivery.ViewModels
         }
         public async void SendOrder()
         {
+            if(Seending)
+                return;
+
             Seending = true;
             int orderCount = await orderService.GetOrderCount();
             orderCount++;
@@ -76,6 +79,7 @@ namespace Delivery.ViewModels
             MessagingCenter.Send(Order, "AddOrderToHistory");
             await orderService.AddUserOrder(Order);
             await shoppingCartService.ClearCart();
+            await Task.Delay(1800);
             IsSent = true;
         }
     }

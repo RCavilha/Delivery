@@ -45,17 +45,10 @@ namespace Delivery.Behaviors
                 _bagGrid.IsVisible = _cartButtonsView.IsVisible && !(e.LastVisibleItemIndex >= _totalItemsCount);
 
                 if ((_cartButtonsView.IsVisible) && (!_bagGrid.IsVisible))
-                {
                     _rowCartButtonsView.Height = 60;
-                }
                 else
-                {
                     _rowCartButtonsView.Height = 0;
-                }
             }
-                
         }
-
     }
-
 }

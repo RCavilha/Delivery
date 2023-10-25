@@ -146,11 +146,10 @@
                 Margin="20"
                 Grid.Row="1"
                 Command="{Binding SendOrderCommand}"/>
-
             <StackLayout 
                 Grid.Row="0"
                 BackgroundColor="Transparent"
-                 IsVisible="{Binding Seending}">
+                IsVisible="{Binding Seending}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100"/>

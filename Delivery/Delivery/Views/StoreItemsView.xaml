@@ -45,21 +45,42 @@
                                 IsVisible="{Binding PageIsLoaded}">
                                 <Grid>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="20"/>
+                                        <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <Label 
                                         Text="{Binding Store.Description}" 
                                         Grid.Row="0"  
                                         TextColor="{StaticResource TextPrimaryCollor}"/>
-                                    <Label 
-                                        Text="{Binding Store.Address}" 
+                                    <Label                                         
                                         Grid.Row="1" 
-                                        TextColor="{StaticResource TextSecondCollor}"/>
+                                        TextColor="{StaticResource TextSecondCollor}">
+                                        <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Store.Address}" />
+                                             <Span Text=", " />
+                                             <Span Text="{Binding Store.AddressNumber}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label                                         
+                                        Grid.Row="2" 
+                                        TextColor="{StaticResource TextSecondCollor}">
+                                        <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Store.Neighborhood}" />
+                                            <Span Text=" - " />
+                                            <Span Text="{Binding Store.City}" />
+                                            <Span Text=" - " />
+                                            <Span Text="{Binding Store.State}" /> 
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
                                     <Label 
                                         Text="{Binding Store.Phone}" 
-                                        Grid.Row="2" 
+                                        Grid.Row="3" 
                                         TextColor="{StaticResource TextSecondCollor}"/>
                                 </Grid>
                             </Frame>

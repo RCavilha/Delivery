@@ -2,6 +2,7 @@
 using Delivery.Models;
 using Delivery.Services;
 using MvvmHelpers.Commands;
+using MvvmHelpers.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
@@ -16,25 +17,43 @@ namespace Delivery.ViewModels
     [QueryProperty("selectedItemSerialized", "selectedItemSerialized")]
     public class ItemViewModel : BaseViewModel
     {
+        IShoppingCartService _shoppingCartService;
         private int _itemsQuantity = 1;
+        private int _storeCode = 0;
+        private bool _showStoreChanged;
+
+        public ItemViewModel()
+        {
+            AddItemClickCommand = new AsyncCommand(AddItemClick);
+            ClearCartQuestionCommand = new AsyncCommand(ClearCartQuestion);
+            LeaveCartQuestionCommand = new AsyncCommand(LeaveCartQuestion);
+            IncItemsQuantityCommand = new Command(IncItemsQuantity);
+            DecItemsQuantityCommand = new Command(DecItemsQuantity);            
+            _shoppingCartService = DependencyService.Get<IShoppingCartService>();
+        }
+
+        public StoreItemModel SelectedItem { get; set; }
+        public AsyncCommand AddItemClickCommand { get; set; }
+        public AsyncCommand ClearCartQuestionCommand { get; set; }
+        public AsyncCommand LeaveCartQuestionCommand { get; set; }
+        public ICommand IncItemsQuantityCommand { get; set; }
+        public ICommand DecItemsQuantityCommand { get; set; }
+
         public int ItemsQuantity
         {
             get { return _itemsQuantity; }
             set
             {
                 if (value <= 0)
-                {
                     _itemsQuantity = 1;
-                }
                 else
-                {
                     _itemsQuantity = value;
-                }
+
                 OnPropertyChanged(nameof(ItemsQuantity));
                 OnPropertyChanged(nameof(TotalPrice));
             }
         }
-        public StoreItemModel SelectedItem { get; set; }
+
         public string selectedItemSerialized
         {
             set
@@ -45,12 +64,13 @@ namespace Delivery.ViewModels
                 OnPropertyChanged(nameof(ItemsQuantity));
             }
         }
-        private int _storeCode { get; set; }
+
         public int StoreCode
         {
             get { return _storeCode; }
             set { _storeCode = value; }
         }
+
         public double TotalPrice
         {
             get
@@ -61,41 +81,50 @@ namespace Delivery.ViewModels
                 return SelectedItem.Price * _itemsQuantity;
             }
         }
-        public AsyncCommand AddItemCommand { get; set; }
-        public ICommand IncItemsQuantityCommand { get; set; }
-        public ICommand DecItemsQuantityCommand { get; set; }
 
-        IShoppingCartService shoppingCartService;
-        public ItemViewModel()
+        public bool ShowStoreChanged
         {
-            AddItemCommand = new AsyncCommand(AddItem);
-            IncItemsQuantityCommand = new Command(IncItemsQuantity);
-            DecItemsQuantityCommand = new Command(DecItemsQuantity);
-            shoppingCartService = DependencyService.Get<IShoppingCartService>();
+            get { return _showStoreChanged; }
+            set { SetProperty(ref _showStoreChanged, value); }
         }
-        public async Task AddItem()
+
+        public async Task AddItemClick()
         {
-            string resultado = "";
+            var cartStoreId = await _shoppingCartService.GetStoreId();
 
-            var CartStoreId = await shoppingCartService.GetStoreId();
-
-            if ((CartStoreId > 0) && (CartStoreId != StoreCode))
+            if ((cartStoreId > 0) && (cartStoreId != StoreCode))
             {
-                resultado = await Shell.Current.DisplayActionSheet("Você já tem itens adicionados na sua sacola. Deseja limpar a sacola?", "Sim", "Não");
-                if (resultado == "Sim") 
-                {
-                    await shoppingCartService.ClearCart();
-                }
+                ShowStoreChanged = true;
+                return;
             }
 
-            if (resultado != "Não")
-                await shoppingCartService.AddItemToCart(_storeCode, SelectedItem.Id, SelectedItem.Image, SelectedItem.Name, SelectedItem.Price, ItemsQuantity);
-            await Shell.Current.Navigation.PopAsync();
+            await AddToCartAndNavigateBack(true);
         }
+
+        public async Task ClearCartQuestion()
+        {
+            await _shoppingCartService.ClearCart();
+            await AddToCartAndNavigateBack(true);
+        }
+
+        public async Task LeaveCartQuestion()
+        {
+            await AddToCartAndNavigateBack(false);
+        }
+
+        public async Task AddToCartAndNavigateBack(bool addItem)
+        {
+            if (addItem)
+                await _shoppingCartService.AddItemToCart(_storeCode, SelectedItem.Id, SelectedItem.Image, SelectedItem.Name, SelectedItem.Price, ItemsQuantity);
+
+           await Shell.Current.Navigation.PopAsync();
+        }
+
         public void IncItemsQuantity()
         {
             ItemsQuantity++;
         }
+
         public void DecItemsQuantity()
         {
             ItemsQuantity--;

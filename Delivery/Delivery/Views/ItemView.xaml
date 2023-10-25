@@ -15,71 +15,121 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <Frame HeightRequest="200">
-                <Image Source="{Binding SelectedItem.Image}"/>
-            </Frame>
-            <Label 
-                Text="{Binding SelectedItem.Name}" 
-                TextColor="{StaticResource TextPrimaryCollor}" 
-                Padding="2"/>
-            <Label 
-                Text="{Binding SelectedItem.Description}" 
-                TextColor="{StaticResource TextSecondCollor}" 
-                MaxLines="20" 
-                Padding="10"/>
-            <Label 
-                Text="{Binding SelectedItem.Price, StringFormat='R$ {0:F2}'}" 
-                TextColor="{StaticResource TextPrimaryCollor}" 
-                MaxLines="3" 
-                Padding="2"/>
-            <Grid Padding="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button 
-                    Text="-" IsEnabled="{Binding ItemsQuantity, Converter={StaticResource ItemsCountBoolConverter}}" 
-                    Command="{Binding DecItemsQuantityCommand}" 
-                    Grid.Column="0" TextColor="{StaticResource PrimaryColor}" 
-                    BackgroundColor="White" 
-                    BorderColor="{StaticResource PrimaryColor}"/>
-                <Button 
-                    Text="{Binding ItemsQuantity}" 
-                    Grid.Column="1" 
-                    TextColor="{StaticResource PrimaryColor}" 
-                    BackgroundColor="White" 
-                    BorderColor="{StaticResource PrimaryColor}"/>
-                <Button 
-                    Text="+" 
-                    Grid.Column="2" 
-                    Command="{Binding IncItemsQuantityCommand}" 
-                    TextColor="{StaticResource PrimaryColor}" 
-                    BackgroundColor="White" 
-                    BorderColor="{StaticResource PrimaryColor}"/>
-                <Frame 
-                    BackgroundColor="{StaticResource PrimaryColor}" 
-                    CornerRadius="5" 
-                    Grid.Column="3">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer 
-                            Command="{Binding Source={x:Reference ItemMenu}, Path=BindingContext.AddItemCommand}" 
-                            CommandParameter="{Binding .}"/>
-                    </Frame.GestureRecognizers>
-                    <StackLayout VerticalOptions="Center">
-                        <Grid>
-                            <Label 
-                                Text="Adicionar" 
-                                HorizontalOptions="Start"/>
-                            <Label 
-                                Text="{Binding TotalPrice, StringFormat='R$ {0:F2}'}" 
-                                HorizontalOptions="End"/>
-                        </Grid>
-                    </StackLayout>
+        <Grid>
+            <StackLayout>
+                <Frame HeightRequest="200">
+                    <Image Source="{Binding SelectedItem.Image}"/>
                 </Frame>
-            </Grid>
-        </StackLayout>
+                <Label 
+                    Text="{Binding SelectedItem.Name}" 
+                    TextColor="{StaticResource TextPrimaryCollor}" 
+                    Padding="2"/>
+                <Label 
+                    Text="{Binding SelectedItem.Description}" 
+                    TextColor="{StaticResource TextSecondCollor}" 
+                    MaxLines="20" 
+                    Padding="10"/>
+                <Label 
+                    Text="{Binding SelectedItem.Price, StringFormat='R$ {0:F2}'}" 
+                    TextColor="{StaticResource TextPrimaryCollor}" 
+                    MaxLines="3" 
+                    Padding="2"/>
+                <Grid Padding="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button 
+                        Text="-" IsEnabled="{Binding ItemsQuantity, Converter={StaticResource ItemsCountBoolConverter}}" 
+                        Command="{Binding DecItemsQuantityCommand}" 
+                        Grid.Column="0" TextColor="{StaticResource PrimaryColor}" 
+                        BackgroundColor="White" 
+                        BorderColor="{StaticResource PrimaryColor}"/>
+                    <Button 
+                        Text="{Binding ItemsQuantity}" 
+                        Grid.Column="1" 
+                        TextColor="{StaticResource PrimaryColor}" 
+                        BackgroundColor="White" 
+                        BorderColor="{StaticResource PrimaryColor}"/>
+                    <Button 
+                        Text="+" 
+                        Grid.Column="2" 
+                        Command="{Binding IncItemsQuantityCommand}" 
+                        TextColor="{StaticResource PrimaryColor}" 
+                        BackgroundColor="White" 
+                        BorderColor="{StaticResource PrimaryColor}"/>
+                    <Frame 
+                        BackgroundColor="{StaticResource PrimaryColor}" 
+                        CornerRadius="5" 
+                        Grid.Column="3">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding Source={x:Reference ItemMenu}, Path=BindingContext.AddItemClickCommand}" 
+                                CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>
+                        <StackLayout VerticalOptions="Center">
+                            <Grid>
+                                <Label 
+                                    Text="Adicionar" 
+                                    HorizontalOptions="Start"/>
+                                <Label 
+                                    Text="{Binding TotalPrice, StringFormat='R$ {0:F2}'}" 
+                                    HorizontalOptions="End"/>
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+            </StackLayout>
+            <StackLayout 
+                Grid.Row="0"
+                BackgroundColor="Transparent"
+                IsVisible="{Binding ShowStoreChanged}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Frame 
+                        BackgroundColor="{StaticResource LightGrey}" 
+                        Grid.Row="1"
+                        Grid.Column="1" 
+                        CornerRadius="20"
+                        BorderColor="{StaticResource PrimaryColor}">
+                        <StackLayout>
+                            <Label 
+                                Text="Você já tem itens adicionados na sua sacola."
+                                HorizontalOptions="Center"
+                                TextColor="{StaticResource Black}"/>
+                            <Label 
+                                Text="Deseja limpar a sacola?"
+                                HorizontalOptions="Center"
+                                TextColor="{StaticResource Black}"/>
+                            <Button 
+                                Text="Sim" 
+                                Margin="20,0,20,0"
+                                CornerRadius="20"
+                                BackgroundColor="{StaticResource PrimaryColor}"
+                                TextColor="{StaticResource White}"
+                                Command="{Binding ClearCartQuestionCommand}"/>
+                            <Button 
+                                Text="Não" 
+                                Margin="20,0,20,0"
+                                CornerRadius="20"
+                                BackgroundColor="{StaticResource PrimaryColor}"
+                                TextColor="{StaticResource White}"
+                                Command="{Binding LeaveCartQuestionCommand}"/>                            
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
