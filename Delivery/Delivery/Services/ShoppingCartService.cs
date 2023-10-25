@@ -1,15 +1,11 @@
 ﻿using Delivery.Models;
 using Delivery.Services;
 using SQLite;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
 [assembly: Dependency(typeof(ShoppingCartService))]
 namespace Delivery.Services

@@ -1,6 +1,4 @@
-﻿using Delivery.Views;
-using System.Linq;
-using Xamarin.Essentials;
+﻿using System.Linq;
 using Xamarin.Forms;
 
 namespace Delivery.Behaviors

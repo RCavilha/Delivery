@@ -49,9 +49,10 @@ namespace Delivery.ViewModels
             SendOrderCommand = new Command(SendOrder);
             OkSentCommand = new AsyncCommand(async () => { await Shell.Current.Navigation.PopToRootAsync(); });
 
-            _getOrder();
+
+            SetCurrentOrder();
         }
-        private async void _getOrder()
+        private async void SetCurrentOrder()
         {
             Order = new OrderModel();
             Order.UserLogin = "admin";
@@ -67,20 +68,31 @@ namespace Delivery.ViewModels
         }
         public async void SendOrder()
         {
-            if(Seending)
+            if (Seending)
                 return;
 
             Seending = true;
-            int orderCount = await orderService.GetOrderCount();
-            orderCount++;
-            Order.OrderId = Order.StoreId.ToString("D4") + orderCount.ToString("D4");
-            Order.OrderDateTime = DateTime.Now;
-            Order.ShoppingCart = await shoppingCartService.GetCartList();
+            await IncludeFinalOrderData();
             MessagingCenter.Send(Order, "AddOrderToHistory");
             await orderService.AddUserOrder(Order);
             await shoppingCartService.ClearCart();
             await Task.Delay(1800);
             IsSent = true;
+        }
+
+        private async Task IncludeFinalOrderData()
+        {
+            var orderCount = await IncrementOrderCount();
+            Order.OrderId = Order.StoreId.ToString("D4") + orderCount.ToString("D4");
+            Order.OrderDateTime = DateTime.Now;
+            Order.ShoppingCart = await shoppingCartService.GetCartList();
+        }
+
+        private async Task<int> IncrementOrderCount()
+        {
+            var orderCount = await orderService.GetOrderCount();
+            orderCount++;
+            return orderCount;
         }
     }
 }

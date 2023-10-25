@@ -2,11 +2,9 @@
 using Delivery.Services;
 using Firebase.Database;
 using Firebase.Database.Query;
-using SQLite;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(StoreService))]

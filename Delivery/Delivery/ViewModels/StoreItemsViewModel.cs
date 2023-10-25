@@ -3,7 +3,6 @@ using Delivery.Models;
 using Delivery.Services;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -43,7 +42,7 @@ namespace Delivery.ViewModels
         private int _quantityCartItem;
         public int QuantityCartItem
         {
-            get { return _quantityCartItem;}
+            get { return _quantityCartItem; }
             set { SetProperty(ref _quantityCartItem, value); }
         }
 

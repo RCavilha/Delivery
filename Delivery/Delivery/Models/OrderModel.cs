@@ -1,15 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms.PancakeView;
-using Xamarin.Forms;
-using SQLite;
-using Newtonsoft.Json;
 
 namespace Delivery.Models
 {
     public class OrderModel
-    {     
+    {
         public string OrderId { get; set; }
         public string UserLogin { get; set; }
         public int StoreId { get; set; }

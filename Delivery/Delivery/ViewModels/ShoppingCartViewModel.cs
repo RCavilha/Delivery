@@ -1,11 +1,8 @@
 ﻿using Delivery.Libraries.Helpers.MVVM;
 using Delivery.Models;
 using Delivery.Services;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Delivery.ViewModels
@@ -18,12 +15,12 @@ namespace Delivery.ViewModels
 
         public double ShoppingCartTotalPrice
         {
-            get 
-            { 
-                return _shoppingCartTotalPrice; 
+            get
+            {
+                return _shoppingCartTotalPrice;
             }
-            set 
-            { 
+            set
+            {
                 SetProperty(ref _shoppingCartTotalPrice, value);
             }
         }
@@ -37,7 +34,7 @@ namespace Delivery.ViewModels
         public ICommand FinishCommand { get; set; }
         public ICommand IncSelectedItemCountCommand { get; set; }
         public ICommand DecSelectedItemCountCommand { get; set; }
-        
+
         IShoppingCartService shoppingCartService;
 
         public ShoppingCartViewModel()
@@ -50,18 +47,18 @@ namespace Delivery.ViewModels
         }
         public async void GetCartList()
         {
-           var itemList = await shoppingCartService.GetCartList();
-           CartList = new ObservableCollection<ShoppingCartModel>(itemList);
-           TotalPrice();
+            var itemList = await shoppingCartService.GetCartList();
+            CartList = new ObservableCollection<ShoppingCartModel>(itemList);
+            TotalPrice();
         }
         public void GoToFinish()
         {
             Shell.Current.GoToAsync($"cart/ordercompletion");
         }
         public async void DecSelectedItemCount(ShoppingCartModel item)
-        {            
+        {
 
-            if(item.Quantity <= 1)
+            if (item.Quantity <= 1)
             {
                 await shoppingCartService.RemoveCartItem(item);
                 CartList.Remove(item);
@@ -78,10 +75,10 @@ namespace Delivery.ViewModels
         }
         public async void IncSelectedItemCount(ShoppingCartModel item)
         {
-            item.Quantity++;   
+            item.Quantity++;
             item.TotalPrice = item.UnitPrice * item.Quantity;
             TotalPrice();
-            await shoppingCartService.UpdateCartItem(item);            
+            await shoppingCartService.UpdateCartItem(item);
         }
         public void TotalPrice()
         {

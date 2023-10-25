@@ -1,7 +1,5 @@
 ﻿using Delivery.Services;
-using Delivery.Views;
 using MvvmHelpers;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -29,10 +27,10 @@ namespace Delivery.ViewModels
         public int Quantity
         {
             get { return _quantity; }
-            private set 
+            private set
             {
                 ShowCartButtonsView = value > 0;
-                SetProperty(ref _quantity, value); 
+                SetProperty(ref _quantity, value);
             }
         }
         private double _total = 0;

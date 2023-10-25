@@ -2,13 +2,11 @@
 using Delivery.Models;
 using Delivery.Services;
 using MvvmHelpers.Commands;
-using MvvmHelpers.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Xamarin.Forms.PancakeView;
 using Command = MvvmHelpers.Commands.Command;
 
 namespace Delivery.ViewModels
@@ -28,7 +26,7 @@ namespace Delivery.ViewModels
             ClearCartQuestionCommand = new AsyncCommand(ClearCartQuestion);
             LeaveCartQuestionCommand = new AsyncCommand(LeaveCartQuestion);
             IncItemsQuantityCommand = new Command(IncItemsQuantity);
-            DecItemsQuantityCommand = new Command(DecItemsQuantity);            
+            DecItemsQuantityCommand = new Command(DecItemsQuantity);
             _shoppingCartService = DependencyService.Get<IShoppingCartService>();
         }
 
@@ -117,7 +115,7 @@ namespace Delivery.ViewModels
             if (addItem)
                 await _shoppingCartService.AddItemToCart(_storeCode, SelectedItem.Id, SelectedItem.Image, SelectedItem.Name, SelectedItem.Price, ItemsQuantity);
 
-           await Shell.Current.Navigation.PopAsync();
+            await Shell.Current.Navigation.PopAsync();
         }
 
         public void IncItemsQuantity()

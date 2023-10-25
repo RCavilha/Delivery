@@ -1,11 +1,8 @@
 ﻿using Delivery.Libraries.Helpers.MVVM;
 using Delivery.Models;
 using Delivery.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using Xamarin.Forms;
 
 namespace Delivery.ViewModels
@@ -35,7 +32,7 @@ namespace Delivery.ViewModels
             storeService = DependencyService.Get<StoreService>();
             MessagingCenter.Subscribe<OrderModel>(this, "AddOrderToHistory", (add) =>
             {
-                if(OrderList  != null) 
+                if (OrderList != null)
                 {
                     OrderList.Insert(0, add);
                 }

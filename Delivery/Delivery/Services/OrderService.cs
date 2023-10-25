@@ -42,8 +42,8 @@ public class OrderService : IOrderService
         var firebaseObjects = await _dbStore
             .Child(_tableName)
             .OnceAsync<OrderModel>();
-        
-        if (firebaseObjects != null) 
+
+        if (firebaseObjects != null)
         {
             var orderList = firebaseObjects.Where(store => store.Object.UserLogin == user)
                 .Select(firebaseObject => firebaseObject.Object)
