@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.OrderHistoryView"
              xmlns:viewModels="clr-namespace:Delivery.ViewModels"
+             xmlns:converter="clr-namespace:Delivery.Libraries.Converters"
              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
     <Shell.TitleView>
         <Grid>
@@ -12,11 +13,21 @@
                 Margin="0,0,20,0" />
         </Grid>
     </Shell.TitleView>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BoolNegationConverter x:Key="BoolNegationConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>    
     <ContentPage.BindingContext>
         <viewModels:OrderHistoryViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Padding="10">
+            <ActivityIndicator 
+                        IsRunning="{Binding PageIsLoaded, Converter={StaticResource BoolNegationConverter}}"
+                        IsVisible="{Binding PageIsLoaded,Converter={StaticResource BoolNegationConverter}}"
+                        Color="Orange">
+            </ActivityIndicator>
             <CollectionView ItemsSource="{Binding OrderList}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>

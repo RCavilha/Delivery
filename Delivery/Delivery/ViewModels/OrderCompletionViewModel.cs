@@ -1,10 +1,12 @@
 ﻿using Delivery.Libraries.Helpers.MVVM;
 using Delivery.Models;
 using Delivery.Services;
+using MvvmHelpers.Commands;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Xamarin.Forms.PancakeView;
+using Command = MvvmHelpers.Commands.Command;
 
 namespace Delivery.ViewModels
 {
@@ -24,25 +26,36 @@ namespace Delivery.ViewModels
             set { SetProperty(ref _seending, value); }
         }
 
+        private bool _isSent = false;
+
+        public bool IsSent
+        {
+            get { return _isSent; }
+            set { SetProperty(ref _isSent, value); }
+        }
+
         IShoppingCartService shoppingCartService;
 
         IOrderService orderService;
 
         IStoreService storeService;
         public ICommand SendOrderCommand { get; set; }
+        public AsyncCommand OkSentCommand { get; set; }
         public OrderCompletionViewModel()
         {
             shoppingCartService = DependencyService.Get<IShoppingCartService>();
             orderService = DependencyService.Get<IOrderService>();
             storeService = DependencyService.Get<IStoreService>();
             SendOrderCommand = new Command(SendOrder);
+            OkSentCommand = new AsyncCommand(async () => { await Shell.Current.Navigation.PopToRootAsync(); });
+
             _getOrder();
         }
         private async void _getOrder()
         {
             Order = new OrderModel();
             Order.UserLogin = "admin";
-            Order.StoreId = shoppingCartService.GetStoreId();
+            Order.StoreId = await shoppingCartService.GetStoreId();
             Order.StoreName = await storeService.GetStoreName(Order.StoreId);
             Order.DeliveryType = "Entrega";
             Order.PaymentType = "Dinheiro";
@@ -63,7 +76,7 @@ namespace Delivery.ViewModels
             MessagingCenter.Send(Order, "AddOrderToHistory");
             await orderService.AddUserOrder(Order);
             await shoppingCartService.ClearCart();
-            await Shell.Current.Navigation.PopToRootAsync();
+            IsSent = true;
         }
     }
 }

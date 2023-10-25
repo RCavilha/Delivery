@@ -41,15 +41,13 @@ namespace Delivery.ViewModels
             get { return _total; }
             private set { SetProperty(ref _total, value); }
         }
-        public void UpdateTotal()
-        {
-            Task task = UpdateTotalAsync();
-        }
+
         public async Task UpdateTotalAsync()
         {
             Total = await shoppingCartService.GetTotalPrice();
             Quantity = await shoppingCartService.GetCount();
         }
+
         public void OpenCart()
         {
             Shell.Current.GoToAsync($"store/cart");

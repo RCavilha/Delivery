@@ -3,6 +3,7 @@ using Delivery.Services;
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -107,19 +108,6 @@ namespace Delivery.Services
             return total;
         }
 
-        public async Task<bool> StoreChanged(int idStoreSelected)
-        {
-            if (CurrentStoreId > 0)
-            {
-                return CurrentStoreId == idStoreSelected;
-            }
-
-            await Init();
-            var exist = await db.Table<ShoppingCartModel>().FirstOrDefaultAsync(c => c.IdStore == idStoreSelected);
-
-            return exist == null;
-        }
-
         public async Task<int> GetTotalQuantityItems()
         {
             await Init();
@@ -127,8 +115,16 @@ namespace Delivery.Services
             return totalQuantity;
         }
 
-        public int GetStoreId()
+        public async Task<int> GetStoreId()
         {
+            if (CurrentStoreId == 0)
+            {
+                await Init();
+                var item = await db.Table<ShoppingCartModel>().FirstOrDefaultAsync(c => c.IdStore > 0);
+                if (item != null)
+                    CurrentStoreId = item.IdStore;
+            }
+
             return CurrentStoreId;
         }
     }

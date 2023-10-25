@@ -14,8 +14,7 @@ namespace Delivery.Services
         Task<ShoppingCartModel> GetCartItem(int idItem);
         Task<int> GetCount();
         Task<double> GetTotalPrice();
-        Task<bool> StoreChanged(int idStoreSelected);
         Task<int> GetTotalQuantityItems();
-        int GetStoreId();
+        Task<int> GetStoreId();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Delivery.ViewModels;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,9 +15,9 @@ namespace Delivery.Views
             _viewModel = new CartButtonsViewModel();
             BindingContext = _viewModel;
         }
-        public void UpdateTotal()
+        public async Task UpdateTotal()
         {
-            _viewModel.UpdateTotal();
+            await _viewModel.UpdateTotalAsync();
         }
     }
 }

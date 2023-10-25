@@ -12,6 +12,13 @@ namespace Delivery.ViewModels
 {
     public class OrderHistoryViewModel : BaseViewModel
     {
+        private bool _pageIsLoaded = false;
+        public bool PageIsLoaded
+        {
+            get { return _pageIsLoaded; }
+            set { SetProperty(ref _pageIsLoaded, value); }
+        }
+
         IOrderService orderService;
 
         IStoreService storeService;
@@ -59,6 +66,7 @@ namespace Delivery.ViewModels
             var orderedList = list.OrderByDescending(order => order.OrderDateTime).ToList();
 
             OrderList = new ObservableCollection<OrderModel>(orderedList);
+            PageIsLoaded = true;
         }
     }
 }

@@ -75,7 +75,21 @@ namespace Delivery.ViewModels
         }
         public async Task AddItem()
         {
-            await shoppingCartService.AddItemToCart(_storeCode, SelectedItem.Id, SelectedItem.Image, SelectedItem.Name, SelectedItem.Price, ItemsQuantity);
+            string resultado = "";
+
+            var CartStoreId = await shoppingCartService.GetStoreId();
+
+            if ((CartStoreId > 0) && (CartStoreId != StoreCode))
+            {
+                resultado = await Shell.Current.DisplayActionSheet("Você já tem itens adicionados na sua sacola. Deseja limpar a sacola?", "Sim", "Não");
+                if (resultado == "Sim") 
+                {
+                    await shoppingCartService.ClearCart();
+                }
+            }
+
+            if (resultado != "Não")
+                await shoppingCartService.AddItemToCart(_storeCode, SelectedItem.Id, SelectedItem.Image, SelectedItem.Name, SelectedItem.Price, ItemsQuantity);
             await Shell.Current.Navigation.PopAsync();
         }
         public void IncItemsQuantity()

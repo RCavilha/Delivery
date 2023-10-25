@@ -4,6 +4,7 @@ using Delivery.Services;
 using MvvmHelpers.Commands;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Delivery.ViewModels

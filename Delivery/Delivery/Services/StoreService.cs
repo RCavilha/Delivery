@@ -43,10 +43,17 @@ namespace Delivery.Services
                 .Child(_tableName)
                 .OnceAsync<StoreModel>();
 
-            var storeModels = firebaseObjects
-                .Select(firebaseObject => firebaseObject.Object)
-                .ToList();
-            return storeModels;
+            if (firebaseObjects != null)
+            {
+                var storeModels = firebaseObjects
+                    .Select(firebaseObject => firebaseObject.Object)
+                    .ToList();
+
+                if (storeModels != null)
+                    return storeModels;
+            }
+
+            return new List<StoreModel>();
         }
         public async Task<StoreModel> GetStore(int idStore)
         {
@@ -57,7 +64,10 @@ namespace Delivery.Services
                     .Where(store => store.Object.Id == idStore)
                     .FirstOrDefault();
 
-            return storeSelect.Object;
+            if (storeSelect != null)
+                return storeSelect.Object;
+
+            return new StoreModel();
         }
 
         public async Task<string> GetStoreName(int idStore)
@@ -69,7 +79,7 @@ namespace Delivery.Services
                     .Where(store => store.Object.Id == idStore)
                     .FirstOrDefault();
 
-            if (storeSelect.Object == null)
+            if ((storeSelect == null) || (storeSelect.Object == null))
                 return "";
 
             return storeSelect.Object.Name;

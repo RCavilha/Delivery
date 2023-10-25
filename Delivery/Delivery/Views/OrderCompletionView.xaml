@@ -3,16 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Delivery.Views.OrderCompletionView"
              xmlns:viewModels="clr-namespace:Delivery.ViewModels"
+             xmlns:converter="clr-namespace:Delivery.Libraries.Converters"
              Shell.TabBarIsVisible="False"
              Title="Meu pedido">
     <ContentPage.BindingContext>
         <viewModels:OrderCompletionViewModel/>
     </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BoolNegationConverter x:Key="BoolNegationConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>            
             <Frame 
                 BorderColor="{StaticResource PrimaryColor}"
-                Margin="20,5,20,0">
+                Margin="20,5,20,0"
+                Grid.Row="0">
                 <Grid RowDefinitions="auto,auto,auto" RowSpacing="-15">
                     <Frame Grid.Row="0" HasShadow="False">
                         <Grid>
@@ -133,7 +144,62 @@
                 TextColor="{StaticResource White}" 
                 VerticalOptions="End" 
                 Margin="20"
+                Grid.Row="1"
                 Command="{Binding SendOrderCommand}"/>
-        </StackLayout>
+
+            <StackLayout 
+                Grid.Row="0"
+                BackgroundColor="Transparent"
+                 IsVisible="{Binding Seending}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Frame 
+                        BackgroundColor="{StaticResource LightGrey}" 
+                        Grid.Row="1"
+                        Grid.Column="1" 
+                        CornerRadius="20"
+                        BorderColor="{StaticResource PrimaryColor}">
+                        <StackLayout>
+                            <ActivityIndicator
+                                IsRunning="True"
+                                IsVisible="{Binding IsSent, Converter={StaticResource BoolNegationConverter}}"
+                                HeightRequest="80"
+                                Color="{StaticResource PrimaryColor}">
+                            </ActivityIndicator>
+                            <Label 
+                                IsVisible="{Binding IsSent, Converter={StaticResource BoolNegationConverter}}"
+                                Text="Enviando pedido..."
+                                HorizontalOptions="Center"
+                                TextColor="{StaticResource PrimaryColor}"/>
+                            <Image 
+                                IsVisible="{Binding IsSent}"
+                                Source="sent"
+                                HeightRequest="80"/>
+                            <Label 
+                                IsVisible="{Binding IsSent}"
+                                Text="Enviado com sucesso!"
+                                HorizontalOptions="Center"
+                                TextColor="{StaticResource PrimaryColor}"/>
+                            <Button 
+                                IsVisible="{Binding IsSent}"
+                                Text="OK" 
+                                Margin="20,0,20,0"
+                                CornerRadius="20"
+                                BackgroundColor="{StaticResource PrimaryColor}"
+                                TextColor="{StaticResource White}"
+                                Command="{Binding OkSentCommand}"/>
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

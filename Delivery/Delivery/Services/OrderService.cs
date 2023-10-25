@@ -42,17 +42,28 @@ public class OrderService : IOrderService
         var firebaseObjects = await _dbStore
             .Child(_tableName)
             .OnceAsync<OrderModel>();
-        var orderList = firebaseObjects.Where(store => store.Object.UserLogin == user)
-            .Select(firebaseObject => firebaseObject.Object)
-            .ToList();
+        
+        if (firebaseObjects != null) 
+        {
+            var orderList = firebaseObjects.Where(store => store.Object.UserLogin == user)
+                .Select(firebaseObject => firebaseObject.Object)
+                .ToList();
 
-        return orderList;
+            if (orderList != null)
+                return orderList;
+        }
+
+        return new List<OrderModel>();
     }
 
     public async Task<int> GetOrderCount()
     {
         Init();
         var firebaseObjects = await _dbStore.Child(_tableName).OnceAsync<OrderModel>();
+
+        if (firebaseObjects == null)
+            return 0;
+
         return firebaseObjects.Count();
     }
 }

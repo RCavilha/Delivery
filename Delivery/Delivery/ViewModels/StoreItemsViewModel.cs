@@ -90,7 +90,7 @@ namespace Delivery.ViewModels
             Shell.Current.GoToAsync($"store/cart");
         }
 
-        public async void UpdateQuantityCartItem()
+        public async Task UpdateQuantityCartItem()
         {
             QuantityCartItem = await shoppingCartService.GetTotalQuantityItems();
         }
