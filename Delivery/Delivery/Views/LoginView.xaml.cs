@@ -10,5 +10,10 @@ namespace Delivery.Views
         {
             InitializeComponent();
         }
+
+        private void Button_Clicked(object sender, System.EventArgs e)
+        {
+            DisplayAlert("Em breve!", "Aguarde! A tela está em manutenção...", "Ok");
+        }
     }
 }

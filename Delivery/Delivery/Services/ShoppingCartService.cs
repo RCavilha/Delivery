@@ -15,6 +15,7 @@ namespace Delivery.Services
         public int CurrentStoreId { get; private set; }
 
         SQLiteAsyncConnection db;
+
         async Task Init()
         {
             if (db != null)
@@ -22,8 +23,7 @@ namespace Delivery.Services
 
             CurrentStoreId = 0;
 
-            // Get an absolute path to the database file
-            var databasePath = Path.Combine(FileSystem.AppDataDirectory, "22CartData.db");//9
+            var databasePath = Path.Combine(FileSystem.AppDataDirectory, "CartDataBase.db");
 
             db = new SQLiteAsyncConnection(databasePath);
 
@@ -49,13 +49,9 @@ namespace Delivery.Services
 
             var exist = await GetCartItem(idItem);
             if ((exist == null) || (exist.IdItem != idItem))
-            {
                 await db.InsertAsync(item);
-            }
             else
-            {
                 await db.UpdateAsync(item);
-            }
         }
 
         public async Task UpdateCartItem(ShoppingCartModel item)
@@ -73,6 +69,7 @@ namespace Delivery.Services
         {
             await Init();
             await db.DeleteAllAsync<ShoppingCartModel>();
+            CurrentStoreId = 0;
         }
         public async Task<List<ShoppingCartModel>> GetCartList()
         {

@@ -15,12 +15,14 @@ namespace Delivery.Services
         private static string _tableName = "Stores";
         public static string FireBasePassword = "H96LnlDzvh0rZ9sJ3bnUGN0Pj9V8qkUyD9eZd9qq";
         FirebaseClient _dbStore;
+
         void Init()
         {
             if (_dbStore != null)
                 return;
             _dbStore = new FirebaseClient("https://delivery-69a12-default-rtdb.firebaseio.com/", new FirebaseOptions { AuthTokenAsyncFactory = () => Task.FromResult(FireBasePassword) });
         }
+
         public async Task<bool> SaveStore(StoreModel stores)
         {
             Init();
@@ -34,6 +36,7 @@ namespace Delivery.Services
                 return false;
             }
         }
+
         public async Task<List<StoreModel>> GetStoreList()
         {
             Init();
@@ -78,7 +81,7 @@ namespace Delivery.Services
                     .FirstOrDefault();
 
             if ((storeSelect == null) || (storeSelect.Object == null))
-                return "";
+                return string.Empty;
 
             return storeSelect.Object.Name;
         }

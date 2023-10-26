@@ -13,20 +13,36 @@ namespace Delivery.ViewModels
     public class OrderCompletionViewModel : BaseViewModel
     {
         private OrderModel _order;
+        private bool _seending = false;
+        private bool _isSent = false;
+        private IShoppingCartService _shoppingCartService;
+        private IOrderService _orderService;
+        private IStoreService _storeService;
+
+        public OrderCompletionViewModel()
+        {
+            _shoppingCartService = DependencyService.Get<IShoppingCartService>();
+            _orderService = DependencyService.Get<IOrderService>();
+            _storeService = DependencyService.Get<IStoreService>();
+            SendOrderCommand = new Command(SendOrder);
+            OkSentCommand = new AsyncCommand(async () => { await Shell.Current.Navigation.PopToRootAsync(); });
+            SetCurrentOrder();
+        }
+
+        public ICommand SendOrderCommand { get; set; }
+        public AsyncCommand OkSentCommand { get; set; }
+
         public OrderModel Order
         {
             get { return _order; }
             set { SetProperty(ref _order, value); }
         }
 
-        private bool _seending = false;
         public bool Seending
         {
             get { return _seending; }
             set { SetProperty(ref _seending, value); }
         }
-
-        private bool _isSent = false;
 
         public bool IsSent
         {
@@ -34,38 +50,21 @@ namespace Delivery.ViewModels
             set { SetProperty(ref _isSent, value); }
         }
 
-        IShoppingCartService shoppingCartService;
-
-        IOrderService orderService;
-
-        IStoreService storeService;
-        public ICommand SendOrderCommand { get; set; }
-        public AsyncCommand OkSentCommand { get; set; }
-        public OrderCompletionViewModel()
-        {
-            shoppingCartService = DependencyService.Get<IShoppingCartService>();
-            orderService = DependencyService.Get<IOrderService>();
-            storeService = DependencyService.Get<IStoreService>();
-            SendOrderCommand = new Command(SendOrder);
-            OkSentCommand = new AsyncCommand(async () => { await Shell.Current.Navigation.PopToRootAsync(); });
-
-
-            SetCurrentOrder();
-        }
         private async void SetCurrentOrder()
         {
             Order = new OrderModel();
             Order.UserLogin = "admin";
-            Order.StoreId = await shoppingCartService.GetStoreId();
-            Order.StoreName = await storeService.GetStoreName(Order.StoreId);
+            Order.StoreId = await _shoppingCartService.GetStoreId();
+            Order.StoreName = await _storeService.GetStoreName(Order.StoreId);
             Order.DeliveryType = "Entrega";
             Order.PaymentType = "Dinheiro";
-            Order.TotalQuantity = await shoppingCartService.GetTotalQuantityItems();
-            Order.TotalPrice = await shoppingCartService.GetTotalPrice();
+            Order.TotalQuantity = await _shoppingCartService.GetTotalQuantityItems();
+            Order.TotalPrice = await _shoppingCartService.GetTotalPrice();
             Order.DiscountValue = 0;
             Order.TotalAmountToPay = Order.TotalPrice - Order.DiscountValue;
             OnPropertyChanged(nameof(Order));
         }
+
         public async void SendOrder()
         {
             if (Seending)
@@ -74,8 +73,8 @@ namespace Delivery.ViewModels
             Seending = true;
             await IncludeFinalOrderData();
             MessagingCenter.Send(Order, "AddOrderToHistory");
-            await orderService.AddUserOrder(Order);
-            await shoppingCartService.ClearCart();
+            await _orderService.AddUserOrder(Order);
+            await _shoppingCartService.ClearCart();
             await Task.Delay(1800);
             IsSent = true;
         }
@@ -85,12 +84,12 @@ namespace Delivery.ViewModels
             var orderCount = await IncrementOrderCount();
             Order.OrderId = Order.StoreId.ToString("D4") + orderCount.ToString("D4");
             Order.OrderDateTime = DateTime.Now;
-            Order.ShoppingCart = await shoppingCartService.GetCartList();
+            Order.ShoppingCart = await _shoppingCartService.GetCartList();
         }
 
         private async Task<int> IncrementOrderCount()
         {
-            var orderCount = await orderService.GetOrderCount();
+            var orderCount = await _orderService.GetOrderCount();
             orderCount++;
             return orderCount;
         }

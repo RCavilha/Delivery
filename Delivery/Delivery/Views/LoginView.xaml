@@ -64,7 +64,7 @@
             Margin="10,40,10,0"
             BackgroundColor="{StaticResource PrimaryColor}"
             TextColor="White"
-            Command="{ Binding LoginCommand }"
+            Clicked="Button_Clicked"
             WidthRequest="300"/>
     </Grid>
 </ContentPage>

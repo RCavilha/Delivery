@@ -9,26 +9,40 @@ using Xamarin.Forms;
 
 namespace Delivery.ViewModels
 {
-    [QueryProperty("storeSerialized", "storeSerialized")]
+    [QueryProperty("StoreSerialized", "StoreSerialized")]
     public class StoreItemsViewModel : BaseViewModel
     {
-        public int idStore { get; set; }
-
         private bool _pageIsLoaded = false;
-        public bool PageIsLoaded
+        private int _quantityCartItem;
+        private StoreModel _storeModel;
+        private IShoppingCartService _shoppingCartService;
+        private IStoreService _storeService;
+
+        public StoreItemsViewModel()
         {
-            get
-            {
-                return _pageIsLoaded;
-            }
-            set
-            {
-                _pageIsLoaded = value;
-                OnPropertyChanged(nameof(PageIsLoaded));
-            }
+            PageIsLoaded = false;
+            SelectedItemCommand = new Command<StoreItemModel>(SelectedItemGoTo);
+            CartCommand = new Command(OpenCart);
+            _shoppingCartService = DependencyService.Get<IShoppingCartService>();
+            _storeService = DependencyService.Get<IStoreService>();
         }
 
-        private StoreModel _storeModel;
+        public int IdStore { get; set; }
+        public ICommand SelectedItemCommand { get; set; }
+        public ICommand CartCommand { get; set; }
+
+        public bool PageIsLoaded
+        {
+            get { return _pageIsLoaded; }
+            set { SetProperty(ref _pageIsLoaded, value); }
+        }
+
+        public int QuantityCartItem
+        {
+            get { return _quantityCartItem; }
+            set { SetProperty(ref _quantityCartItem, value); }
+        }
+
         public StoreModel Store
         {
             get { return _storeModel; }
@@ -39,43 +53,22 @@ namespace Delivery.ViewModels
             }
         }
 
-        private int _quantityCartItem;
-        public int QuantityCartItem
-        {
-            get { return _quantityCartItem; }
-            set { SetProperty(ref _quantityCartItem, value); }
-        }
-
-        public int storeSerialized
+        public int StoreSerialized
         {
             set
             {
-                if (idStore != value)
+                if (IdStore != value)
                 {
-                    idStore = value;
+                    IdStore = value;
                     GetStoreDataBase();
                 }
             }
-        }
-        public ICommand SelectedItemCommand { get; set; }
-        public ICommand CartCommand { get; set; }
-
-        IShoppingCartService shoppingCartService;
-
-        IStoreService storeService;
-        public StoreItemsViewModel()
-        {
-            PageIsLoaded = false;
-            SelectedItemCommand = new Command<StoreItemModel>(SelectedItemGoTo);
-            CartCommand = new Command(OpenCart);
-            shoppingCartService = DependencyService.Get<IShoppingCartService>();
-            storeService = DependencyService.Get<IStoreService>();
         }
 
         public async void GetStoreDataBase()
         {
             await Task.Delay(150);
-            Store = await storeService.GetStore(idStore);
+            Store = await _storeService.GetStore(IdStore);
         }
 
         public void SelectedItemGoTo(StoreItemModel selectedItem)
@@ -91,7 +84,7 @@ namespace Delivery.ViewModels
 
         public async Task UpdateQuantityCartItem()
         {
-            QuantityCartItem = await shoppingCartService.GetTotalQuantityItems();
+            QuantityCartItem = await _shoppingCartService.GetTotalQuantityItems();
         }
     }
 }

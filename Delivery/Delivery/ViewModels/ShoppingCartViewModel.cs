@@ -9,45 +9,39 @@ namespace Delivery.ViewModels
 {
     public class ShoppingCartViewModel : BaseViewModel
     {
-        public StoreModel Store { get; set; }
-
         private double _shoppingCartTotalPrice;
-
-        public double ShoppingCartTotalPrice
-        {
-            get
-            {
-                return _shoppingCartTotalPrice;
-            }
-            set
-            {
-                SetProperty(ref _shoppingCartTotalPrice, value);
-            }
-        }
-
+        private IShoppingCartService _shoppingCartService;
         private ObservableCollection<ShoppingCartModel> _cartList;
-        public ObservableCollection<ShoppingCartModel> CartList
-        {
-            get { return _cartList; }
-            set { SetProperty(ref _cartList, value); }
-        }
-        public ICommand FinishCommand { get; set; }
-        public ICommand IncSelectedItemCountCommand { get; set; }
-        public ICommand DecSelectedItemCountCommand { get; set; }
-
-        IShoppingCartService shoppingCartService;
 
         public ShoppingCartViewModel()
         {
-            shoppingCartService = DependencyService.Get<IShoppingCartService>();
+            _shoppingCartService = DependencyService.Get<IShoppingCartService>();
             FinishCommand = new Command(GoToFinish);
             IncSelectedItemCountCommand = new Command<ShoppingCartModel>(IncSelectedItemCount);
             DecSelectedItemCountCommand = new Command<ShoppingCartModel>(DecSelectedItemCount);
             GetCartList();
         }
+
+        public StoreModel Store { get; set; }
+        public ICommand FinishCommand { get; set; }
+        public ICommand IncSelectedItemCountCommand { get; set; }
+        public ICommand DecSelectedItemCountCommand { get; set; }
+
+        public double ShoppingCartTotalPrice
+        {
+            get { return _shoppingCartTotalPrice; }
+            set { SetProperty(ref _shoppingCartTotalPrice, value); }
+        }
+
+        public ObservableCollection<ShoppingCartModel> CartList
+        {
+            get { return _cartList; }
+            set { SetProperty(ref _cartList, value); }
+        }
+
         public async void GetCartList()
         {
-            var itemList = await shoppingCartService.GetCartList();
+            var itemList = await _shoppingCartService.GetCartList();
             CartList = new ObservableCollection<ShoppingCartModel>(itemList);
             TotalPrice();
         }
@@ -60,17 +54,17 @@ namespace Delivery.ViewModels
 
             if (item.Quantity <= 1)
             {
-                await shoppingCartService.RemoveCartItem(item);
+                await _shoppingCartService.RemoveCartItem(item);
                 CartList.Remove(item);
-                TotalPrice();
-                //OnPropertyChanged(nameof(CartList));
+                TotalPrice();                
             }
             else
             {
                 item.Quantity--;
                 item.TotalPrice = item.UnitPrice * item.Quantity;
                 TotalPrice();
-                await shoppingCartService.UpdateCartItem(item);
+                await _shoppingCartService.UpdateCartItem(item);
+                OnPropertyChanged(nameof(item));
             }
         }
         public async void IncSelectedItemCount(ShoppingCartModel item)
@@ -78,7 +72,8 @@ namespace Delivery.ViewModels
             item.Quantity++;
             item.TotalPrice = item.UnitPrice * item.Quantity;
             TotalPrice();
-            await shoppingCartService.UpdateCartItem(item);
+            await _shoppingCartService.UpdateCartItem(item);
+            OnPropertyChanged(nameof(item));
         }
         public void TotalPrice()
         {

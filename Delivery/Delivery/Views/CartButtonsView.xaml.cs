@@ -9,12 +9,14 @@ namespace Delivery.Views
     public partial class CartButtonsView : ContentView
     {
         private CartButtonsViewModel _viewModel;
+
         public CartButtonsView()
         {
             InitializeComponent();
             _viewModel = new CartButtonsViewModel();
             BindingContext = _viewModel;
         }
+
         public async Task UpdateTotal()
         {
             await _viewModel.UpdateTotalAsync();

@@ -17,6 +17,7 @@ namespace Delivery.Models
         public double DiscountValue { get; set; }
         public double TotalAmountToPay { get; set; }
         public List<ShoppingCartModel> ShoppingCart { get; set; }
+
         [JsonIgnore]
         public string StoreName { get; set; }
     }

@@ -10,40 +10,43 @@ namespace Delivery.ViewModels
 {
     public class StoreViewModel : BaseViewModel
     {
-        public AsyncCommand<StoreModel> StoreItemsCommand { get; set; }
-
-        private IShoppingCartService shoppingCartService;
-
-        private IStoreService storeService;
-
         private List<StoreModel> _storeList;
+        private IShoppingCartService _shoppingCartService;
+        private IStoreService _storeService;
+
+        public StoreViewModel()
+        {
+            StoreItemsCommand = new AsyncCommand<StoreModel>(StoreItemsGoTo);
+            _shoppingCartService = DependencyService.Get<IShoppingCartService>();
+            _storeService = DependencyService.Get<IStoreService>();
+            GetListStore();
+        }
+
+        public AsyncCommand<StoreModel> StoreItemsCommand { get; set; }
+        
         public List<StoreModel> StoreList
         {
             get { return _storeList; }
             set { SetProperty(ref _storeList, value); }
         }
+
         public bool ShowCartView
         {
             get
             {
-                var quantity = shoppingCartService.GetCount().Result;
+                var quantity = _shoppingCartService.GetCount().Result;
                 return (quantity > 0);
             }
         }
-        public StoreViewModel()
-        {
-            StoreItemsCommand = new AsyncCommand<StoreModel>(StoreItemsGoTo);
-            shoppingCartService = DependencyService.Get<IShoppingCartService>();
-            storeService = DependencyService.Get<IStoreService>();
-            GetListStore();
-        }
+
         public async void GetListStore()
         {
-            StoreList = await storeService.GetStoreList();
+            StoreList = await _storeService.GetStoreList();
         }
+
         public async Task StoreItemsGoTo(StoreModel store)
         {
-            await Shell.Current.GoToAsync($"store/items?storeSerialized={store.Id}");
+            await Shell.Current.GoToAsync($"store/items?StoreSerialized={store.Id}");
         }
     }
 }

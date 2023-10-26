@@ -9,7 +9,6 @@ namespace Delivery.Views
     public partial class StoreItemsView : ContentPage
     {
         private StoreItemsViewModel _viewModel;
-
         private int _totalItemsCount = 0;
         private int _lastVisibleItemIndex = 0;
 
@@ -24,9 +23,10 @@ namespace Delivery.Views
         {
             base.OnAppearing();
             await _viewModel.UpdateQuantityCartItem();
-            CartButtonsView.UpdateTotal();
+            await CartButtonsView.UpdateTotal();
             ControlCartButton();
         }
+
         private void CollectionStoreItems_Scrolled(object sender, ItemsViewScrolledEventArgs e)
         {
             if (_totalItemsCount == 0)
@@ -38,6 +38,7 @@ namespace Delivery.Views
             _lastVisibleItemIndex = e.LastVisibleItemIndex;
             ControlCartButton();
         }
+
         private void ControlCartButton()
         {
             if (_viewModel.QuantityCartItem > 0)
@@ -52,13 +53,9 @@ namespace Delivery.Views
             }
 
             if (CartButtonsView.IsVisible)
-            {
                 RowCartButton.Height = 60;
-            }
             else
-            {
                 RowCartButton.Height = 0;
-            }
         }
     }
 }

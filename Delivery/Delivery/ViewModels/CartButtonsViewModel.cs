@@ -8,22 +8,26 @@ namespace Delivery.ViewModels
 {
     public class CartButtonsViewModel : BaseViewModel
     {
-        private IShoppingCartService shoppingCartService;
-        public ICommand GotoCartCommand { get; set; }
+        private IShoppingCartService _shoppingCartService;
+        private bool _showCartButtonsView = false;
+        private int _quantity = 0;
+        private double _total = 0;
+
         public CartButtonsViewModel()
         {
-            shoppingCartService = DependencyService.Get<IShoppingCartService>();
+            _shoppingCartService = DependencyService.Get<IShoppingCartService>();
             GotoCartCommand = new Command(OpenCart);
             UpdateTotalAsync();
         }
-        private bool _showCartButtonsView = false;
+
+        public ICommand GotoCartCommand { get; set; }
+        
         public bool ShowCartButtonsView
         {
             get { return _showCartButtonsView; }
             private set { SetProperty(ref _showCartButtonsView, value); }
         }
 
-        private int _quantity = 0;
         public int Quantity
         {
             get { return _quantity; }
@@ -33,7 +37,7 @@ namespace Delivery.ViewModels
                 SetProperty(ref _quantity, value);
             }
         }
-        private double _total = 0;
+
         public double Total
         {
             get { return _total; }
@@ -42,8 +46,8 @@ namespace Delivery.ViewModels
 
         public async Task UpdateTotalAsync()
         {
-            Total = await shoppingCartService.GetTotalPrice();
-            Quantity = await shoppingCartService.GetCount();
+            Total = await _shoppingCartService.GetTotalPrice();
+            Quantity = await _shoppingCartService.GetCount();
         }
 
         public void OpenCart()
